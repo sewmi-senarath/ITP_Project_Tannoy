@@ -19,10 +19,8 @@ const userSchema = new Schema({
     type:String,//Data Type
     required:true,//validate
   }
-});
+},{ collection: 'user' });
 
+const User = mongoose.model('User', userSchema);
 
-module.exports = mongoose.model(
-  "Customer",//file name
-  userSchema // function name
-)
+module.exports = User;

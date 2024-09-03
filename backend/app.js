@@ -1,7 +1,9 @@
 //Password = UM0Syrg5u5iRPglM
 const express = require("express");
-const mongoose = require("mongoose");
 const router = require("./Route/UserRoutes")
+require('dotenv').config({path: './env/.env'});
+const mongoose = require("mongoose");
+const config = require('config');
 
 const app = express();
 
@@ -9,9 +11,10 @@ const app = express();
 app.use(express.json())
 app.use("/Users", router)
 
-mongoose.connect("mongodb+srv://tannoyelectrical:Tannoy123@tannoy.veldxba.mongodb.net/")
-.then(() => console.log("Connected to MongoDB"))
-.then(() => {
-  app.listen(5000);
-})
-.catch((err)=> console.log((err)));
+//Database connection
+mongoose.connect(config.get('db.uri'))
+    .then(()=> console.log('Connected to MongoDB...'))
+    .catch(err => console.error('Could not connect to MongoDB...', err));
+
+const port = process.env.PORT || 3000;
+app.listen(port, ()=> console.log(`Server listening on port ${port}...`));
