@@ -11,7 +11,7 @@ const app = express();
 //Middleware
 app.use(express.json())
 app.use("/Users", userRouter)
-app.use("/Employee", employeeRouter)
+app.use("/Employee", employeeRouter)//Add Employee routes
 
 //Database connection
 mongoose.connect(config.get('db.uri'))
