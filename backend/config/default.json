@@ -1,5 +1,5 @@
 {
     "db":{
-        "uri": "mongodb://localhost:27017/tannoyelectrical"
+        "uri": "mongodb+srv://tannoyelectrical:Tannoy123@tannoy.veldxba.mongodb.net/Tannoy?retryWrites=true&w=majority"
     }
 }
