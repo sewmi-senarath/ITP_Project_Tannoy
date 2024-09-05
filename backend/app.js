@@ -1,4 +1,4 @@
-//Password = UM0Syrg5u5iRPglMv
+//Password = UM0Syrg5u5iRPglM
 const express = require("express");
 const userRouter = require("./Route/UserRoutes");
 const employeeRouter = require("./Route/EmployeeRoute");
