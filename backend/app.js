@@ -3,7 +3,7 @@ const express = require("express");
 const userRouter = require("./Route/UserRoutes");
 const employeeRouter = require("./Route/EmployeeRoute");
 const recyclingProductRouter = require("./Route/RecyclingProductRoute");
-
+const delivermanRoute = require("./Route/delivermanRoute");
 require('dotenv').config({path: './env/.env'});
 const mongoose = require("mongoose");
 const config = require('config');
@@ -27,11 +27,15 @@ app.use(cookieParser());
 app.use(express.urlencoded({extended: false}));
 app.use(bodyParser.json()); 
 app.use("/Customer",router);
+app.use("/deliverMan", delivermanRoute);
 
 // routes customer management
 app.get("/", (req, res) => {
     res.send("Home Page");
   });
+
+
+
 
 
 
