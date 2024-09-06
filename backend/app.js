@@ -3,6 +3,7 @@ const express = require("express");
 const userRouter = require("./Route/UserRoutes");
 const employeeRouter = require("./Route/EmployeeRoute");
 const recyclingProductRouter = require("./Route/RecyclingProductRoute");
+const delivermanRoute = require("./Route/delivermanRoute");
 require('dotenv').config({path: './env/.env'});
 const mongoose = require("mongoose");
 const config = require('config');
@@ -14,6 +15,7 @@ app.use(express.json());
 app.use("/Users", userRouter);
 app.use("/Employee", employeeRouter);
 app.use("/RecyclingProducts", recyclingProductRouter);
+app.use("/deliverMan", delivermanRoute);
 
 //Database connection
 mongoose.connect(config.get('db.uri'))
