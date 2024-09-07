@@ -1,23 +1,24 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+// ape pages wala files tika import kara ganna
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
+import EmployeeDashboard from "./components/EmployeeDashboard";
+import AddEmployee from "./components/AddEmployee";
+import Home from "./components/Home/Home";
+import "./App.css";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Header />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<EmployeeDashboard />} />
+          <Route path="/employee-dashboard" element={<AddEmployee />} />
+        </Routes>
+      </BrowserRouter>
+      <Footer />
     </div>
   );
 }
