@@ -7,15 +7,37 @@ const delivermanRoute = require("./Route/delivermanRoute");
 require('dotenv').config({path: './env/.env'});
 const mongoose = require("mongoose");
 const config = require('config');
+const router = require("./Route/CustomerRoutes");
+const cors = require("cors");
+const bodyParser = require("body-parser");
+
+const cookieParser = require("cookie-parser");
 
 const app = express();
+
+
+
 
 //Middleware
 app.use(express.json());
 app.use("/Users", userRouter);
 app.use("/Employee", employeeRouter);
 app.use("/RecyclingProducts", recyclingProductRouter);
+app.use(cookieParser());
+app.use(express.urlencoded({extended: false}));
+app.use(bodyParser.json()); 
+app.use("/Customer",router);
 app.use("/deliverMan", delivermanRoute);
+
+// routes customer management
+app.get("/", (req, res) => {
+    res.send("Home Page");
+  });
+
+
+
+
+
 
 //Database connection
 mongoose.connect(config.get('db.uri'))
