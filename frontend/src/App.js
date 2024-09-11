@@ -6,6 +6,13 @@ import Footer from "./component/footer/footer";
 import EmployeeDashboard from "./component/employee/EmployeeDashboard";
 import AddEmployee from "./component/employee/AddEmployee";
 //import Home from "./component/Home/Home";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
+import EmployeeDashboard from "./components/EmployeeDashboard";
+import AddEmployee from "./components/AddEmployee";
+import Home from "./components/Home/Home";
+import crmHome from "./component/CRM/home";
+
 import "./App.css";
 
 function App() {
@@ -16,6 +23,7 @@ function App() {
         <Routes>
           <Route path="/" element={<EmployeeDashboard />} />
           <Route path="/employee-dashboard" element={<AddEmployee />} />
+          <Route path="/crmHome" element={<home/>} />
         </Routes>
       </BrowserRouter>
       <Footer />
