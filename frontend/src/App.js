@@ -11,7 +11,7 @@ import Footer from "./components/Footer";
 import EmployeeDashboard from "./components/EmployeeDashboard";
 import AddEmployee from "./components/AddEmployee";
 import Home from "./components/Home/Home";
-import crmHome from "./component/CRM/home";
+import EditProfile from "./component/CRM/Editprofile/EditProfile";
 
 import "./App.css";
 
@@ -24,6 +24,7 @@ function App() {
           <Route path="/" element={<EmployeeDashboard />} />
           <Route path="/employee-dashboard" element={<AddEmployee />} />
           <Route path="/crmHome" element={<home/>} />
+          <Route path="/crmhome" element={<EditProfile />} />
         </Routes>
       </BrowserRouter>
       <Footer />
