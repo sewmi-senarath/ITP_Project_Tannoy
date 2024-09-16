@@ -15,7 +15,7 @@ const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 
 const app = express();
-
+const itemRoutes = require("./Route/InvenoryRoute");
 
 
 
@@ -30,6 +30,7 @@ app.use(bodyParser.json());
 app.use("/Customer",router);
 app.use("/deliverMan", delivermanRoute);
 app.use("/deliverParsel", deliverParselRoute)
+app.use("/api/items", itemRoutes);
 
 // routes customer management
 app.get("/", (req, res) => {

@@ -6,6 +6,7 @@ import Footer from "./component/footer/footer";
 import EmployeeDashboard from "./component/employee/EmployeeDashboard";
 import AddEmployee from "./component/employee/AddEmployee";
 //import Home from "./component/Home/Home";
+//juthmini 
 import "./App.css";
 
 function App() {
