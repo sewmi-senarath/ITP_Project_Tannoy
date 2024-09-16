@@ -11,9 +11,10 @@ const Header = () => {
                 <h1>Tannoy Electricals</h1>
             </div>
             <nav className="tannoy-nav">
-                <a href="#">Home</a>
+                <a href="/">Home</a>
                 <a href="#">Products</a>
-                <a href="#">Inquiry Team</a>
+                <a href="/employee-dashboard">Employee Team</a>
+                <a href="/delivery-dashboard">Delivery</a>
                 <a href="#">Login</a>
                 <a href="#">Register</a>
             </nav>
