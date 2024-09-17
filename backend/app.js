@@ -21,6 +21,7 @@ const itemRoutes = require("./Route/InvenoryRoute");
 
 //Middleware
 app.use(express.json());
+app.use(cors());
 app.use("/Users", userRouter);
 app.use("/Employee", employeeRouter);
 app.use("/RecyclingProducts", recyclingProductRouter);

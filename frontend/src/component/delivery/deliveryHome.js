@@ -1,14 +1,13 @@
-// deliveryHome.js
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import '../../styles/deliveryHome.css'; // Import the CSS file
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import "../../styles/deliveryHome.css"; // Import the CSS file
 
 const DeliveryHome = () => {
   const navigate = useNavigate();
 
-  // Function to handle redirection to home page
+  // Function to handle redirection to the Parcel List page
   const handleDeliveryClick = () => {
-    navigate('/'); // Navigates to the home page
+    navigate("/parsel-list"); // Navigates to the displayParselList page
   };
 
   return (
