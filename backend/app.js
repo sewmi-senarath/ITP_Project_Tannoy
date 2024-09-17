@@ -5,7 +5,7 @@ const employeeRouter = require("./Route/EmployeeRoute");
 const recyclingProductRouter = require("./Route/RecyclingProductRoute");
 const delivermanRoute = require("./Route/delivermanRoute");
 const deliverParselRoute =require("./Route/deliverParselRoutes")
-const financeRoute =("./Route/FinanceInvestorRoutes")
+const financeRoute = require("./Route/FinanceInvestorRoutes");
 require('dotenv').config({path: './env/.env'});
 const mongoose = require("mongoose");
 const config = require('config');
@@ -32,7 +32,7 @@ app.use(bodyParser.json());
 app.use("/Customer",router);
 app.use("/deliverMan", delivermanRoute); 
 app.use("/deliverParsel", deliverParselRoute)
-app.use("/FinanceInvestor",financeRoute )
+app.use("/FinanceInvestor", financeRoute);
 app.use("/api/items", itemRoutes);
 
 // routes customer management
