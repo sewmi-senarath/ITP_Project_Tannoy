@@ -1,17 +1,46 @@
 //Password = UM0Syrg5u5iRPglM
 const express = require("express");
-const userRouter = require("./Route/UserRoutes")
-const employeeRouter = require("./Route/EmployeeRoute")
+const userRouter = require("./Route/UserRoutes");
+const employeeRouter = require("./Route/EmployeeRoute");
+const recyclingProductRouter = require("./Route/RecyclingProductRoute");
+const delivermanRoute = require("./Route/delivermanRoute");
+const deliverParselRoute =require("./Route/deliverParselRoutes")
 require('dotenv').config({path: './env/.env'});
 const mongoose = require("mongoose");
 const config = require('config');
+const router = require("./Route/CustomerRoutes");
+const cors = require("cors");
+const bodyParser = require("body-parser");
+
+const cookieParser = require("cookie-parser");
 
 const app = express();
+const itemRoutes = require("./Route/InvenoryRoute");
+
+
 
 //Middleware
-app.use(express.json())
-app.use("/Users", userRouter)
-app.use("/Employee", employeeRouter)
+app.use(express.json());
+app.use("/Users", userRouter);
+app.use("/Employee", employeeRouter);
+app.use("/RecyclingProducts", recyclingProductRouter);
+app.use(cookieParser());
+app.use(express.urlencoded({extended: false}));
+app.use(bodyParser.json()); 
+app.use("/Customer",router);
+app.use("/deliverMan", delivermanRoute);
+app.use("/deliverParsel", deliverParselRoute)
+app.use("/api/items", itemRoutes);
+
+// routes customer management
+app.get("/", (req, res) => {
+    res.send("Home Page");
+  });
+
+
+
+
+
 
 //Database connection
 mongoose.connect(config.get('db.uri'))
