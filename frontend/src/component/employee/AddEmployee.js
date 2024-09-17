@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';  // Ensure axios is installed: npm install axios
 
+
 const AddEmployee = () => {
   // State to store input field values
   const [formData, setFormData] = useState({
