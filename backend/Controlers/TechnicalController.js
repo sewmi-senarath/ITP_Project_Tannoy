@@ -104,3 +104,9 @@ exports.deleteTechnicalRecord = async (req, res) => {
     });
   }
 };
+  // Export functions
+  exports.getAllTechnicalRecords = getAllTechnicalRecords;
+  exports.addTechnicalRecord = addTechnicalRecord;
+  exports.getTechnicalRecordById = getTechnicalRecordById;
+  exports.updateTechnicalRecord = updateTechnicalRecord;
+  exports.deleteTechnicalRecord = deleteTechnicalRecord;

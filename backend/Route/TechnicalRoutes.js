@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const technicalController = require("../Controllers/TechnicalController");
+const technicalController = require('../Controllers/TechnicalController');
 
 // Route to get all technical records
 router.get('/', technicalController.getAllTechnicalRecords);
