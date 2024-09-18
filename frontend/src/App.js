@@ -1,25 +1,29 @@
 import React from "react";
-// ape pages wala files tika import kara ganna
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Header from "./components/Header";
-import Footer from "./components/Footer";
-import EmployeeDashboard from "./components/EmployeeDashboard";
-import AddEmployee from "./components/AddEmployee";
-import Home from "./components/Home/Home";
+import Header from "./component/header/header";
+import Footer from "./component/footer/footer";
+import EmployeeDashboard from "./component/employee/EmployeeDashboard";
+import AddEmployee from "./component/employee/AddEmployee";
+import Home from "./component/home/home";
+import DeliveryHome from "./component/delivery/deliveryHome"; 
+
+//juthmini
 import "./App.css";
 
 function App() {
   return (
-    <div>
-      <Header />
-      <BrowserRouter>
+    <BrowserRouter>
+      <div>
+        <Header />
         <Routes>
-          <Route path="/" element={<EmployeeDashboard />} />
-          <Route path="/employee-dashboard" element={<AddEmployee />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/deliveryHome" element={<DeliveryHome />} /> 
+          <Route path="/employee-dashboard" element={<EmployeeDashboard />} />
+          <Route path="/add-employee" element={<AddEmployee />} />
         </Routes>
-      </BrowserRouter>
-      <Footer />
-    </div>
+        <Footer />
+      </div>
+    </BrowserRouter>
   );
 }
 
