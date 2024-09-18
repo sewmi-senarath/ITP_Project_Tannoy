@@ -1,112 +1,87 @@
-const Technical = require("../Model/TechnicalModel");
+const Technical = require('../Model/TechnicalModel');
 
-// Add a new technical record (Log new maintenance records promptly)
-exports.addTechnicalRecord = async (req, res) => {
+// Get all technical records
+const getAllTechnicalRecords = async (req, res) => {
   try {
-    const {
-      machineId,
-      maintenanceType, // e.g., Preventive, Corrective
-      description,
-      maintenanceDate,
-      technician,
-      partsUsed, // e.g., Spare parts, Engine oil
-    } = req.body;
+    const technicalRecords = await Technical.find();
+    res.status(200).json(technicalRecords);
+  } catch (error) {
+    res.status(500).json({ message: 'Error retrieving technical records', error });
+  }
+};
 
+// Add a new technical record
+const addTechnicalRecord = async (req, res) => {
+  const { name, description, date } = req.body;
+
+  try {
     const newRecord = new Technical({
-      machineId,
-      maintenanceType,
+      name,
       description,
-      maintenanceDate,
-      technician,
-      partsUsed,
+      date
     });
-
-    const savedRecord = await newRecord.save();
-    res.status(201).json(savedRecord);
+    await newRecord.save();
+    res.status(201).json(newRecord);
   } catch (error) {
-    console.error("Error adding technical record:", error);
-    res.status(500).json({
-      message: "Error adding technical record",
-      error: error.message,
-    });
+    res.status(500).json({ message: 'Error adding technical record', error });
   }
 };
 
-// Retrieve all technical records (Access detailed existing maintenance records)
-exports.getAllTechnicalRecords = async (req, res) => {
-  try {
-    const records = await Technical.find();
-    res.status(200).json(records);
-  } catch (error) {
-    console.error("Error retrieving technical records:", error);
-    res.status(500).json({
-      message: "Error retrieving technical records",
-      error: error.message,
-    });
-  }
-};
+// Get a technical record by ID
+const getTechnicalRecordById = async (req, res) => {
+  const { id } = req.params;
 
-// Retrieve a single technical record by ID
-exports.getTechnicalRecordById = async (req, res) => {
   try {
-    const record = await Technical.findById(req.params.id);
-    if (!record) {
-      return res.status(404).json({ message: "Technical record not found" });
+    const technicalRecord = await Technical.findById(id);
+    if (!technicalRecord) {
+      return res.status(404).json({ message: 'Technical record not found' });
     }
-    res.status(200).json(record);
+    res.status(200).json(technicalRecord);
   } catch (error) {
-    console.error("Error retrieving technical record:", error);
-    res.status(500).json({
-      message: "Error retrieving technical record",
-      error: error.message,
-    });
+    res.status(500).json({ message: 'Error retrieving technical record', error });
   }
 };
 
-// Modify a technical record by ID (Update records as needed)
-exports.updateTechnicalRecord = async (req, res) => {
+// Update a technical record by ID
+const updateTechnicalRecord = async (req, res) => {
+  const { id } = req.params;
+  const { name, description, date } = req.body;
+
   try {
     const updatedRecord = await Technical.findByIdAndUpdate(
-      req.params.id,
-      req.body,
-      { new: true } // Return the updated document
+      id,
+      { name, description, date },
+      { new: true }
     );
-
     if (!updatedRecord) {
-      return res.status(404).json({ message: "Technical record not found" });
+      return res.status(404).json({ message: 'Technical record not found' });
     }
-
     res.status(200).json(updatedRecord);
   } catch (error) {
-    console.error("Error updating technical record:", error);
-    res.status(500).json({
-      message: "Error updating technical record",
-      error: error.message,
-    });
+    res.status(500).json({ message: 'Error updating technical record', error });
   }
 };
 
-// Remove a technical record by ID (Delete outdated maintenance records)
-exports.deleteTechnicalRecord = async (req, res) => {
+// Delete a technical record by ID
+const deleteTechnicalRecord = async (req, res) => {
+  const { id } = req.params;
+
   try {
-    const deletedRecord = await Technical.findByIdAndDelete(req.params.id);
-
+    const deletedRecord = await Technical.findByIdAndDelete(id);
     if (!deletedRecord) {
-      return res.status(404).json({ message: "Technical record not found" });
+      return res.status(404).json({ message: 'Technical record not found' });
     }
-
-    res.status(200).json({ message: "Technical record deleted successfully" });
+    res.status(200).json({ message: 'Technical record deleted successfully' });
   } catch (error) {
-    console.error("Error deleting technical record:", error);
-    res.status(500).json({
-      message: "Error deleting technical record",
-      error: error.message,
-    });
+    res.status(500).json({ message: 'Error deleting technical record', error });
   }
 };
-  // Export functions
-  exports.getAllTechnicalRecords = getAllTechnicalRecords;
-  exports.addTechnicalRecord = addTechnicalRecord;
-  exports.getTechnicalRecordById = getTechnicalRecordById;
-  exports.updateTechnicalRecord = updateTechnicalRecord;
-  exports.deleteTechnicalRecord = deleteTechnicalRecord;
+
+// Export the functions
+module.exports = {
+  getAllTechnicalRecords,
+  addTechnicalRecord,
+  getTechnicalRecordById,
+  updateTechnicalRecord,
+  deleteTechnicalRecord
+};

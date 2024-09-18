@@ -1,20 +1,27 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const technicalController = require('../Controllers/TechnicalController');
 
-// Route to get all technical records
-router.get('/', technicalController.getAllTechnicalRecords);
+// Insert Model (Optional, can be handled entirely in the controller)
+const Technical = require("../Model/TechnicalModel");
 
-// Route to add a new technical record
-router.post('/', technicalController.addTechnicalRecord);
+// Insert Technical Controller
+const TechnicalController = require("../Controllers/TechnicalController");
 
-// Route to get a single technical record by ID
-router.get('/:id', technicalController.getTechnicalRecordById);
+// Routes for Technical Records
+// Get all technical records
+router.get("/", TechnicalController.getAllTechnicalRecords);
 
-// Route to update a technical record by ID
-router.put('/:id', technicalController.updateTechnicalRecord);
+// Add a new technical record
+router.post("/", TechnicalController.addTechnicalRecord);
 
-// Route to delete a technical record by ID
-router.delete('/:id', technicalController.deleteTechnicalRecord);
+// Get a technical record by ID (matches the ID parameter)
+router.get("/:id", TechnicalController.getTechnicalRecordById);
 
+// Update a technical record by ID
+router.put("/:id", TechnicalController.updateTechnicalRecord);
+
+// Delete a technical record by ID
+router.delete("/:id", TechnicalController.deleteTechnicalRecord);
+
+// Export the router
 module.exports = router;
