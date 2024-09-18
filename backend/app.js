@@ -6,6 +6,7 @@ const recyclingProductRouter = require("./Route/RecyclingProductRoute");
 const delivermanRoute = require("./Route/delivermanRoute");
 const deliverParselRoute =require("./Route/deliverParselRoutes")
 const financeRoute = require("./Route/FinanceInvestorRoutes");
+const ProductRouter = require("./Route/InventoryProductRoutes");
 require('dotenv').config({path: './env/.env'});
 const mongoose = require("mongoose");
 const config = require('config');
@@ -17,6 +18,8 @@ const cookieParser = require("cookie-parser");
 
 const app = express();
 const itemRoutes = require("./Route/InvenoryRoute");
+
+
 
 
 
@@ -34,6 +37,7 @@ app.use("/deliverMan", delivermanRoute);
 app.use("/deliverParsel", deliverParselRoute)
 app.use("/FinanceInvestor", financeRoute);
 app.use("/api/items", itemRoutes);
+app.use("/api/inventoryProduct",ProductRouter)
 
 // routes customer management
 app.get("/", (req, res) => {
