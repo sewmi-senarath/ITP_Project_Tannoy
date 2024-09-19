@@ -21,6 +21,7 @@ function App() {
           <Route path="/deliveryHome" element={<DeliveryHome />} /> 
           <Route path="/employee-dashboard" element={<EmployeeDashboard />} />
           <Route path="/add-employee" element={<AddEmployee />} />
+          <Route path="/add-employee/:employeeId" element={<AddEmployee />} />
           <Route path="/parsel-list" element={<DisplayParselList />} /> 
         </Routes>
         <Footer />

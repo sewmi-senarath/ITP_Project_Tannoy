@@ -1,112 +1,463 @@
-import React, { useState } from 'react';
-import axios from 'axios';  // Ensure axios is installed: npm install axios
+// import React, { useState, useEffect } from "react";
+// import { useNavigate, useParams } from "react-router-dom"; // useParams to get employeeId from the URL
+// import axios from "axios";
 
+// const AddEmployee = () => {
+//   const navigate = useNavigate();
+//   const { employeeId } = useParams(); // Get the employee ID from the URL
+
+//   const [formData, setFormData] = useState({
+//     name: "",
+//     dob: "",
+//     gender: "Male",
+//     address: "",
+//     contactNumber: "",
+//     email: "",
+//     position: "",
+//     department: "",
+//     employmentType: "Full-Time",
+//     photo: null,
+//   });
+
+//   const [isLoading, setIsLoading] = useState(true); // To show a loading indicator while fetching data
+//   const [isSubmitting, setIsSubmitting] = useState(false);
+//   const [errorMessage, setErrorMessage] = useState("");
+
+//   // Fetch employee data by ID if we're editing
+//   useEffect(() => {
+//     const fetchEmployee = async () => {
+//       if (employeeId) {
+//         try {
+//           const response = await axios.get(`http://localhost:5000/api/employees/${employeeId}`);
+//           console.log("Fetched Employee Data:", response.data); // Log fetched data for debugging
+//           setFormData(response.data); // Pre-fill the form with fetched employee data
+//           setIsLoading(false); // Stop the loading state
+//         } catch (error) {
+//           console.error("Error fetching employee:", error);
+//           setErrorMessage("Failed to fetch employee data.");
+//           setIsLoading(false); // Stop the loading state in case of an error
+//         }
+//       } else {
+//         setIsLoading(false); // Not editing, so no need for loading state
+//       }
+//     };
+//     fetchEmployee();
+//   }, [employeeId]);
+
+//   // Handle form input changes
+//   const handleInputChange = async (event) => {
+//     const { name, value, files } = event.target;
+//     if (name === "photo" && files && files.length > 0) {
+//       const reader = new FileReader();
+//       reader.readAsDataURL(files[0]);
+//       reader.onload = () => setFormData((prev) => ({ ...prev, [name]: reader.result }));
+//     } else {
+//       setFormData((prev) => ({ ...prev, [name]: value }));
+//     }
+//   };
+
+//   // Handle form submission
+//   const handleSubmit = async (event) => {
+//     event.preventDefault();
+//     setIsSubmitting(true);
+
+//     try {
+//       if (employeeId) {
+//         // If editing, send a PUT request to update the employee
+//         await axios.put(`http://localhost:5000/api/employees/${employeeId}`, formData);
+//       } else {
+//         // If adding a new employee, send a POST request
+//         await axios.post("http://localhost:5000/api/employees", formData);
+//       }
+//       navigate("/employee-dashboard");
+//     } catch (error) {
+//       console.error("Error saving employee:", error);
+//       setErrorMessage("Failed to save employee.");
+//     } finally {
+//       setIsSubmitting(false);
+//     }
+//   };
+
+//   // Show a loading spinner or message while the data is being fetched
+//   if (isLoading) {
+//     return <div>Loading...</div>;
+//   }
+
+//   return (
+//     <div className="employee-dashboard">
+//       <div className="Add-main-content">
+//         <h1>{employeeId ? "Edit Employee" : "Add Employee"}</h1>
+//         <form className="employee-form" onSubmit={handleSubmit}>
+//           <div className="form-group">
+//             <label htmlFor="name">Name:</label>
+//             <input
+//               type="text"
+//               id="name"
+//               name="name"
+//               placeholder="Enter full name"
+//               value={formData.name}
+//               onChange={handleInputChange}
+//               required
+//             />
+//           </div>
+
+//           <div className="form-group">
+//             <label htmlFor="dob">Date of Birth:</label>
+//             <input
+//               type="date"
+//               id="dob"
+//               name="dob"
+//               value={formData.dob}
+//               onChange={handleInputChange}
+//               required
+//             />
+//           </div>
+
+//           <div className="form-group">
+//             <label htmlFor="gender">Gender:</label>
+//             <select
+//               id="gender"
+//               name="gender"
+//               value={formData.gender}
+//               onChange={handleInputChange}
+//               required
+//             >
+//               <option value="Male">Male</option>
+//               <option value="Female">Female</option>
+//               <option value="Other">Other</option>
+//             </select>
+//           </div>
+
+//           <div className="form-group">
+//             <label htmlFor="photo">Photo (Optional):</label>
+//             <input type="file" id="photo" name="photo" onChange={handleInputChange} />
+//           </div>
+
+//           <div className="form-group">
+//             <label htmlFor="address">Address:</label>
+//             <input
+//               type="text"
+//               id="address"
+//               name="address"
+//               placeholder="Enter address"
+//               value={formData.address}
+//               onChange={handleInputChange}
+//               required
+//             />
+//           </div>
+
+//           <div className="form-group">
+//             <label htmlFor="contactNumber">Contact Number:</label>
+//             <input
+//               type="text"
+//               id="contactNumber"
+//               name="contactNumber"
+//               placeholder="Enter contact number"
+//               value={formData.contactNumber}
+//               onChange={handleInputChange}
+//               required
+//             />
+//           </div>
+
+//           <div className="form-group">
+//             <label htmlFor="email">Email Address:</label>
+//             <input
+//               type="email"
+//               id="email"
+//               name="email"
+//               placeholder="Enter email address"
+//               value={formData.email}
+//               onChange={handleInputChange}
+//               required
+//             />
+//           </div>
+
+//           <div className="form-group">
+//             <label htmlFor="position">Position/Job Title:</label>
+//             <input
+//               type="text"
+//               id="position"
+//               name="position"
+//               placeholder="Enter job title"
+//               value={formData.position}
+//               onChange={handleInputChange}
+//               required
+//             />
+//           </div>
+
+//           <div className="form-group">
+//             <label htmlFor="department">Department:</label>
+//             <input
+//               type="text"
+//               id="department"
+//               name="department"
+//               placeholder="Enter department"
+//               value={formData.department}
+//               onChange={handleInputChange}
+//               required
+//             />
+//           </div>
+
+//           <div className="form-group">
+//             <label htmlFor="employmentType">Employee Type:</label>
+//             <select
+//               id="employmentType"
+//               name="employmentType"
+//               value={formData.employmentType}
+//               onChange={handleInputChange}
+//               required
+//             >
+//               <option value="Full-Time">Full-Time</option>
+//               <option value="Part-Time">Part-Time</option>
+//               <option value="Contract">Contract</option>
+//             </select>
+//           </div>
+
+//           <button type="submit" className="submit-btn" disabled={isSubmitting}>
+//             {isSubmitting ? "Saving..." : employeeId ? "Edit Employee" : "Add Employee"}
+//           </button>
+
+//           {errorMessage && <p className="error-message">{errorMessage}</p>}
+//         </form>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default AddEmployee;
+import React, { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom"; // useParams to get employeeId from the URL
+import axios from "axios";
 
 const AddEmployee = () => {
-  // State to store input field values
+  const navigate = useNavigate();
+  const { employeeId } = useParams(); // Get the employee ID from the URL
+
   const [formData, setFormData] = useState({
-    name: '',
-    dob: '',
-    gender: '',
-    address: '',
-    contactNumber: '',
-    email: '',
-    position: '',
-    department: '',
-    employmentType: '',
-    photo: null  // Assuming this is a file input
+    name: "",
+    dob: "",
+    gender: "Male",
+    address: "",
+    contactNumber: "",
+    email: "",
+    position: "",
+    department: "",
+    employmentType: "Full-Time",
+    photo: null, // Store the base64 image here
   });
 
-  // Handles input changes for both text inputs and file input
-  const handleInputChange = (event) => {
+  const [isLoading, setIsLoading] = useState(true); // To show a loading indicator while fetching data
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+
+  // Fetch employee data by ID if we're editing
+  useEffect(() => {
+    const fetchEmployee = async () => {
+      if (employeeId) {
+        try {
+          const response = await axios.get(`http://localhost:5000/api/employees/${employeeId}`);
+          console.log("Fetched Employee Data:", response.data); // Log fetched data for debugging
+
+          // Ensure date is in the format YYYY-MM-DD
+          const formattedDob = response.data.dob ? new Date(response.data.dob).toISOString().substring(0, 10) : "";
+          
+          setFormData({
+            ...response.data,
+            dob: formattedDob, // Proper date format for input[type="date"]
+          });
+          setIsLoading(false); // Stop the loading state
+        } catch (error) {
+          console.error("Error fetching employee:", error);
+          setErrorMessage("Failed to fetch employee data.");
+          setIsLoading(false); // Stop the loading state in case of an error
+        }
+      } else {
+        setIsLoading(false); // Not editing, so no need for loading state
+      }
+    };
+    fetchEmployee();
+  }, [employeeId]);
+
+  // Handle form input changes
+  const handleInputChange = async (event) => {
     const { name, value, files } = event.target;
-    if (name === 'photo') {
-      setFormData({
-        ...formData,
-        [name]: files[0]
-      });
+    if (name === "photo" && files && files.length > 0) {
+      const reader = new FileReader();
+      reader.readAsDataURL(files[0]);
+      reader.onload = () => setFormData((prev) => ({ ...prev, [name]: reader.result }));
     } else {
-      setFormData({
-        ...formData,
-        [name]: value
-      });
+      setFormData((prev) => ({ ...prev, [name]: value }));
     }
   };
 
-  // Handles the form submission
+  // Handle form submission
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const data = new FormData();
-    Object.keys(formData).forEach(key => {
-      data.append(key, formData[key]);
-    });
+    setIsSubmitting(true);
 
     try {
-      const response = await axios.post('http://localhost:5000/api/employees', data, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      });
-      console.log('Employee added:', response.data);  // Handle success
+      if (employeeId) {
+        // If editing, send a PUT request to update the employee
+        await axios.put(`http://localhost:5000/api/employees/${employeeId}`, formData);
+      } else {
+        // If adding a new employee, send a POST request
+        await axios.post("http://localhost:5000/api/employees", formData);
+      }
+      navigate("/employee-dashboard");
     } catch (error) {
-      console.error('Error adding employee:', error.response.data);  // Handle error
+      console.error("Error saving employee:", error);
+      setErrorMessage("Failed to save employee.");
+    } finally {
+      setIsSubmitting(false);
     }
   };
+
+  // Show a loading spinner or message while the data is being fetched
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="employee-dashboard">
       <div className="Add-main-content">
-        <h1>Add Employee</h1>
-        <form className="employee-form" onSubmit={handleSubmit} encType="multipart/form-data">
+        <h1>{employeeId ? "Edit Employee" : "Add Employee"}</h1>
+        <form className="employee-form" onSubmit={handleSubmit}>
           <div className="form-group">
             <label htmlFor="name">Name:</label>
-            <input type="text" id="name" name="name" placeholder="Enter full name" value={formData.name} onChange={handleInputChange} />
+            <input
+              type="text"
+              id="name"
+              name="name"
+              placeholder="Enter full name"
+              value={formData.name}
+              onChange={handleInputChange}
+              required
+            />
           </div>
+
           <div className="form-group">
             <label htmlFor="dob">Date of Birth:</label>
-            <input type="date" id="dob" name="dob" value={formData.dob} onChange={handleInputChange} />
+            <input
+              type="date"
+              id="dob"
+              name="dob"
+              value={formData.dob}
+              onChange={handleInputChange}
+              required
+            />
           </div>
+
           <div className="form-group">
             <label htmlFor="gender">Gender:</label>
-            <select id="gender" name="gender" value={formData.gender} onChange={handleInputChange}>
+            <select
+              id="gender"
+              name="gender"
+              value={formData.gender}
+              onChange={handleInputChange}
+              required
+            >
               <option value="Male">Male</option>
               <option value="Female">Female</option>
               <option value="Other">Other</option>
             </select>
           </div>
+
           <div className="form-group">
-            <label htmlFor="photo">Photo:</label>
+            <label htmlFor="photo">Photo (Optional):</label>
             <input type="file" id="photo" name="photo" onChange={handleInputChange} />
+            {/* Display preview of uploaded photo */}
+            {formData.photo && (
+              <div>
+                <img src={formData.photo} alt="Employee" style={{ width: '100px', height: '100px' }} />
+              </div>
+            )}
           </div>
+
           <div className="form-group">
             <label htmlFor="address">Address:</label>
-            <input type="text" id="address" name="address" placeholder="Enter address" value={formData.address} onChange={handleInputChange} />
+            <input
+              type="text"
+              id="address"
+              name="address"
+              placeholder="Enter address"
+              value={formData.address}
+              onChange={handleInputChange}
+              required
+            />
           </div>
+
           <div className="form-group">
-            <label htmlFor="contact">Contact Number:</label>
-            <input type="text" id="contact" name="contact" placeholder="Enter contact number" value={formData.contactNumber} onChange={handleInputChange} />
+            <label htmlFor="contactNumber">Contact Number:</label>
+            <input
+              type="text"
+              id="contactNumber"
+              name="contactNumber"
+              placeholder="Enter contact number"
+              value={formData.contactNumber}
+              onChange={handleInputChange}
+              required
+            />
           </div>
+
           <div className="form-group">
             <label htmlFor="email">Email Address:</label>
-            <input type="email" id="email" name="email" placeholder="Enter email address" value={formData.email} onChange={handleInputChange} />
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="Enter email address"
+              value={formData.email}
+              onChange={handleInputChange}
+              required
+            />
           </div>
+
           <div className="form-group">
             <label htmlFor="position">Position/Job Title:</label>
-            <input type="text" id="position" name="position" placeholder="Enter job title" value={formData.position} onChange={handleInputChange} />
+            <input
+              type="text"
+              id="position"
+              name="position"
+              placeholder="Enter job title"
+              value={formData.position}
+              onChange={handleInputChange}
+              required
+            />
           </div>
+
           <div className="form-group">
             <label htmlFor="department">Department:</label>
-            <input type="text" id="department" name="department" placeholder="Enter department" value={formData.department} onChange={handleInputChange} />
+            <input
+              type="text"
+              id="department"
+              name="department"
+              placeholder="Enter department"
+              value={formData.department}
+              onChange={handleInputChange}
+              required
+            />
           </div>
+
           <div className="form-group">
-            <label htmlFor="employeeType">Employee Type:</label>
-            <select id="employeeType" name="employeeType" value={formData.employeeType} onChange={handleInputChange}>
+            <label htmlFor="employmentType">Employee Type:</label>
+            <select
+              id="employmentType"
+              name="employmentType"
+              value={formData.employmentType}
+              onChange={handleInputChange}
+              required
+            >
               <option value="Full-Time">Full-Time</option>
               <option value="Part-Time">Part-Time</option>
               <option value="Contract">Contract</option>
             </select>
           </div>
-          <button type="submit" className="submit-btn">Add Employee</button>
+
+          <button type="submit" className="submit-btn" disabled={isSubmitting}>
+            {isSubmitting ? "Saving..." : employeeId ? "Edit Employee" : "Add Employee"}
+          </button>
+
+          {errorMessage && <p className="error-message">{errorMessage}</p>}
         </form>
       </div>
     </div>
@@ -114,4 +465,3 @@ const AddEmployee = () => {
 };
 
 export default AddEmployee;
-///sewmi
