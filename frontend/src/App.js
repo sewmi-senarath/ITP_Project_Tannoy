@@ -7,6 +7,7 @@ import AddEmployee from "./component/employee/AddEmployee";
 import Home from "./component/home/home";
 import DeliveryHome from "./component/delivery/deliveryHome"; 
 import DisplayParselList from "./component/delivery/displayParselList";
+import AddParselRequest from "./component/delivery/addDeliveryRequest";
 
 //juthmini
 import "./App.css";
@@ -22,6 +23,7 @@ function App() {
           <Route path="/employee-dashboard" element={<EmployeeDashboard />} />
           <Route path="/add-employee" element={<AddEmployee />} />
           <Route path="/parsel-list" element={<DisplayParselList />} /> 
+          <Route path="/Add-parsel" element={<AddParselRequest />} /> 
         </Routes>
         <Footer />
       </div>

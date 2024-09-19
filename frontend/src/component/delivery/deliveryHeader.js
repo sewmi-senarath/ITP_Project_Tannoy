@@ -10,6 +10,7 @@ const Sidebar = () => (
       <ul>
         <li><a href="/deliveryHome">Home</a></li>
         <li><a href="/parsel-list">Tracking</a></li>
+        <li><a href="/Add-parsel">Add Delivery Request</a></li>
         <li><a href="/delivery">Delivery Team</a></li>
         <li><a href="/login">Login</a></li>
         <li><a href="/register">Register</a></li>
