@@ -27,7 +27,7 @@ function addDeliveryRequest() {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(inputs); 
-    sendRequest().then(() => history('parsel-list'))
+    sendRequest().then(() => history('/parsel-list'))
   };
 
   const sendRequest = async() => {
