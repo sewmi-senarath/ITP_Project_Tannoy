@@ -1,7 +1,10 @@
 const mongoose = require("mongoose");
- 
-// Define the schema for your Employee model
+
 const employeeSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+  },
   name: {
     type: String,
     required: true,
@@ -13,7 +16,6 @@ const employeeSchema = new mongoose.Schema({
   gender: {
     type: String,
     required: true,
-    enum: ["Male", "Female", "Other"],
   },
   address: {
     type: String,
@@ -38,16 +40,14 @@ const employeeSchema = new mongoose.Schema({
   },
   employmentType: {
     type: String,
+    enum: ['Full-Time', 'Part-Time', 'Contract'], // Ensure the value sent matches one of these
     required: true,
-    enum: ["Full-time", "Part-time", "Contract"],
   },
+
   photo: {
-    type: String, // URL or file path to the uploaded photo
-    required: true,
+    type: String, // Optional field for storing photo filename or URL
+    default: null,
   },
-},{ collection: 'employee' });
- 
-// Create the model from the schema
-const Employee = mongoose.model("Employee", employeeSchema);
- 
-module.exports = Employee;
+});
+
+module.exports = mongoose.model("Employee", employeeSchema);

@@ -28,7 +28,7 @@ const itemRoutes = require("./Route/InvenoryRoute");
 app.use(express.json());
 app.use(cors());
 app.use("/Users", userRouter);
-app.use("/Employee", employeeRouter);
+app.use("/api/employees", employeeRouter);
 app.use("/RecyclingProducts", recyclingProductRouter);
 app.use(cookieParser());
 app.use(express.urlencoded({extended: false}));
