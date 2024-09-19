@@ -6,6 +6,7 @@ import EmployeeDashboard from "./component/employee/EmployeeDashboard";
 import AddEmployee from "./component/employee/AddEmployee";
 import Home from "./component/home/home";
 import DeliveryHome from "./component/delivery/deliveryHome"; 
+import RecycleProducts from "./component/recycledProducts/RecycleProducts";
 
 //juthmini
 import "./App.css";
@@ -17,6 +18,7 @@ function App() {
         <Header />
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/product-dashbord" element={<RecycleProducts/>} />
           <Route path="/deliveryHome" element={<DeliveryHome />} /> 
           <Route path="/employee-dashboard" element={<EmployeeDashboard />} />
           <Route path="/add-employee" element={<AddEmployee />} />

@@ -15,6 +15,10 @@ const recyclingProductSchema = new Schema({
     type:String,//Data Type "CLEANING, SORTING, MELTING"
     required:true,//validate
   },
+  quality:{
+    type:String,//Data Type "GOOD, MEDIUM, LOW"
+    required:true,//validate
+  },
   status:{
     type:String,//Data Type "DONE, INPROGRESS, REJECT"
     required:true,//validate
