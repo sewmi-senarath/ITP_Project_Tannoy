@@ -40,13 +40,14 @@ h1 {
   background-color: #4CAF50;
 }
 
-.status['Departure from WA'] {
+.status.DepartureFromWA {
   background-color: orange;
 }
 
-.status['On the Way'] {
+.status.OnTheWay {
   background-color: yellow;
 }
+
 
 .status.Delivered {
   background-color: red;

@@ -2,12 +2,17 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import "../../styles/deliveryHome.css"; // Import the CSS file
 
+
 const DeliveryHome = () => {
   const navigate = useNavigate();
 
   // Function to handle redirection to the Parcel List page
-  const handleDeliveryClick = () => {
+  const handleDeliveryClickView = () => {
     navigate("/parsel-list"); // Navigates to the displayParselList page
+  };
+
+  const handleDeliveryClickAdd = () => {
+    navigate("/Add-parsel"); // Navigates to the displayParselList page
   };
 
   return (
@@ -20,8 +25,8 @@ const DeliveryHome = () => {
         className="input-box"
       />
       <div className="button-wrapper">
-        <button className="button button-primary">Add Delivery Request</button>
-        <button className="button" onClick={handleDeliveryClick}>
+        <button className="button button-primary" onClick={handleDeliveryClickAdd}>Add Delivery Request</button>
+        <button className="button" onClick={handleDeliveryClickView}>
           View all delivery
         </button>
       </div>
