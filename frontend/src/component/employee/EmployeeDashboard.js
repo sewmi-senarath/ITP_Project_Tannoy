@@ -95,7 +95,7 @@ const EmployeeDashboard = () => {
         <ul className="nav-links">
           <li><a href="/mark-attendance">Mark Attendance</a></li>
           <li><a href="/add-employee">Add Employee</a></li>
-          <li><a href="#" className="active">Employee Overview</a></li>
+          <li><a href="/employeesalaryReport">Salary Report</a></li>
         </ul>
         <div className="profile">
           <img src={manager} alt="Manager Photo" />

@@ -15,7 +15,7 @@ import OrderDtails from "./component/CRM/OrderDtails/OrderDtails";
 import UpdateOrder from "./component/CRM/UpdateOrder/UpdateOrder";
 import CrmHome from "./component/CRM/CRMHome/CrmHome";
 import CrmReport from "./component/CRM/CrmReport/CRMReport";
-
+import EmployeeSalaryReport from "./component/employee/EmployeeSalaryReport";
 
 
 //juthmini
@@ -41,6 +41,7 @@ function App() {
           <Route path="/updateOrder/:Oid" element={<UpdateOrder />} /> 
           <Route path="/crmHome" element={<CrmHome />} />
           <Route path="/crmReport" element={<CrmReport />} />
+          <Route path="/employeesalaryReport" element={<EmployeeSalaryReport/>} />
         </Routes>
         <Footer />
       </div>
