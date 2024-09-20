@@ -22,7 +22,7 @@ input, select {
   width: calc(100% - 16px); /* Adjust input width */
 }
 
-.submit-button, .back-button {
+.submit-button, .back-button, .update-button {
   margin-top: 20px;
   padding: 10px 15px;
   cursor: pointer;
@@ -32,6 +32,10 @@ input, select {
 }
 
 .submit-button {
+  background-color: #007bff; /* Blue */
+}
+
+.update-button {
   background-color: #007bff; /* Blue */
 }
 
