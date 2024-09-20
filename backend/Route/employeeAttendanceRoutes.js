@@ -14,4 +14,7 @@ router.get('/employee/:empId', employeeAttendanceController.getAttendanceByEmplo
 // Route to get attendance records by date
 router.get('/date/:date', employeeAttendanceController.getAttendanceByDate);
 
+// New route to generate employee report by month
+router.get('/report/:empId', employeeAttendanceController.generateEmployeeReport);
+
 module.exports = router;
