@@ -20,6 +20,7 @@ const orderRouter = require("./Route/OrderRoute");
 
 const app = express();
 const itemRoutes = require("./Route/InvenoryRoute");
+const productRoutes=require("./Route/InventoryProductRoutes")
 
 
 
@@ -43,16 +44,12 @@ app.use("/api/inventoryProduct",ProductRouter)
 app.use("/api/Supplier",SupplierRouter)
 app.use("/api/attendance",employeeAttendancerouter)
 app.use("/order", orderRouter);
+app.use('/api/products', productRoutes);
 
 // routes customer management
 app.get("/", (req, res) => {
     res.send("Home Page");
   });
-
-
-
-
-
 
 //Database connection
 mongoose.connect(config.get('db.uri'))

@@ -28,13 +28,32 @@ exports.getProductById = async (req, res) => {
 // Add a new Product
 exports.addProduct = async (req, res) => {
   const { ProductName, ProductDescription, ProductCategory, stockSize, ProductCode, availability } = req.body;
+
   try {
-    const newProduct = new Product({ ProductName, ProductDescription, ProductCategory, stockSize, ProductCode, availability });
+    // Create a new product instance
+    const newProduct = new Product({
+      ProductName,
+      ProductDescription,
+      ProductCategory,
+      stockSize,
+      ProductCode,
+      availability
+    });
+
+    // Save the product in the database
     await newProduct.save();
+
+    // Return a success response with the created product
     res.status(201).json(newProduct);
-    console.log("Created Successfully");
-  } catch (err) {
-    res.status(500).json({ message: 'Error adding Product', error: err.message });
+    console.log("Product added successfully");
+  } catch (error) {
+    // Check for unique validation errors
+    if (error.code === 11000) {
+      res.status(400).json({ message: `Duplicate value for field: ${Object.keys(error.keyValue)[0]}` });
+    } else {
+      // Return an error response for other cases
+      res.status(500).json({ message: 'Error adding product', error });
+    }
   }
 };
 
