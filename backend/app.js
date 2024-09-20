@@ -14,8 +14,8 @@ const config = require('config');
 const router = require("./Route/CustomerRoutes");
 const cors = require("cors");
 const bodyParser = require("body-parser");
-
 const cookieParser = require("cookie-parser");
+const orderRouter = require("./Route/OrderRoute");
 
 const app = express();
 const itemRoutes = require("./Route/InvenoryRoute");
@@ -40,6 +40,7 @@ app.use("/FinanceInvestor", financeRoute);
 app.use("/api/items", itemRoutes);
 app.use("/api/inventoryProduct",ProductRouter)
 app.use("/api/Supplier",SupplierRouter)
+app.use("/order", orderRouter);
 
 // routes customer management
 app.get("/", (req, res) => {
