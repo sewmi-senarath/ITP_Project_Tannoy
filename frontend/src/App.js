@@ -10,6 +10,13 @@ import Home from "./component/home/home";
 import DeliveryHome from "./component/delivery/deliveryHome"; 
 import DisplayParselList from "./component/delivery/displayParselList";
 import AddParselRequest from "./component/delivery/addDeliveryRequest";
+import AddNewOrder from "./component/CRM/AddOrder/AddNewOrder";
+import OrderDtails from "./component/CRM/OrderDtails/OrderDtails";
+import UpdateOrder from "./component/CRM/UpdateOrder/UpdateOrder";
+import CrmHome from "./component/CRM/CRMHome/CrmHome";
+import CrmReport from "./component/CRM/CrmReport/CRMReport";
+
+
 
 //juthmini
 import "./App.css";
@@ -29,6 +36,11 @@ function App() {
           <Route path="/Add-parsel" element={<AddParselRequest />} />
           <Route path="/mark-attendance" element={<MarkAttendance />} />  
           <Route path="/displayattendance" element={<DisplayAttendance />} />
+          <Route path="/addorder" element={<AddNewOrder />} />
+          <Route path="/orderDetails" element={<OrderDtails />} />
+          <Route path="/updateOrder/:Oid" element={<UpdateOrder />} /> 
+          <Route path="/crmHome" element={<CrmHome />} />
+          <Route path="/crmReport" element={<CrmReport />} />
         </Routes>
         <Footer />
       </div>
