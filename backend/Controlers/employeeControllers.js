@@ -4,6 +4,7 @@ const Employee = require("../Model/EmployeeModel"); // Assuming your model is in
 exports.createEmployee = async (req, res) => {
   try {
     const {
+      empId,
       name,
       dob,
       gender,
@@ -17,6 +18,7 @@ exports.createEmployee = async (req, res) => {
     } = req.body;
 
     const employee = new Employee({
+      empId,
       name,
       dob,
       gender,
@@ -26,16 +28,26 @@ exports.createEmployee = async (req, res) => {
       position,
       department,
       employmentType,
-      photo, // base64 photo is directly stored
+      photo,
     });
 
     await employee.save();
     res.status(201).json({ message: "Employee added successfully", employee });
   } catch (error) {
+    if (error.code === 11000) {  // MongoDB duplicate key error
+      // Check which field is duplicate
+      if (error.keyValue.empId) {
+        return res.status(400).json({ message: `Employee ID ${error.keyValue.empId} already exists.` });
+      }
+      if (error.keyValue.email) {
+        return res.status(400).json({ message: `Email ${error.keyValue.email} already exists.` });
+      }
+    }
     console.error("Error adding employee:", error);
     res.status(500).json({ message: "Failed to add employee", error });
   }
 };
+
 
 // Get all employees
 exports.getAllEmployees = async (req, res) => {
