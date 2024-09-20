@@ -1,9 +1,10 @@
 const mongoose = require("mongoose");
 
 const employeeSchema = new mongoose.Schema({
-  name: {
+  empId: {
     type: String,
-    required: true,
+    required: [true, 'Employee ID is required'],  // Ensure empId is required
+    unique: true,  // Ensure uniqueness if necessary
   },
   name: {
     type: String,
