@@ -6,8 +6,8 @@ const ProductSchema = new mongoose.Schema({
     required: true,
     trim: true
   },
-  ProducDescription: {
-    type: String,
+  ProductDescription: {
+    type: String, 
     trim: true
   },
   ProductCategory: {
@@ -23,12 +23,13 @@ const ProductSchema = new mongoose.Schema({
   ProductCode: {
     type: String,
     required: true,
-    unique: true,
+    unique: true, // Ensuring unique ProductCode
     trim: true
   },
   availability: {
     type: String,
-    
+    enum: ['In Stock', 'Out of Stock'], // Enforcing valid availability values
+    default: 'In Stock' // Default value if not provided
   }
 });
 
