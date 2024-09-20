@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from 'react-router-dom'; // Import useNavigate for navigation
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import Sidebar from './deliveryHeader'; // Import the Sidebar component
-import '../../styles/dispalyList.css'; // Assuming you have styles for your page
+import Sidebar from "./deliveryHeader"; // Import the Sidebar component
+import "../../styles/dispalyList.css"; // Assuming you have styles for your page
 
 const URL = "http://localhost:5000/deliverParsel";
 
@@ -20,7 +20,7 @@ function DisplayParselList() {
   const [parselData, setParselData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
-  
+
   const navigate = useNavigate(); // Hook for navigation
 
   useEffect(() => {
@@ -40,14 +40,25 @@ function DisplayParselList() {
       });
   }, []);
 
+  // Update the deleteHandler to accept _id as a parameter
+  const deleteHandler = async (id) => {
+    try {
+      await axios.delete(`http://localhost:5000/deliverParsel/${id}`);
+      setParselData((prevParcels) => prevParcels.filter((parsel) => parsel._id !== id)); // Update the state to remove the deleted parcel
+      navigate("/parsel-list"); // Redirect to parsel-list after deletion
+    } catch (error) {
+      console.error("Error deleting parcel:", error);
+    }
+  };
+
   return (
     <div className="layout">
       <Sidebar />
       <div className="main-content">
         <div className="content">
           <button
-            className="btn-back" // Custom class for the back button
-            onClick={() => navigate('/deliveryHome')} // Navigate to DeliveryHome when clicked
+            className="btn-back"
+            onClick={() => navigate("/deliveryHome")}
           >
             <span className="back-arrow">←</span> Back
           </button>
@@ -67,8 +78,8 @@ function DisplayParselList() {
                 </tr>
               </thead>
               <tbody>
-                {parselData.map((parsel, i) => (
-                  <tr key={i}>
+                {parselData.map((parsel) => (
+                  <tr key={parsel._id}>
                     <td>{parsel._id}</td>
                     <td>{parsel.fullName}</td>
                     <td>
@@ -77,21 +88,12 @@ function DisplayParselList() {
                       </span>
                     </td>
                     <td>
-                      <button
-                        className="btn btn-view"
-                        onClick={() => console.log(`View ${parsel._id}`)}
-                      >
-                        View
-                      </button>
-                      <button
-                        className="btn btn-update"
-                        onClick={() => console.log(`Update ${parsel._id}`)}
-                      >
-                        Update
-                      </button>
+                      <Link to={`/parsel-list/${parsel._id}`}>
+                        <button className="btn btn-update">Update</button>
+                      </Link>
                       <button
                         className="btn btn-delete"
-                        onClick={() => console.log(`Delete ${parsel._id}`)}
+                        onClick={() => deleteHandler(parsel._id)} // Pass the _id to deleteHandler
                       >
                         Delete
                       </button>
