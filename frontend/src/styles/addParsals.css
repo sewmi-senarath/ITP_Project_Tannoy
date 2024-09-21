@@ -1,0 +1,48 @@
+.container {
+  display: flex;
+}
+
+.form-container {
+  flex: 1;
+  padding: 20px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  margin-bottom: 10px;
+}
+
+input, select {
+  padding: 8px;
+  margin-top: 5px;
+  width: calc(100% - 16px); /* Adjust input width */
+}
+
+.submit-button, .back-button, .update-button {
+  margin-top: 20px;
+  padding: 10px 15px;
+  cursor: pointer;
+  border: none;
+  color: white;
+  border-radius: 5px;
+}
+
+.submit-button {
+  background-color: #007bff; /* Blue */
+}
+
+.update-button {
+  background-color: #007bff; /* Blue */
+}
+
+.back-button {
+  background-color: #ccc; /* Gray */
+}
+
+.back-button:hover {
+  background-color: #bbb; /* Darker gray */
+}
