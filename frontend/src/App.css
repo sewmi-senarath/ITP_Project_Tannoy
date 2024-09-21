@@ -358,3 +358,10 @@ button {
 .employee-form .submit-btn:hover {
   opacity: 0.8;
 }
+
+.supplier-img {
+  width: 300px;
+  height: auto;
+  margin-left: 20px;
+  border-radius: 8px;
+}

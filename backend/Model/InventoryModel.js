@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
 const itemSchema = new mongoose.Schema({
+
   itemName: {
     type: String,
     required: true,
@@ -27,9 +28,10 @@ const itemSchema = new mongoose.Schema({
     trim: true
   },
   availability: {
-    type: Boolean,
-    default: true
-  }
+    type: String,
+    enum: ['Available', 'Not Available'],  // Enum for dropdown options
+    default: 'Available',
+  },
 });
 
 const Item = mongoose.model('Item', itemSchema);

@@ -18,6 +18,10 @@ import CrmReport from "./component/CRM/CrmReport/CRMReport";
 import EmployeeSalaryReport from "./component/employee/EmployeeSalaryReport";
 import ProductDashboard from "./component/Inventory/ProductDashboard";
 import AddProduct from "./component/Inventory/AddProduct";
+import AddSupplier from "./component/Inventory/AddSupplier";
+import StockDashboard from "./component/Inventory/StockDashboard";
+import AddStock from "./component/Inventory/AddStock";
+import SupplierDashboard from "./component/Inventory/SupplierDashboard";
 
 //juthmini
 import "./App.css";
@@ -46,6 +50,12 @@ function App() {
           <Route path="/productDashboard" element={<ProductDashboard/>} />
           <Route path="/Addproduct" element={<AddProduct/>} />
           <Route path="/Addproduct/:productId" element={<AddProduct />} />
+          <Route path="/Addsupplier" element={<AddSupplier/>} />
+          <Route path="/AddSupplier/:supplierId" element={<AddSupplier />} />
+          <Route path="/stockDashboard" element={<StockDashboard/>} />
+          <Route path="/addStock" element={<AddStock/>} />
+          <Route path="/addStock/:itemId" element={<AddStock />} />
+          <Route path="/supplierDashboard" element={<SupplierDashboard/>} />
 
         </Routes>
         <Footer />

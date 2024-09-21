@@ -26,6 +26,8 @@ const productRoutes=require("./Route/InventoryProductRoutes")
 
 
 
+
+
 //Middleware
 app.use(express.json());
 app.use(cors());
@@ -41,10 +43,12 @@ app.use("/deliverParsel", deliverParselRoute)
 app.use("/FinanceInvestor", financeRoute);
 app.use("/api/items", itemRoutes);
 app.use("/api/inventoryProduct",ProductRouter)
-app.use("/api/Supplier",SupplierRouter)
+app.use("/api/suppliers",SupplierRouter)
 app.use("/api/attendance",employeeAttendancerouter)
 app.use("/order", orderRouter);
 app.use('/api/products', productRoutes);
+app.use('/api/items',itemRoutes);
+
 
 // routes customer management
 app.get("/", (req, res) => {
