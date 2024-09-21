@@ -15,6 +15,8 @@ function updateParselReq() {
     const fetchHandler = async ()=>{
       await axios
       .get(`http://localhost:5000/deliverParsel/${id}`)
+      .then((res) => res.data)
+      .then((data) => setInputs(data.parsel))
     };
     fetchHandler();
   },[id]);
@@ -22,14 +24,14 @@ function updateParselReq() {
   const sendRequest = async ()=>{
     await axios
     .put(`http://localhost:5000/deliverParsel/${id}`,{
-        fullName: String(inputs.fullName),
-        phoneNo: Number(inputs.phoneNo),
-        email: String(inputs.email),
-        address: String(inputs.address),
-        postalCode: String(inputs.postalCode),
-        productType: String(inputs.productType),
-        productQty: Number(inputs.productQty),
-        status: String(inputs.status),
+      fullName: String(inputs.fullName),
+      phoneNo: Number(inputs.phoneNo),
+      email: String(inputs.email),
+      address: String(inputs.address),
+      postalCode: String(inputs.postalCode),
+      productType: String(inputs.productType),
+      productQty: Number(inputs.productQty),
+      status: String(inputs.status), 
     })
     .then((res)=> res.data);
   };
