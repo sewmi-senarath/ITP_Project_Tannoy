@@ -1,0 +1,109 @@
+.container {
+  width: 80%;
+  margin: 0 auto;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th, .table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+}
+
+.table th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+.status {
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 5px;
+  color: rgb(7, 7, 7);
+  font-weight: bold;
+}
+
+.status.NEW {
+  background-color: green;
+}
+
+.status.Packaging {
+  background-color: #4CAF50;
+}
+
+.status.DepartureFromWA {
+  background-color: orange;
+}
+
+.status.OnTheWay {
+  background-color: yellow;
+}
+
+
+.status.Delivered {
+  background-color: red;
+}
+
+.btn {
+  margin: 0 5px;
+  padding: 5px 15px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.btn-view {
+  background-color: #2196F3;
+  color: white;
+  border: none;
+  border-radius: 4px;
+}
+
+.btn-update {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+}
+
+.btn-delete {
+  background-color: red;
+  color: white;
+  border: none;
+  border-radius: 4px;
+}
+
+.btn:hover {
+  opacity: 0.8;
+}
+
+/* Back Button Styles */
+.btn-back {
+  background-color: #e6f3ff; /* Light blue background */
+  color: #007bff; /* Blue text */
+  border: none;
+  padding: 10px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+}
+
+.btn-back:hover {
+  background-color: #cce7ff; /* Darker blue on hover */
+}
+
+.back-arrow {
+  margin-right: 5px;
+  font-weight: bold;
+  font-size: 18px;
+}
