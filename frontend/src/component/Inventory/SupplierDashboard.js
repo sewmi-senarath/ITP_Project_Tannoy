@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios'; // For making HTTP requests
-import '../../App.css'; // Assuming your CSS file is here
+import '../../styles/addSupplier.css'; // Assuming your CSS file is here
 import Logo from '../../images/logo.jpeg';
 import manager from '../../images/manager.jpeg';
 import { useNavigate } from 'react-router-dom';
@@ -11,7 +11,7 @@ const SupplierDashboard = () => {
   const [loading, setLoading] = useState(true); // Loading state
   const [error, setError] = useState(''); // Error state for handling API errors
   const [searchQuery, setSearchQuery] = useState(''); // Search query state
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   // Fetch suppliers from the backend API when the component mounts
   useEffect(() => {
@@ -30,14 +30,37 @@ const SupplierDashboard = () => {
     fetchSuppliers();
   }, []); // Empty dependency array means this effect runs once on component mount
 
+  // Group suppliers by delivery item and find the highest discount in each group
+  const getHighestDiscountPerCategory = (suppliersList) => {
+    const groupedSuppliers = suppliersList.reduce((groups, supplier) => {
+      const category = supplier.DeliveryItem;
+      if (!groups[category]) {
+        groups[category] = [];
+      }
+      groups[category].push(supplier);
+      return groups;
+    }, {});
+
+    // Find highest discount in each category
+    const highestDiscountSuppliers = Object.values(groupedSuppliers).map(group => {
+      return group.reduce((highest, current) =>
+        parseFloat(current.Discount) > parseFloat(highest.Discount) ? current : highest
+      );
+    });
+
+    return highestDiscountSuppliers;
+  };
+
   // Filter suppliers based on the search query
   useEffect(() => {
     const lowerCaseQuery = searchQuery.toLowerCase(); // Make the search query case-insensitive
 
     const filtered = suppliers.filter(supplier =>
       supplier.supCode.toLowerCase().includes(lowerCaseQuery) ||
-      supplier.ContactInfo.toString().includes(lowerCaseQuery) // Convert ContactInfo to string for comparison
+      supplier.ContactInfo.toString().includes(lowerCaseQuery) ||
+      supplier.DeliveryItem.toLowerCase().includes(lowerCaseQuery)
     );
+
     setFilteredSuppliers(filtered);
   }, [searchQuery, suppliers]); // Run this effect whenever the searchQuery or suppliers change
 
@@ -58,6 +81,14 @@ const SupplierDashboard = () => {
   // Handle edit action
   const handleEdit = (supId) => {
     navigate(`/addSupplier/${supId}`);  // Pass the supplier ID to the edit route
+  };
+
+  // Find the highest discount suppliers per category (both in search and default)
+  const highestDiscountSuppliers = getHighestDiscountPerCategory(filteredSuppliers);
+
+  // Helper to check if a supplier is the highest discount in their category
+  const isHighestDiscountSupplier = (supplier) => {
+    return highestDiscountSuppliers.some(highestSupplier => highestSupplier._id === supplier._id);
   };
 
   if (loading) {
@@ -122,7 +153,12 @@ const SupplierDashboard = () => {
           <tbody>
             {filteredSuppliers.length > 0 ? (
               filteredSuppliers.map(supplier => (
-                <tr key={supplier._id}>
+                <tr
+                  key={supplier._id}
+                  style={{
+                    backgroundColor: isHighestDiscountSupplier(supplier) ? 'yellow' : 'inherit' // Highlight highest discount suppliers
+                  }}
+                >
                   <td>{supplier.supCode}</td>
                   <td>{supplier.SupplierName}</td>
                   <td>{supplier.ContactInfo}</td>
@@ -130,6 +166,12 @@ const SupplierDashboard = () => {
                   <td>{supplier.ItemPrice}</td>
                   <td>{supplier.Discount}</td>
                   <td>
+                    {/* Show "Generate Report" button only for the highest discount suppliers */}
+                    {isHighestDiscountSupplier(supplier) && (
+                      <button className="report-btn" onClick={() => navigate(`/StockReport/${supplier._id}`)}>
+                        Generate Report
+                      </button>
+                    )}
                     <button className="edit-btn" onClick={() => handleEdit(supplier._id)}>Edit</button><br /><br />
                     <button className="delete-btn" onClick={() => handleDelete(supplier._id)}>Delete</button>
                   </td>

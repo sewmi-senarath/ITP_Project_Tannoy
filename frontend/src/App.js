@@ -23,11 +23,12 @@ import AddSupplier from "./component/Inventory/AddSupplier";
 import StockDashboard from "./component/Inventory/StockDashboard";
 import AddStock from "./component/Inventory/AddStock";
 import SupplierDashboard from "./component/Inventory/SupplierDashboard";
+import StockReport from "./component/Inventory/StockReport";
 
 //Gangani
-//import RecycleProducts from "./component/recycledProducts/RecycleProducts";
-//import RecyclingProductsTable from "./component/recycledProducts/RecyclingProductsTable";
-//import RecycledProducts from "./component/recycledProducts/RecycledProducts";
+import RecycleProducts from "./component/recycledProducts/RecycleProducts";
+import RecyclingProductsTable from "./component/recycledProducts/RecyclingProductsTable";
+import RecycledProducts from "./component/recycledProducts/RecycledProducts";
 
 //juthmini
 import "./App.css";
@@ -63,7 +64,7 @@ function App() {
           <Route path="/addStock" element={<AddStock/>} />
           <Route path="/addStock/:itemId" element={<AddStock />} />
           <Route path="/supplierDashboard" element={<SupplierDashboard/>} />
-
+          <Route path="/StockReport/:supplierId" element={<StockReport />} />
           <Route path="/recycle-product-dashbord" element={<RecycleProducts/>} /> {/* Gangani */}
           <Route path="/recycling-products" element={<RecyclingProductsTable/>} /> {/* Gangani */}
           <Route path="/recycled-products" element={<RecycledProducts/>} /> {/* Gangani */}
