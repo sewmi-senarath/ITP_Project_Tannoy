@@ -4,6 +4,7 @@ import axios from 'axios';
 import productImage from '../../images/product.jpeg'; // Adjust the path to your image file
 import '../../styles/product.css'
 
+
 const AddProduct = () => {
   const navigate = useNavigate();
   const { productId } = useParams(); // Get the product ID from the URL
@@ -65,12 +66,14 @@ const AddProduct = () => {
         // Update existing product
         await axios.put(`http://localhost:5000/api/products/${productId}`, formData);
         setMessage('Product updated successfully!');
+        navigate('/productDashboard')
       } else {
         // Add new product
         await axios.post('http://localhost:5000/api/products', formData);
         setMessage('Product added successfully!');
+       
       }
-      navigate('/productOverview'); // Redirect after submission
+      navigate('/productDashboard'); // Redirect after submission
     } catch (error) {
       console.error('Error saving product:', error);
       setMessage('Failed to save product.');

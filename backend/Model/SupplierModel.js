@@ -1,13 +1,22 @@
 const mongoose = require('mongoose');
 
 const SupplierSchema = new mongoose.Schema({
+
+  supCode: {
+    type: String,
+    required: true,
+    trim: true,
+    unique:true,
+  },
+
   SupplierName: {
     type: String,
     required: true,
     trim: true
   },
-  ContatInfo: {
+  ContactInfo: { 
     type: Number,
+    required: true,
     trim: true
   },
   DeliveryItem: {
