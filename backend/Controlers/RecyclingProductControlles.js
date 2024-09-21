@@ -23,20 +23,11 @@ const getAllRecyclingProducts = async(req, res, next) => {
 
 //data insert
 const addRecyclingProducts = async(req, res, next) => {
-<<<<<<< HEAD
   const {recyclingProductName, quantity, stage, quality, status, date} = req.body;
-=======
-  const {recyclingProductName, quantity, stage, quality, status} = req.body;
->>>>>>> 72053426c7e9a976bc75a5347fdad3c3f90504ca
-
   let recyclingProduct;
 
   try {
-<<<<<<< HEAD
     recyclingProduct = new RecyclingProduct({recyclingProductName, quantity, stage, quality, status, date  });
-=======
-    recyclingProduct = new RecyclingProduct({recyclingProductName, quantity, stage, quality, status  });
->>>>>>> 72053426c7e9a976bc75a5347fdad3c3f90504ca
     await recyclingProduct.save();
   }catch(err){
     console.log(err);
@@ -74,21 +65,13 @@ const getById = async(req, res, next) => {
 //Update recyclingProduct details
 const updateRecyclingProduct = async(req, res, next) => {
   const id = req.params.id;
-<<<<<<< HEAD
   const {recyclingProductName, quantity, stage, quality, status, date} = req.body;
-=======
-  const {recyclingProductName, quantity, stage, quality, status} = req.body;
->>>>>>> 72053426c7e9a976bc75a5347fdad3c3f90504ca
 
   let recyclingProducts;
 
   try{
     recyclingProducts = await RecyclingProduct.findByIdAndUpdate(id,
-<<<<<<< HEAD
       {recyclingProductName:recyclingProductName, quantity:quantity, stage:stage, quality:quality, status:status, date:date });
-=======
-      {recyclingProductName:recyclingProductName, quantity:quantity, stage:stage, quality:quality, status:status });
->>>>>>> 72053426c7e9a976bc75a5347fdad3c3f90504ca
       recyclingProducts = await recyclingProducts.save();
   }catch(err){
     console.log(err);
