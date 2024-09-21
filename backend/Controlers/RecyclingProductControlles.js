@@ -24,6 +24,10 @@ const getAllRecyclingProducts = async(req, res, next) => {
 //data insert
 const addRecyclingProducts = async(req, res, next) => {
   const {recyclingProductName, quantity, stage, quality, status, date} = req.body;
+<<<<<<< HEAD
+=======
+
+>>>>>>> c3e588576d2b4ad64dc6be65f6f43e8a245f146a
   let recyclingProduct;
 
   try {

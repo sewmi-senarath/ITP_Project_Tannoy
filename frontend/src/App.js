@@ -53,6 +53,10 @@ function App() {
           <Route path="/productDashboard" element={<ProductDashboard/>} />
           <Route path="/Addproduct" element={<AddProduct/>} />
           <Route path="/Addproduct/:productId" element={<AddProduct />} />
+<<<<<<< HEAD
+=======
+
+>>>>>>> c3e588576d2b4ad64dc6be65f6f43e8a245f146a
           <Route path="/recycle-product-dashbord" element={<RecycleProducts/>} /> {/* Gangani */}
           <Route path="/recycling-products" element={<RecyclingProductsTable/>} /> {/* Gangani */}
           <Route path="/recycled-products" element={<RecycledProducts/>} /> {/* Gangani */}

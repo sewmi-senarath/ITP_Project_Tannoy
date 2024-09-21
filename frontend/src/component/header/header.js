@@ -12,7 +12,11 @@ const Header = () => {
             </div>
             <nav className="tannoy-nav">
                 <a href="/">Home</a>
+<<<<<<< HEAD
                 <a href="/recycle-product-dashbord">Recycle Products</a> {/* Gangani */}
+=======
+                <a href="/recycle-product-dashbord">Products</a> {/* Gangani */}
+>>>>>>> c3e588576d2b4ad64dc6be65f6f43e8a245f146a
                 <a href="/employee-dashboard">Employee Team</a>
                 <a href="/deliveryHome">Delivery</a>
                 <a href="#">Login</a>

@@ -6,7 +6,7 @@ const RecycleProducts = () => {
 
   return (
     <>
-    <div id='product-dashbord'>
+    <div id='recycle-product-dashbord'>
         <div id='RecycleProductsDashBoard'>
            <div id='RecycleProductsLeftDiv'>
                 <div>
