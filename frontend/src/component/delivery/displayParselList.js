@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useEffect, useState, useRef } from "react";
+import { Link, useNavigate, useLocation } from "react-router-dom"; // Added useLocation
 import axios from "axios";
 import Sidebar from "./deliveryHeader"; // Import the Sidebar component
 import "../../styles/dispalyList.css"; // Assuming you have styles for your page
+import { useReactToPrint } from "react-to-print"; // Import react-to-print for generating PDF
 
 const URL = "http://localhost:5000/deliverParsel";
 
@@ -20,36 +21,41 @@ function DisplayParselList() {
   const [parselData, setParselData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [noResults, setNoResults] = useState(false);
 
+  const location = useLocation(); // Hook to get the current URL
   const navigate = useNavigate(); // Hook for navigation
+  const tableRef = useRef(); // Ref for the table data
 
   useEffect(() => {
-    fetchHandler()
-      .then((data) => {
-        if (data && data.parcels) {
-          setParselData(data.parcels);
-          setLoading(false);
-        } else {
-          setLoading(false);
-          setError(true);
-        }
-      })
-      .catch(() => {
+    // Check for search query in URL parameters
+    const params = new URLSearchParams(location.search);
+    const searchParam = params.get("search") || "";
+    setSearchQuery(searchParam); // Set the search query from URL
+
+    fetchHandler().then((data) => {
+      if (data && data.parcels) {
+        const filteredParsels = data.parcels.filter((parsel) =>
+          Object.values(parsel).some((field) =>
+            field.toString().toLowerCase().includes(searchParam.toLowerCase())
+          )
+        );
+        setParselData(filteredParsels);
+        setNoResults(filteredParsels.length === 0);
+        setLoading(false);
+      } else {
         setLoading(false);
         setError(true);
-      });
-  }, []);
+      }
+    });
+  }, [location.search]); // Re-run this effect when the URL search query changes
 
-  // Update the deleteHandler to accept _id as a parameter
-  const deleteHandler = async (id) => {
-    try {
-      await axios.delete(`http://localhost:5000/deliverParsel/${id}`);
-      setParselData((prevParcels) => prevParcels.filter((parsel) => parsel._id !== id)); // Update the state to remove the deleted parcel
-      navigate("/parsel-list"); // Redirect to parsel-list after deletion
-    } catch (error) {
-      console.error("Error deleting parcel:", error);
-    }
-  };
+  const handlePrint = useReactToPrint({
+    content: () => tableRef.current, // Reference the table content for print
+    documentTitle: "Parsel Report",
+    onAfterPrint: () => alert("Parsel Report Successfully Downloaded!"),
+  });
 
   return (
     <div className="layout">
@@ -62,13 +68,32 @@ function DisplayParselList() {
           >
             <span className="back-arrow">←</span> Back
           </button>
+
+          <button className="btn-back" onClick={handlePrint}>
+            Download Report
+          </button>
+
           <h1>All Delivery Requests</h1>
-          {loading ? (
+
+          <input
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            type="text"
+            name="search"
+            placeholder="Search Parcel Details"
+          />
+          <button onClick={() => navigate(`/parsel-list?search=${searchQuery}`)}>
+            Search
+          </button>
+
+          {noResults ? (
+            <p>No parcels found</p>
+          ) : loading ? (
             <p>Loading parcels...</p>
           ) : error ? (
-            <p>Failed to load parsel data. Please try again.</p>
+            <p>Failed to load parcel data. Please try again.</p>
           ) : parselData.length > 0 ? (
-            <table className="table">
+            <table ref={tableRef} className="table">
               <thead>
                 <tr>
                   <th>Tracking ID</th>
@@ -93,7 +118,7 @@ function DisplayParselList() {
                       </Link>
                       <button
                         className="btn btn-delete"
-                        onClick={() => deleteHandler(parsel._id)} // Pass the _id to deleteHandler
+                        onClick={() => deleteHandler(parsel._id)}
                       >
                         Delete
                       </button>
