@@ -10,6 +10,7 @@ import Home from "./component/home/home";
 import DeliveryHome from "./component/delivery/deliveryHome"; 
 import DisplayParselList from "./component/delivery/displayParselList";
 import AddParselRequest from "./component/delivery/addDeliveryRequest";
+import UpdateParselReq from "./component/delivery/updateParselReq";
 import AddNewOrder from "./component/CRM/AddOrder/AddNewOrder";
 import OrderDtails from "./component/CRM/OrderDtails/OrderDtails";
 import UpdateOrder from "./component/CRM/UpdateOrder/UpdateOrder";
@@ -23,6 +24,11 @@ import StockDashboard from "./component/Inventory/StockDashboard";
 import AddStock from "./component/Inventory/AddStock";
 import SupplierDashboard from "./component/Inventory/SupplierDashboard";
 
+//Gangani
+//import RecycleProducts from "./component/recycledProducts/RecycleProducts";
+//import RecyclingProductsTable from "./component/recycledProducts/RecyclingProductsTable";
+//import RecycledProducts from "./component/recycledProducts/RecycledProducts";
+
 //juthmini
 import "./App.css";
 
@@ -33,11 +39,12 @@ function App() {
         <Header />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/deliveryHome" element={<DeliveryHome />} /> 
           <Route path="/employee-dashboard" element={<EmployeeDashboard />} />
           <Route path="/add-employee" element={<AddEmployee />} />
           <Route path="/add-employee/:employeeId" element={<AddEmployee />} />
-          <Route path="/parsel-list" element={<DisplayParselList />} /> 
+          <Route path="/deliveryHome" element={<DeliveryHome />} /> 
+          <Route path="/parsel-list" element={<DisplayParselList />} />
+          <Route path="/parsel-list/:id" element={<UpdateParselReq />} />
           <Route path="/Add-parsel" element={<AddParselRequest />} />
           <Route path="/mark-attendance" element={<MarkAttendance />} />  
           <Route path="/displayattendance" element={<DisplayAttendance />} />
@@ -57,6 +64,9 @@ function App() {
           <Route path="/addStock/:itemId" element={<AddStock />} />
           <Route path="/supplierDashboard" element={<SupplierDashboard/>} />
 
+          <Route path="/recycle-product-dashbord" element={<RecycleProducts/>} /> {/* Gangani */}
+          <Route path="/recycling-products" element={<RecyclingProductsTable/>} /> {/* Gangani */}
+          <Route path="/recycled-products" element={<RecycledProducts/>} /> {/* Gangani */}
         </Routes>
         <Footer />
       </div>

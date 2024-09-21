@@ -29,6 +29,7 @@ const productRoutes=require("./Route/InventoryProductRoutes")
 
 
 //Middleware
+app.use(cors());
 app.use(express.json());
 app.use(cors());
 app.use("/Users", userRouter);
@@ -54,6 +55,8 @@ app.use('/api/items',itemRoutes);
 app.get("/", (req, res) => {
     res.send("Home Page");
   });
+
+
 
 //Database connection
 mongoose.connect(config.get('db.uri'))

@@ -44,12 +44,15 @@
 
 .input-box {
   padding: 20px;
-  width: 500px;
+  width: 25px; /* Reduced the width */
   border-radius: 5px;
   border: 1px solid #ddd;
   margin-bottom: 2rem;
-  font-size: 1.5rem;
+  font-size: 1rem;
+  color: #000; /* Set text color to black */
+  background-color: #fff; /* Ensure background is white */
 }
+
 
 .button-wrapper {
   display: flex;
