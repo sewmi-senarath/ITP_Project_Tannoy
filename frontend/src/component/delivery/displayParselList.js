@@ -57,6 +57,18 @@ function DisplayParselList() {
     onAfterPrint: () => alert("Parsel Report Successfully Downloaded!"),
   });
 
+  const handleSendReport = () => {
+    //create the whatsApp Chat Url
+    const phoneNumber = "+94715331167";
+    const message = `Your Order Request details are updated`;
+    const whatsAppUrl = `https://web.whatsapp.com/send?phone=${phoneNumber}&text=${encodeURIComponent(
+      message
+    )}`;
+
+    //open the whatsapp chat in new window
+    window.open(whatsAppUrl, "_blank");
+  }
+
   return (
     <div className="layout">
       <Sidebar />
@@ -68,9 +80,12 @@ function DisplayParselList() {
           >
             <span className="back-arrow">←</span> Back
           </button>
-
           <button className="btn-back" onClick={handlePrint}>
             Download Report
+          </button>
+
+          <button className="btn-back" onClick={handleSendReport}>
+            Send Report
           </button>
 
           <h1>All Delivery Requests</h1>
@@ -82,7 +97,8 @@ function DisplayParselList() {
             name="search"
             placeholder="Search Parcel Details"
           />
-          <button onClick={() => navigate(`/parsel-list?search=${searchQuery}`)}>
+          <br></br>
+          <button className="btn-back" onClick={() => navigate(`/parsel-list?search=${searchQuery}`)}>
             Search
           </button>
 
