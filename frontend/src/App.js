@@ -21,9 +21,9 @@ import ProductDashboard from "./component/Inventory/ProductDashboard";
 import AddProduct from "./component/Inventory/AddProduct";
 
 //Gangani
-import RecycleProducts from "./component/recycledProducts/RecycleProducts";
-import RecyclingProductsTable from "./component/recycledProducts/RecyclingProductsTable";
-import RecycledProducts from "./component/recycledProducts/RecycledProducts";
+//import RecycleProducts from "./component/recycledProducts/RecycleProducts";
+//import RecyclingProductsTable from "./component/recycledProducts/RecyclingProductsTable";
+//import RecycledProducts from "./component/recycledProducts/RecycledProducts";
 
 //juthmini
 import "./App.css";
