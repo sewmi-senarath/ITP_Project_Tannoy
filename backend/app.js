@@ -17,9 +17,8 @@ const cookieParser = require("cookie-parser");
 const app = express();
 const itemRoutes = require("./Route/InvenoryRoute");
 
-
-
 //Middleware
+app.use(cors());
 app.use(express.json());
 app.use("/Users", userRouter);
 app.use("/Employee", employeeRouter);
@@ -36,9 +35,6 @@ app.use("/api/items", itemRoutes);
 app.get("/", (req, res) => {
     res.send("Home Page");
   });
-
-
-
 
 
 

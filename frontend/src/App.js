@@ -7,6 +7,11 @@ import AddEmployee from "./component/employee/AddEmployee";
 import Home from "./component/home/home";
 import DeliveryHome from "./component/delivery/deliveryHome"; 
 
+//Gangani
+import RecycleProducts from "./component/recycledProducts/RecycleProducts";
+import RecyclingProductsTable from "./component/recycledProducts/RecyclingProductsTable";
+import RecycledProducts from "./component/recycledProducts/RecycledProducts";
+
 //juthmini
 import "./App.css";
 
@@ -20,6 +25,9 @@ function App() {
           <Route path="/deliveryHome" element={<DeliveryHome />} /> 
           <Route path="/employee-dashboard" element={<EmployeeDashboard />} />
           <Route path="/add-employee" element={<AddEmployee />} />
+          <Route path="/product-dashbord" element={<RecycleProducts/>} /> {/* Gangani */}
+          <Route path="/recycling-products" element={<RecyclingProductsTable/>} /> {/* Gangani */}
+          <Route path="/recycled-products" element={<RecycledProducts/>} /> {/* Gangani */}
         </Routes>
         <Footer />
       </div>
