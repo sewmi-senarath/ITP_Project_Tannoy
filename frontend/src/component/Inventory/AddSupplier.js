@@ -122,15 +122,20 @@ const AddSupplier = () => {
 
           <div className="form-group">
             <label htmlFor="DeliveryItem">Delivery Item</label>
-            <input
-              type="text"
+            <select
               id="DeliveryItem"
               name="DeliveryItem"
               value={formData.DeliveryItem}
               onChange={handleChange}
-              placeholder="Enter Delivery Item"
               required
-            />
+            >
+            <option value="">Select the category</option>
+              <option value="Plastic 1">Plastic 1</option>
+              <option value="Plastic 2">Plastic 2</option>
+              <option value="Plastic 3">Plastic 3</option>
+              <option value="Plastic 4">Plastic 4</option>
+              <option value="Plastic 5">Plastic 5</option>
+            </select>
           </div>
 
           <div className="form-group">
