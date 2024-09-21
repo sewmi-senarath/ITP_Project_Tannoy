@@ -9,6 +9,7 @@ router.get("/", parselController.getAllParsel);
 router.post("/", parselController.addParsel);
 //" /:id - meka user control eke id ekata dunn ekath ekka match wenn oni"
 router.get("/:id", parselController.getById);
+router.put("/:id", parselController.updateParsel);
 router.delete("/:id", parselController.deleteParsel);
 
 

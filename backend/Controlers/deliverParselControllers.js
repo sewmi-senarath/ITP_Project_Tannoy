@@ -7,7 +7,7 @@ const getAllParsel = async (req, res, next) => {
   let parcels;
 
   try {
-    parcels = await Parsel.find();  // Correct model usage
+    parcels = await Parsel.find();  
   } catch (err) {
     console.log(err);
     return res.status(500).json({ message: "Error fetching parcels" });
@@ -79,41 +79,27 @@ const getById = async (req, res, next) => {
 //Update User details
 const updateParsel = async (req, res, next) => {
   const id = req.params.id;
-  const {
-    fullName,
-    phoneNo,
-    email,
-    address,
-    postalCode,
-    productType,
-    productQty,
-    status
-  } = req.body;
+  const {fullName, phoneNo, email, address, postalCode, productType, productQty, status} = req.body;
 
-  let updatedParsel;
+  let parsel;
 
   try {
-    updatedParsel = await Parsel.findByIdAndUpdate(id, {
-      fullName,
-      phoneNo,
-      email,
-      address,
-      postalCode,
-      productType,
-      productQty,
-      status,
-    }, { new: true });  // Make sure it returns the updated document
+    parsel = await Parsel.findByIdAndUpdate(id, {fullName: fullName, phoneNo: phoneNo, email: email, address: address, postalCode: postalCode, productType: productType, productQty: productQty,status: status});
+      // Make sure it returns the updated document
+    parsel = await parsel.save();
 
   } catch (err) {
     console.log(err);
     return res.status(500).json({ message: "Error updating parsel details" });
   }
 
-  if (!updatedParsel) {
+  if (!parsel) {
     return res.status(404).json({ message: "Parsel not found" });
+  } else {
+    return res.status(200).json({ parsel });
   }
 
-  return res.status(200).json({ updatedParsel });
+
 };
 
 //Delete user Detail
