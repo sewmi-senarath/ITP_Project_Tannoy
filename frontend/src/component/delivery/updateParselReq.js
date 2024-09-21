@@ -1,30 +1,27 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import { useParams, useNavigate } from "react-router-dom";
-import Sidebar from "./deliveryHeader";
+import React, {useEffect, useState} from 'react';
+import axios from 'axios';
+import { useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import Sidebar from './deliveryHeader';
 
-function UpdateParselReq() {
-  const [inputs, setInputs] = useState(null); // Change initial state to null to handle loading state
+
+function updateParselReq() {
+
+  const [inputs, setInputs] = useState({});
   const history = useNavigate();
-  const { id } = useParams(); // Ensure this matches your route (it could be 'id' or '_id')
+  const id = useParams().id;
 
-  useEffect(() => {
-    const fetchHandler = async () => {
-      try {
-        const res = await axios.get(`http://localhost:5000/deliverParsel/${id}`);
-        if (res.data) {
-          setInputs(res.data); // Set fetched data into inputs
-        }
-      } catch (error) {
-        console.error("Error fetching parsel data:", error);
-      }
+  useEffect(()=>{
+    const fetchHandler = async ()=>{
+      await axios
+      .get(`http://localhost:5000/deliverParsel/${id}`)
     };
     fetchHandler();
-  }, [id]);
+  },[id]);
 
-  const sendRequest = async () => {
-    try {
-      const res = await axios.put(`http://localhost:5000/deliverParsel/${id}`, {
+  const sendRequest = async ()=>{
+    await axios
+    .put(`http://localhost:5000/deliverParsel/${id}`,{
         fullName: String(inputs.fullName),
         phoneNo: Number(inputs.phoneNo),
         email: String(inputs.email),
@@ -33,11 +30,8 @@ function UpdateParselReq() {
         productType: String(inputs.productType),
         productQty: Number(inputs.productQty),
         status: String(inputs.status),
-      });
-      console.log(res.data);
-    } catch (error) {
-      console.error("Error updating delivery request:", error);
-    }
+    })
+    .then((res)=> res.data);
   };
 
   const handleChange = (e) => {
@@ -47,29 +41,24 @@ function UpdateParselReq() {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    sendRequest().then(() => history("/parsel-list"));
+    console.log(inputs);
+    sendRequest().then(()=>history("/parsel-list"))
   };
-
-  // Show loading state if data hasn't been fetched yet
-  if (!inputs) {
-    return <p>Loading...</p>; // Show a loading message or spinner
-  }
 
   return (
     <div className="container">
       <Sidebar />
       <div className="form-container">
         <h1>Update Delivery Request</h1>
-        
         <form onSubmit={handleSubmit}>
           <label>
             Full Name
             <input
               type="text"
               name="fullName"
-              value={inputs.fullName} 
+              value={inputs.fullName}
               onChange={handleChange}
               placeholder="Enter Your Full Name"
               required
@@ -80,7 +69,7 @@ function UpdateParselReq() {
             <input
               type="text"
               name="phoneNo"
-              value={inputs.phoneNo} 
+              value={inputs.phoneNo}
               onChange={handleChange}
               placeholder="Enter Your Phone Number"
               required
@@ -91,7 +80,7 @@ function UpdateParselReq() {
             <input
               type="email"
               name="email"
-              value={inputs.email} 
+              value={inputs.email}
               onChange={handleChange}
               placeholder="Enter Your Email"
               required
@@ -102,7 +91,7 @@ function UpdateParselReq() {
             <input
               type="text"
               name="address"
-              value={inputs.address} 
+              value={inputs.address}
               onChange={handleChange}
               placeholder="Enter Your Address"
               required
@@ -124,7 +113,7 @@ function UpdateParselReq() {
             <input
               type="text"
               name="productType"
-              value={inputs.productType} 
+              value={inputs.productType}
               onChange={handleChange}
               placeholder="Enter Product Type"
               required
@@ -135,7 +124,7 @@ function UpdateParselReq() {
             <input
               type="number"
               name="productQty"
-              value={inputs.productQty} // Make sure it's controlled
+              value={inputs.productQty}
               onChange={handleChange}
               placeholder="Enter Product Quantity"
               required
@@ -145,7 +134,7 @@ function UpdateParselReq() {
             Status
             <select
               name="status"
-              value={inputs.status} // Ensure it's controlled
+              value={inputs.status}
               onChange={handleChange}
               required
             >
@@ -157,12 +146,20 @@ function UpdateParselReq() {
               <option value="Delivered">Delivered</option>
             </select>
           </label>
-          <button type="submit" className="submit-button">Update</button>
-          <button type="button" onClick={() => history('/parsel-list')} className="back-button">Back</button>
+          <button type="submit" className="submit-button">
+            Update
+          </button>
+          <button
+            type="button"
+            onClick={() => history("/parsel-list")}
+            className="back-button"
+          >
+            Back
+          </button>
         </form>
       </div>
     </div>
-  );
+  )
 }
 
-export default UpdateParselReq;
+export default updateParselReq;
