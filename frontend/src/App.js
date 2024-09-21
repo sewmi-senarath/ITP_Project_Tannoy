@@ -19,6 +19,12 @@ import CrmReport from "./component/CRM/CrmReport/CRMReport";
 import EmployeeSalaryReport from "./component/employee/EmployeeSalaryReport";
 import ProductDashboard from "./component/Inventory/ProductDashboard";
 import AddProduct from "./component/Inventory/AddProduct";
+import RecycleProducts from "./component/recycledProducts/RecycleProducts";
+
+//Gangani
+import RecycleProducts from "./component/recycledProducts/RecycleProducts";
+import RecyclingProductsTable from "./component/recycledProducts/RecyclingProductsTable";
+import RecycledProducts from "./component/recycledProducts/RecycledProducts";
 
 //juthmini
 import "./App.css";
@@ -30,6 +36,7 @@ function App() {
         <Header />
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/product-dashbord" element={<RecycleProducts/>} />
           <Route path="/employee-dashboard" element={<EmployeeDashboard />} />
           <Route path="/add-employee" element={<AddEmployee />} />
           <Route path="/add-employee/:employeeId" element={<AddEmployee />} />
@@ -49,6 +56,9 @@ function App() {
           <Route path="/Addproduct" element={<AddProduct/>} />
           <Route path="/Addproduct/:productId" element={<AddProduct />} />
 
+          <Route path="/product-dashbord" element={<RecycleProducts/>} /> {/* Gangani */}
+          <Route path="/recycling-products" element={<RecyclingProductsTable/>} /> {/* Gangani */}
+          <Route path="/recycled-products" element={<RecycledProducts/>} /> {/* Gangani */}
         </Routes>
         <Footer />
       </div>
