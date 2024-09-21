@@ -25,7 +25,7 @@ const productRoutes=require("./Route/InventoryProductRoutes")
 
 
 //Middleware
-app.use(cors());
+app.use(cors());{/* Gangani */}
 app.use(express.json());
 app.use(cors());
 app.use("/Users", userRouter);
