@@ -31,8 +31,7 @@ import RecycleProducts from "./component/recycledProducts/RecycleProducts";
 import RecyclingProductsTable from "./component/recycledProducts/RecyclingProductsTable";
 import RecycledProducts from "./component/recycledProducts/RecycledProducts";
 
-//juthmini
-import "./App.css";
+
 
 function App() {
   return (
