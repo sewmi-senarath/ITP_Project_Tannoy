@@ -250,4 +250,10 @@ button {
   .delete-btn:hover {
     background-color: #c82333; /* Darker red on hover */
   }
+  .supplier-img {
+    width: 300px;
+    height: auto;
+    margin-left: 20px;
+    border-radius: 8px;
+  }
   
