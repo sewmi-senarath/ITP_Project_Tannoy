@@ -28,7 +28,7 @@ function crmHeader() {
               <Link to="./sign-in">
                 <li className="hover:underline text-2xl"></li>
               </Link>
-              <Link to="./sign-up">
+              <Link to="/CRMLogin">
                 <li className="hover:underline text-2xl">Log Out</li>
               </Link>
             </ul>
