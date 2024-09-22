@@ -119,7 +119,7 @@ const updateOrder = async (req, res, next) => {
   return res.status(200).json({ orders });
 };
 
-//delete inventory
+//delete order
 const deleteOrder = async (req, res, next) => {
   const orderId = req.params.Oid;
   let order;
@@ -130,7 +130,7 @@ const deleteOrder = async (req, res, next) => {
   }
   //not deleted
   if (!order) {
-    return res.status(404).json({ message: "Unable to delete inventory" });
+    return res.status(404).json({ message: "Unable to delete order" });
   }
   return res.status(200).json({ order });
 };
