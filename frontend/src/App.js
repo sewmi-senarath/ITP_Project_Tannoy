@@ -24,7 +24,8 @@ import StockDashboard from "./component/Inventory/StockDashboard";
 import AddStock from "./component/Inventory/AddStock";
 import SupplierDashboard from "./component/Inventory/SupplierDashboard";
 import StockReport from "./component/Inventory/StockReport";
-
+import CRMRegister from "./component/CRM/CRMRegister/Register";
+import CRMLogin from "./component/CRM/CRMLogin/Login";
 //Gangani
 import RecycleProducts from "./component/recycledProducts/RecycleProducts";
 import RecyclingProductsTable from "./component/recycledProducts/RecyclingProductsTable";
@@ -49,11 +50,15 @@ function App() {
           <Route path="/Add-parsel" element={<AddParselRequest />} />
           <Route path="/mark-attendance" element={<MarkAttendance />} />  
           <Route path="/displayattendance" element={<DisplayAttendance />} />
+          {/* Dilmi  */}
           <Route path="/addorder" element={<AddNewOrder />} />
           <Route path="/orderDetails" element={<OrderDtails />} />
           <Route path="/updateOrder/:Oid" element={<UpdateOrder />} /> 
           <Route path="/crmHome" element={<CrmHome />} />
           <Route path="/crmReport" element={<CrmReport />} />
+          <Route path="/CRMRegi" element={<CRMRegister />} />
+          <Route path="/CRMLogin" element={<CRMLogin />} />
+          {/* Dilmi */}
           <Route path="/employeesalaryReport" element={<EmployeeSalaryReport/>} />
           <Route path="/productDashboard" element={<ProductDashboard/>} />
           <Route path="/Addproduct" element={<AddProduct/>} />
