@@ -7,9 +7,10 @@ import AddEmployee from "./component/employee/AddEmployee";
 import Home from "./component/home/home";
 import DeliveryHome from "./component/delivery/deliveryHome"; 
 import TechnicalHome from './component/technical/technicalHome';
-import AddTechnical from "./component/technical/AddTechnical";
+import Addmachine from "./component/technical/addmachine";
 //juthmini
 import "./App.css";
+import MachinePage from "./component/technical/page/MachinePage";
 
 function App() {
   return (
@@ -23,7 +24,9 @@ function App() {
           <Route path="/employee-dashboard" element={<EmployeeDashboard />} />
           <Route path="/add-employee" element={<AddEmployee />} />
           <Route path="/technicalHome" element={<TechnicalHome />} />
-          <Route path="/add-technical" element={<AddTechnical />} />
+          <Route path="/addmachine" element={<Addmachine />} />
+          <Route path="/machine" element={< MachinePage/>} />
+          
         </Routes>
         <Footer />
       </div>

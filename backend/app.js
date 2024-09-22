@@ -4,7 +4,6 @@ const userRouter = require("./Route/UserRoutes");
 const employeeRouter = require("./Route/EmployeeRoute");
 const recyclingProductRouter = require("./Route/RecyclingProductRoute");
 const delivermanRoute = require("./Route/delivermanRoute");
-//const technicalRouter = require('./Route/TechnicalRoutes');
 const deliverParselRoute =require("./Route/deliverParselRoutes")
 require('dotenv').config({path: './env/.env'});
 const mongoose = require("mongoose");
@@ -21,6 +20,7 @@ const itemRoutes = require("./Route/InvenoryRoute");
 
 
 //Middleware
+app.use(cors());
 app.use(express.json());
 app.use("/Users", userRouter);
 app.use("/Employee", employeeRouter);
@@ -30,7 +30,8 @@ app.use(express.urlencoded({extended: false}));
 app.use(bodyParser.json()); 
 app.use("/Customer",router);
 app.use("/deliverMan", delivermanRoute);
-//app.use('/technical', technicalRouter);
+app.use(require("./Route/TechnicalRoutes.js"));
+
 // routes customer management
 app.get("/", (req, res) => {
     res.send("Home Page");
