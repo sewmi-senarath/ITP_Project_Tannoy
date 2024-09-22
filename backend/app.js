@@ -17,6 +17,8 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const orderRouter = require("./Route/OrderRoute");
+const CRMRegister = require("./CRMAuthHandler/CRMRegiHandler");
+const { loginCRM } = require("./CRMAuthHandler/CRMLoginHandler");
 
 const app = express();
 const itemRoutes = require("./Route/InvenoryRoute");
@@ -49,6 +51,8 @@ app.use("/api/attendance",employeeAttendancerouter)
 app.use("/order", orderRouter);
 app.use('/api/products', productRoutes);
 app.use('/api/items',itemRoutes);
+app.post("/CRMRegister", CRMRegister);
+app.post("/loginCRM", loginCRM);
 
 
 // routes customer management

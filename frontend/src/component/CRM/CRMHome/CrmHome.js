@@ -11,7 +11,7 @@ function CrmHome() {
           <Link to="/orderDetails">
             <button
               type="submit"
-              className="bg-blue-800 text-white p-3 rounded-lg uppercase w-72 ml-4 over:opacity-95 font-semibold hover:bg-blue-600 mb-2"
+              className="bg-blue-800 text-white p-3 rounded-lg uppercase w-72 ml-4 over:opacity-95 font-semibold hover:opacity-95 hover:scale-110 hover:bg-blue-600 transition duration-300 mb-2"
             >
               Order Details
             </button>
@@ -20,7 +20,7 @@ function CrmHome() {
           <Link to="/crmReport">
             <button
               type="submit"
-              className="bg-blue-800 text-white p-3 rounded-lg uppercase w-72 ml-4 over:opacity-95 font-semibold hover:bg-blue-600 mb-2"
+              className="bg-blue-800 text-white p-3 rounded-lg uppercase w-72 ml-4 over:opacity-95 font-semibold hover:opacity-95 hover:scale-110 hover:bg-blue-600 transition duration-300 mb-2"
             >
                Report
             </button>
@@ -28,7 +28,7 @@ function CrmHome() {
           <Link to="/inventoryReport">
             <button
               type="submit"
-              className="bg-blue-800 text-white p-3 rounded-lg uppercase w-72 ml-4 over:opacity-95 font-semibold hover:bg-blue-600 mb-2"
+              className="bg-blue-800 text-white p-3 rounded-lg uppercase w-72 ml-4 over:opacity-95 font-semibold hover:opacity-95 hover:scale-110 hover:bg-blue-600 transition duration-300 mb-2"
             >
               Support Desk
             </button>
