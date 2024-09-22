@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import '../../App.css';  // Your CSS file
+import '../../styles/employee.css';  // Your CSS file
 import Logo from '../../images/logo.jpeg';
 import manager from '../../images/manager.jpeg';
 import { useNavigate } from "react-router-dom";
