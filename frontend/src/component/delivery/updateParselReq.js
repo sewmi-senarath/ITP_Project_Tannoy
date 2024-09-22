@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import Sidebar from './deliveryHeader';
 
 
-function updateParselReq() {
+function UpdateParselReq() {
 
   const [inputs, setInputs] = useState({});
   const history = useNavigate();
@@ -164,4 +164,4 @@ function updateParselReq() {
   )
 }
 
-export default updateParselReq;
+export default UpdateParselReq;

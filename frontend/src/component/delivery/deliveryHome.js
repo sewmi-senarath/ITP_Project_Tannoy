@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "../../styles/deliveryHome.css"; // Import the CSS file
+import "../../component/delivery/deliveryHome.css"; // Import the CSS file
 
 const DeliveryHome = () => {
   const navigate = useNavigate();

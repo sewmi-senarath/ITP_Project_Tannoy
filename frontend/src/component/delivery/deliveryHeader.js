@@ -1,5 +1,5 @@
 import React from 'react';
-import '../../styles/Header.css'; // Assuming the same CSS is used for layout
+import '../../component/delivery/Header.css'; // Assuming the same CSS is used for layout
 
 const Sidebar = () => (
   <div className="sidebar">
