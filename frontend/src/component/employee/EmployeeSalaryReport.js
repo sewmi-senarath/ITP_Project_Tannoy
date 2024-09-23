@@ -58,7 +58,7 @@ const EmployeeSalaryReport = () => {
     doc.text(`Present Days: ${reportData.presentCount}`, 10, 20);
     doc.text(`Absent Days: ${reportData.absentCount}`, 10, 30);
     doc.text(`OT Hours: ${reportData.otHours}`, 10, 40);
-    doc.text(`Salary: ₹${reportData.totalSalary}`, 10, 50);
+    doc.text(`Salary: Rs.${reportData.totalSalary}`, 10, 50);
 
     // Save the PDF
     doc.save(`Salary_Report_${selectedEmployee}_${selectedMonth}.pdf`);

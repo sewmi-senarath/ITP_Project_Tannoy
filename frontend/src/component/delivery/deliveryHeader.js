@@ -1,5 +1,5 @@
 import React from 'react';
-import '../../styles/Header.css'; // Assuming the same CSS is used for layout
+import '../../component/delivery/Header.css'; // Assuming the same CSS is used for layout
 
 const Sidebar = () => (
   <div className="sidebar">
@@ -12,7 +12,7 @@ const Sidebar = () => (
         <li><a href="/parsel-list">Tracking</a></li>
         <li><a href="/Add-parsel">Add Delivery Request</a></li>
         <li><a href="/delivery">Delivery Team</a></li>
-        <li><a href="/login">Login</a></li>
+        <li><a href="/login">Log Out</a></li>
         <li><a href="/register">Register</a></li>
       </ul>
     </nav>

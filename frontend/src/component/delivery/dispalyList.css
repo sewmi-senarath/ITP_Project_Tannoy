@@ -1,30 +1,42 @@
-.container {
-  width: 80%;
-  margin: 0 auto;
+#container {
+  display: flex; /* Ensures the sidebar and content are aligned side by side */
+  width: 100%;
+  height: 100vh; /* Full height layout */
 }
 
-h1 {
+#sidebar {
+  width: 250px; /* Set a fixed width for the sidebar */
+  background-color: #f4f4f4; /* Optional: Add a background color */
+}
+
+#main-content {
+  flex-grow: 1; /* Ensures the main content takes up the remaining space */
+  padding: 20px;
+  overflow-y: auto; /* If the content is long, it will become scrollable */
+}
+
+#heading {
   text-align: center;
   margin-bottom: 20px;
 }
 
-.table {
+#table {
   width: 100%;
   border-collapse: collapse;
 }
 
-.table th, .table td {
-  border: 1px solid #ddd;
+#table th, #table td {
+  border: 1px solid #080808;
   padding: 8px;
   text-align: center;
 }
 
-.table th {
-  background-color: #f2f2f2;
+#table th {
+  background-color: #000000;
   font-weight: bold;
 }
 
-.status {
+#status {
   display: inline-block;
   padding: 5px 10px;
   border-radius: 5px;
@@ -32,61 +44,60 @@ h1 {
   font-weight: bold;
 }
 
-.status.NEW {
+#status.NEW {
   background-color: green;
 }
 
-.status.Packaging {
+#status.Packaging {
   background-color: #4CAF50;
 }
 
-.status.DepartureFromWA {
+#status.DepartureFromWA {
   background-color: orange;
 }
 
-.status.OnTheWay {
+#status.OnTheWay {
   background-color: yellow;
 }
 
-
-.status.Delivered {
+#status.Delivered {
   background-color: red;
 }
 
-.btn {
+#btn {
   margin: 0 5px;
   padding: 5px 15px;
   cursor: pointer;
   font-size: 14px;
 }
 
-.btn-view {
+#btn-view {
   background-color: #2196F3;
   color: white;
   border: none;
   border-radius: 4px;
 }
 
-.btn-update {
+#btn-update {
   background-color: #4CAF50;
   color: white;
   border: none;
   border-radius: 4px;
 }
 
-.btn-delete {
+#btn-delete {
   background-color: red;
   color: white;
   border: none;
   border-radius: 4px;
 }
 
-.btn:hover {
+#btn:hover {
   opacity: 0.8;
 }
 
 /* Back Button Styles */
-.btn-back {
+#btn-back {
   background-color: #e6f3ff; /* Light blue background */
   color: #007bff; /* Blue text */
   border: none;
@@ -98,11 +109,11 @@ h1 {
   align-items: center;
 }
 
-.btn-back:hover {
+#btn-back:hover {
   background-color: #cce7ff; /* Darker blue on hover */
 }
 
-.back-arrow {
+#back-arrow {
   margin-right: 5px;
   font-weight: bold;
   font-size: 18px;

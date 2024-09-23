@@ -1,51 +1,52 @@
-import React, { useState } from "react"
-import Sidebar from "./deliveryHeader"
-import ParselCSS from "../../styles/addParsals.css"
-import { useNavigate } from "react-router-dom"
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-function addDeliveryRequest() {
-  const history = useNavigate()
+
+function AddDeliveryRequest() {
+  const history = useNavigate();
   const [inputs, setInputs] = useState({
-    fullName:"",
-    phoneNo:"",
-    email:"",
-    address:"",
-    postalCode:"",
-    productType:"",
-    productQty:"",
-    status:"",
+    fullName: "",
+    phoneNo: "",
+    email: "",
+    address: "",
+    postalCode: "",
+    productType: "",
+    productQty: "",
+    status: "",
   });
 
   const handleChange = (e) => {
-    setInputs((prevState)=> ({
+    setInputs((prevState) => ({
       ...prevState,
-      [e.target.name]:e.target.value,
+      [e.target.name]: e.target.value,
     }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(inputs); 
-    sendRequest().then(() => history('/parsel-list'))
+    console.log(inputs);
+    sendRequest().then(() => history("/parsel-list"));
   };
 
-  const sendRequest = async() => {
-    await axios.post("http://localhost:5000/deliverParsel", {
-      fullName: String(inputs.fullName),
-      phoneNo: Number(inputs.phoneNo),
-      email: String(inputs.email),
-      address: String(inputs.address),
-      postalCode: String(inputs.postalCode),
-      productType: String(inputs.productType),
-      productQty: Number(inputs.productQty),
-      status: String(inputs.status),
-    }).then(res => res.data);
-  }
+  const sendRequest = async () => {
+    await axios
+      .post("http://localhost:5000/deliverParsel", {
+        fullName: String(inputs.fullName),
+        phoneNo: Number(inputs.phoneNo),
+        email: String(inputs.email),
+        address: String(inputs.address),
+        postalCode: String(inputs.postalCode),
+        productType: String(inputs.productType),
+        productQty: Number(inputs.productQty),
+        status: String(inputs.status),
+      })
+      .then((res) => res.data);
+  };
 
   return (
     <div className="container">
-      <Sidebar />
+      
       <div className="form-container">
         <h1>Create New Delivery Request</h1>
         <form onSubmit={handleSubmit}>
@@ -137,17 +138,29 @@ function addDeliveryRequest() {
               <option value="">Select Status</option>
               <option value="Confirm Delivery">Confirm Delivery</option>
               <option value="Start Packaging">Start Packaging</option>
-              <option value="On the way to Warehouse">On the way to Warehouse</option>
-              <option value="Departure from Warehouse">Departure from Warehouse</option>
+              <option value="On the way to Warehouse">
+                On the way to Warehouse
+              </option>
+              <option value="Departure from Warehouse">
+                Departure from Warehouse
+              </option>
               <option value="Delivered">Delivered</option>
             </select>
           </label>
-          <button type="submit" className="submit-button">Submit</button>
-          <button type="button" onClick={() => history('/parsel-list')} className="back-button">Back</button>
+          <button type="submit" className="submit-button">
+            Submit
+          </button>
+          <button
+            type="button"
+            onClick={() => history("/parsel-list")}
+            className="back-button"
+          >
+            Back
+          </button>
         </form>
       </div>
     </div>
   );
 }
 
-export default addDeliveryRequest
+export default AddDeliveryRequest; 

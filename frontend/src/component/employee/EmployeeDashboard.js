@@ -1,6 +1,6 @@
 // export default EmployeeDashboard;
 import React, { useState, useEffect } from 'react';
-import '../../App.css'; // Assuming your CSS is here
+import '../../styles/employee.css'; // Assuming your CSS is here
 import Logo from '../../images/logo.jpeg';
 import manager from '../../images/manager.jpeg'; // Manager's image
 import { useNavigate } from 'react-router-dom';

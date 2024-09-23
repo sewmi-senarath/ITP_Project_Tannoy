@@ -1,21 +1,28 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const adminSchema = new Schema({
-     name:{
-        type:String,
-        required:true,//validate
-     },
-
-     email:{
-        type:String,
-        required:true,//validate
-     },
-
-});
-
-
+const crmSchema = new Schema({
+   fname: {
+      type: String,
+      required: true,
+    },
+    sname: {
+      type: String,
+      required: true,
+    },
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    password: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+  });
+    
 module.exports = mongoose.model(
-    "CRMRegister" , //file name'
-    adminSchema //function name
+    "CRMReg" , //file name'
+    crmSchema //function name
 )

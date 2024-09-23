@@ -17,15 +17,21 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const orderRouter = require("./Route/OrderRoute");
+const CRMRegister = require("./CRMAuthHandler/CRMRegiHandler");
+const { loginCRM } = require("./CRMAuthHandler/CRMLoginHandler");
 
 const app = express();
 const itemRoutes = require("./Route/InvenoryRoute");
+const productRoutes=require("./Route/InventoryProductRoutes")
+
+
 
 
 
 
 
 //Middleware
+app.use(cors());
 app.use(express.json());
 app.use(cors());
 app.use("/Users", userRouter);
@@ -40,18 +46,58 @@ app.use("/deliverParsel", deliverParselRoute)
 app.use("/FinanceInvestor", financeRoute);
 app.use("/api/items", itemRoutes);
 app.use("/api/inventoryProduct",ProductRouter)
-app.use("/api/Supplier",SupplierRouter)
+app.use("/api/suppliers",SupplierRouter)
 app.use("/api/attendance",employeeAttendancerouter)
 app.use("/order", orderRouter);
+app.use('/api/products', productRoutes);
+app.use('/api/items',itemRoutes);
+app.post("/CRMRegister", CRMRegister);
+app.post("/loginCRM", loginCRM);
+
 
 // routes customer management
 app.get("/", (req, res) => {
     res.send("Home Page");
   });
 
+//Register
+//Call Registration Model
+require("./Model/DelRegister");
+const Register = mongoose.model("Register");
+app.post("/register", async(req, res) => {
+  const {name, email, password} = req.body;
+  try {
+    await Register.create({
+      name,
+      email,
+      password,
+    })
+    res.send({status:"ok"});
+  }catch(err){
+    res.send({status:"err"});
+  }
+});
 
+//Login
+app.post("/login", async (req, res) => {
+  const {email, password} = req.body;
+  try{
+    const register = await Register.findOne({email});
+    if(!register){
+      return res.json({err:"Not found"})
+    }
+    if(register.password === password){
+      return res.json({status: "ok"});
 
+    }else{
+      return res.json({err: "Incorrect Password"})
+    }
 
+  }catch(err){
+    console.error(err);
+    res.status(500).json({err:"Server Error"})
+  }
+});
 
 
 //Database connection

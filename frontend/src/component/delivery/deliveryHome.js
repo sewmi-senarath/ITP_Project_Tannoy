@@ -1,18 +1,29 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "../../styles/deliveryHome.css"; // Import the CSS file
-
+import "../../component/delivery/deliveryHome.css"; // Import the CSS file
 
 const DeliveryHome = () => {
   const navigate = useNavigate();
+  const [trackingNumber, setTrackingNumber] = useState("");
 
-  // Function to handle redirection to the Parcel List page
+  // Function to handle redirection to the Parcel List page with search query
   const handleDeliveryClickView = () => {
-    navigate("/parsel-list"); // Navigates to the displayParselList page
+    if (trackingNumber) {
+      navigate(`/parsel-list?search=${trackingNumber}`); // Navigates to displayParselList with search query
+    } else {
+      navigate("/parsel-list"); // Navigate without search query
+    }
   };
 
   const handleDeliveryClickAdd = () => {
-    navigate("/Add-parsel"); // Navigates to the displayParselList page
+    navigate("/Add-parsel"); // Navigates to add parsel page
+  };
+
+  // Function to handle pressing the Enter key in the input field
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      handleDeliveryClickView();
+    }
   };
 
   return (
@@ -23,9 +34,14 @@ const DeliveryHome = () => {
         type="text"
         placeholder="Enter Your Tracking number here..."
         className="input-box"
+        value={trackingNumber}
+        onChange={(e) => setTrackingNumber(e.target.value)} // Update tracking number state
+        onKeyPress={handleKeyPress} // Trigger search on Enter key press
       />
       <div className="button-wrapper">
-        <button className="button button-primary" onClick={handleDeliveryClickAdd}>Add Delivery Request</button>
+        <button className="button button-primary" onClick={handleDeliveryClickAdd}>
+          Add Delivery Request
+        </button>
         <button className="button" onClick={handleDeliveryClickView}>
           View all delivery
         </button>

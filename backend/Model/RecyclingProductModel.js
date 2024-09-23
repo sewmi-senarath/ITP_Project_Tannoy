@@ -15,10 +15,23 @@ const recyclingProductSchema = new Schema({
     type:String,//Data Type "CLEANING, SORTING, MELTING"
     required:true,//validate
   },
+  quality:{
+    type:String,//Data Type "GOOD, MEDIUM, LOW"
+    required:true,//validate
+  },
   status:{
     type:String,//Data Type "DONE, INPROGRESS, REJECT"
     required:true,//validate
   },
+  quality:{
+    type:String,//Data Type "GOOD, MEDIUM, LOW"
+    required:true,//validate
+  },
+  date: {
+    type: Date, // Data Type
+    default: Date.now, // Set the default value to the current date and time
+    required: true, // validate
+  },
 },{ collection: 'recyclingProduct' });
 
 const RecyclingProduct = mongoose.model('RecyclingProduct', recyclingProductSchema);

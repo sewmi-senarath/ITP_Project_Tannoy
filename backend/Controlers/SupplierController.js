@@ -19,7 +19,7 @@ exports.getSupplierById = async (req, res) => {
     if (!supplier) {
       return res.status(404).json({ message: 'Supplier not found' });
     }
-    res.status(200).json(item);
+    res.status(200).json(supplier);
   } catch (err) {
     res.status(500).json({ message: 'Error retrieving supplier', error: err.message });
   }
@@ -27,9 +27,9 @@ exports.getSupplierById = async (req, res) => {
 
 // Add a new Supplier
 exports.addSupplier= async (req, res) => {
-  const { SupplierName, ContactInfo, DeliveryItem, ItemPrice,Discount } = req.body;
+  const {supCode, SupplierName, ContactInfo, DeliveryItem, ItemPrice,Discount } = req.body;
   try {
-    const newSupplier = new Supplier({ SupplierName, ContactInfo, DeliveryItem, ItemPrice,Discount });
+    const newSupplier = new Supplier({supCode, SupplierName, ContactInfo, DeliveryItem, ItemPrice,Discount });
     await newSupplier.save();
     res.status(201).json(newSupplier);
     console.log("Created Successfully");

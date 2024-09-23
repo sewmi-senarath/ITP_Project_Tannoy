@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import axios from "axios";
 import Order from "../OrderList/Order";
-import { FaSearch } from "react-icons/fa";
+// import { FaSearch } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import nodata from "../comonimages/noresults.svg";
 import Header from "../CrmHeader/crmHeader";
@@ -14,6 +14,15 @@ const fetchOrder = async () => {
 
 function OrderDtails() {
   const [order, setOrder] = useState([]);
+  useEffect(() => {
+    fetchOrder().then((data) => setOrder(data.order));
+  }, []);
+
+   // Function to handle the deletion of an order
+   const handleDelete = (id) => {
+    setOrder((prevOrders) => prevOrders.filter((order) => order._id !== id));
+  };
+
   useEffect(() => {
     fetchOrder().then((data) => setOrder(data.order));
   }, []);
@@ -46,13 +55,13 @@ function OrderDtails() {
           Order Details Display
         </h1>
 
-        <div className="flex flex-row gap-5">
+        <div className="flex flex-row gap-3">
           <Link to="/addorder">
-            <button className="h-10 p-2 mt-2 font-semibold bg-green-700 mr-28 rounded-lg">
+            <button className="h-10 mt-3 font-semibold bg-green-700 mr-28 rounded-lg w-44">
               Place New Order
             </button>
           </Link>
-          <form className="bg-green-100 p-2 pt-1 rounded-lg flex items-center mt-2 h-10 mr-1 ">
+          <form className="   rounded-lg flex items-center h-12 mr-1  mt-2">
             <input
               onChange={(e) => setSearchQuery(e.target.value)}
               type="text"
@@ -60,12 +69,12 @@ function OrderDtails() {
               //Responsivness od the components
               //w-24 --> make the size according to the mobile
               //sm:w-64 --> above the size of the mobile
-              className="bg-transparent focus:outline-none w-24 sm:w-64 "
+              className="bg-green-100  w-44 sm:w-64 border-none h-10 "
             />
-            <FaSearch className="text-slate-600" />
+            
           </form>
           <button
-            className="h-10 p-2 mt-2 mr-2 font-bold bg-green-500 px-5 rounded-lg"
+            className="h-10 font-bold bg-green-500 px-5 rounded-lg w-32 mt-3"
             onClick={handleSearch}
           >
             Search
@@ -141,13 +150,13 @@ function OrderDtails() {
           </h1>
         </div>
       ) : (
-        <div className="mb-52">
-          {/*get the inventroy details repetitively from the Inventory.js*/}
-          {order &&
-            order.map((order, i) => (
-              <div key={i}>
-                <Order order={order} />
-              </div>
+         <div className="mb-52">
+      {/* Map through the order array and pass the handleDelete function */}
+      {order &&
+        order.map((order, i) => (
+          <div key={i}>
+            <Order order={order} onDelete={handleDelete} />
+          </div>
             ))}
         </div>
       )}
