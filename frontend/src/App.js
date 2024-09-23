@@ -11,6 +11,7 @@ import DeliveryHome from "./component/delivery/deliveryHome";
 import DisplayParselList from "./component/delivery/displayParselList";
 import AddParselRequest from "./component/delivery/addDeliveryRequest";
 import UpdateParselReq from "./component/delivery/updateParselReq";
+import DeliveryRegister from "./component/delivery/Register";
 import AddNewOrder from "./component/CRM/AddOrder/AddNewOrder";
 import OrderDtails from "./component/CRM/OrderDtails/OrderDtails";
 import UpdateOrder from "./component/CRM/UpdateOrder/UpdateOrder";
@@ -47,6 +48,7 @@ function App() {
           <Route path="/parsel-list" element={<DisplayParselList />} />
           <Route path="/parsel-list/:id" element={<UpdateParselReq />} />
           <Route path="/Add-parsel" element={<AddParselRequest />} />
+          <Route path="/register" element={<DeliveryRegister />} />
           <Route path="/mark-attendance" element={<MarkAttendance />} />  
           <Route path="/displayattendance" element={<DisplayAttendance />} />
           {/* Dilmi  */}
