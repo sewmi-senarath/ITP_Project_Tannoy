@@ -60,6 +60,22 @@ app.get("/", (req, res) => {
     res.send("Home Page");
   });
 
+//Call Registration Model
+require("./Model/DelRegister");
+const Register = mongoose.model("Register");
+app.post("/register", async(req, res) => {
+  const {name, email, password} = req.body;
+  try {
+    await Register.create({
+      name,
+      email,
+      password,
+    })
+    res.send({status:"ok"});
+  }catch(err){
+    res.send({status:"err"});
+  }
+});
 
 
 //Database connection
