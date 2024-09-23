@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import Sidebar from "./deliveryHeader";
-import ParselCSS from "../../component/delivery/addParsals.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -48,7 +46,7 @@ function AddDeliveryRequest() {
 
   return (
     <div className="container">
-      <Sidebar />
+      
       <div className="form-container">
         <h1>Create New Delivery Request</h1>
         <form onSubmit={handleSubmit}>

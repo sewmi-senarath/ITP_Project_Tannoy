@@ -29,7 +29,7 @@ function DisplayParselList() {
   const tableRef = useRef()
 
   useEffect(() => {
-    const params = new URLSearchParams(location.search)
+    const params = new URLSearchParams(location.search);
     const searchParam = params.get("search") || ""
     setSearchQuery(searchParam)
 
