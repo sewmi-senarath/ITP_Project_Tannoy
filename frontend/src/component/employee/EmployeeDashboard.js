@@ -90,7 +90,7 @@ const EmployeeDashboard = () => {
       <div className="sidebar">
         <div className="logo">
           <img src={Logo} alt="Tannoy Electricals Logo" /><br />
-          <h2>Tannoy Electricals</h2>
+          
         </div>
         <ul className="nav-links">
           <li><a href="/mark-attendance">Mark Attendance</a></li>
@@ -98,9 +98,9 @@ const EmployeeDashboard = () => {
           <li><a href="/employeesalaryReport">Salary Report</a></li>
         </ul>
         <div className="profile">
-          <img src={manager} alt="Manager Photo" />
-          <p>HR Manager</p>
-          <p>hrmanager@tannoy.com</p>
+          <center><img src={manager} alt="Manager Photo" /></center>
+          <p>Employee Manager</p>
+          <p>employeemanager@tannoy.com</p>
         </div>
         <ul className="settings">
           <li><a href="#">Settings</a></li>
@@ -113,21 +113,23 @@ const EmployeeDashboard = () => {
         <header>
           <input
             type="text"
-            placeholder="Search by email or contact number..."
+            placeholder="Search by employee ID"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)} // Update search query on input change
           />
         </header>
-        <h1>Dashboard</h1>
-        <h2>Employee Details</h2>
+        <div>
+            <h1 style={{ fontFamily: 'Arial, sans-serif', fontSize: '36px', fontWeight: 'bold' }}>Dashboard</h1>
+            <h2 style={{ fontFamily: 'Times New Roman, serif', fontSize: '28px', fontStyle: 'italic' }}>Employee Details</h2>
+        </div>
 
         {/* Display an error message if fetching fails */}
         {error && <p className="error-message">{error}</p>}
 
         {/* Employee Table */}
-        <table>
-          <thead>
-            <tr>
+        <table> {/*change kala methana*/}
+        <thead>
+        <tr>
               <th>Employee ID</th>
               <th>Name</th>
               <th>Date of Birth</th>
@@ -141,7 +143,8 @@ const EmployeeDashboard = () => {
               <th>Employee Type</th>
               <th>Actions</th>
             </tr>
-          </thead>
+        </thead>
+
           <tbody>
             {filteredEmployees.length > 0 ? (
               filteredEmployees.map((employee) => (
