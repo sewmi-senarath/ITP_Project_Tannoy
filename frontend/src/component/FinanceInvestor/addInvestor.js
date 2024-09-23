@@ -2,7 +2,8 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom"; // useParams to get investorId from the URL
 import axios from "axios";
-import './AddInvestor.css';
+import '../../styles/AddInvestor.css';
+
 
 
 const AddInvestor = () => {

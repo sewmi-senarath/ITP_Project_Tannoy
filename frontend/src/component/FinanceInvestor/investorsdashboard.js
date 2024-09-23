@@ -3,11 +3,11 @@ import '../../App.css'; // Assuming your CSS is here
 import Logo from '../../images/logo.jpeg'; 
 import manager from '../../images/manager.jpeg'; // Manager's image
 import { useNavigate } from 'react-router-dom';
-import Header from './Header'; // Import the Header component
-import './InvestorsDashboard.css';
+ // Import the Header component
+import '../../styles/InvestorsDashboard.css';
 
 
-const InvestorsDashboard = () => {
+function InvestorsDashboard  ()  {
   const [investors, setInvestors] = useState([]); // State to hold investor data
   const [error, setError] = useState(''); // To handle errors
   const [searchQuery, setSearchQuery] = useState(''); // State to hold the search query
@@ -87,7 +87,7 @@ const InvestorsDashboard = () => {
 
   return (
     <div className="investor-dashboard">
-      <Header /> {/* Include the Header component here */}
+      {/* Include the Header component here */}
       
       {/* Sidebar Section */}
       <div className="sidebar">
