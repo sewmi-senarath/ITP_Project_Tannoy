@@ -25,7 +25,7 @@ function Login() {
       }else{
         alert("Login Error");
       }
-    }catch(er){
+    }catch(err){
       alert("error" + err.message);
     }
   }
@@ -77,4 +77,4 @@ function Login() {
   )
 }
 
-export default Login
+export default Login;
