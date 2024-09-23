@@ -103,7 +103,7 @@ const EmployeeSalaryReport = () => {
 
   return (
     <div className="report-container">
-      <h1>Generate Salary Report</h1>
+      <h1 style={{ fontFamily: 'Arial, sans-serif', fontSize: '36px', fontWeight: 'bold' }}>Salary Report</h1>
 
       {/* Error Message */}
       {errorMessage && <p className="error-message">{errorMessage}</p>}

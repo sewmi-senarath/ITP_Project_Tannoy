@@ -209,7 +209,8 @@ const MarkAttendance = () => {
 
   return (
     <div className="attendance-container">
-      <h1>Mark Attendance</h1>
+      {/*added css*/}
+      <h1 style={{ fontFamily: 'Arial, sans-serif', fontSize: '36px', fontWeight: 'bold' }}>Mark Attendance</h1>
 
       {/* Show error messages if any */}
       {errorMessage && <p className="error-message">{errorMessage}</p>}
