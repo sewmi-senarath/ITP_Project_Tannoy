@@ -7,6 +7,7 @@ import AddEmployee from "./component/employee/AddEmployee";
 import DisplayAttendance from "./component/employee/DisplayAttendance";
 import MarkAttendance from "./component/employee/MarkAttendance";
 import Home from "./component/home/home";
+import Login from "./component/delivery/Login";
 import DeliveryHome from "./component/delivery/deliveryHome"; 
 import DisplayParselList from "./component/delivery/displayParselList";
 import AddParselRequest from "./component/delivery/addDeliveryRequest";
@@ -44,6 +45,7 @@ function App() {
           <Route path="/employee-dashboard" element={<EmployeeDashboard />} />
           <Route path="/add-employee" element={<AddEmployee />} />
           <Route path="/add-employee/:employeeId" element={<AddEmployee />} />
+          <Route path="/login" element={<Login />} /> 
           <Route path="/deliveryHome" element={<DeliveryHome />} /> 
           <Route path="/parsel-list" element={<DisplayParselList />} />
           <Route path="/parsel-list/:id" element={<UpdateParselReq />} />
