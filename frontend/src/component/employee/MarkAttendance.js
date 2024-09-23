@@ -65,8 +65,7 @@ const MarkAttendance = () => {
 
   return (
     <div className="attendance-container">
-      {/*added css*/}
-      <h1 style={{ fontFamily: 'Arial, sans-serif', fontSize: '36px', fontWeight: 'bold' }}>Mark Attendance</h1>
+      <h1>Mark Attendance</h1>
 
       {/* Show error messages if any */}
       {errorMessage && <p className="error-message">{errorMessage}</p>}
@@ -153,5 +152,3 @@ const MarkAttendance = () => {
 };
 
 export default MarkAttendance;
-
-

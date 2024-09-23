@@ -1,4 +1,4 @@
-/* Container for the attendance table */
+/* Container for the attendance table
 .attendance-table-container {
     max-width: 900px;
     margin: 0 auto;
@@ -29,7 +29,7 @@
   /* Table header styling */
   .attendance-table th {
     background-color: #3498db;
-    color: white;
+    color:black;
     padding: 12px;
     text-align: left;
     font-size: 16px;
@@ -97,3 +97,58 @@
     }
   }
   
+ */
+
+
+ .attendance-table-container {
+  padding: 20px;
+}
+
+.filter-container {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.date-select,
+.employee-select,
+.status-select {
+  padding: 10px;
+  font-size: 16px;
+}
+
+.attendance-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.attendance-table th, .attendance-table td {
+  padding: 10px;
+  border: 1px solid #ccc;
+  text-align: left;
+}
+
+.attendance-table th {
+  background-color: #f4f4f4;
+  font-weight: bold;
+}
+
+.error-message {
+  color: red;
+  margin-bottom: 15px;
+}
+
+.generate-report-btn {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.generate-report-btn:hover {
+  background-color: #0056b3;
+}
