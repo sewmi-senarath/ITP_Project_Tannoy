@@ -1,11 +1,11 @@
-// export default addDeliveryRequest
 import React, { useState } from "react";
 import Sidebar from "./deliveryHeader";
-import ParselCSS from "../../styles/addParsals.css";
+import ParselCSS from "../../component/delivery/addParsals.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-function AddDeliveryRequest() { // Changed name to uppercase
+
+function AddDeliveryRequest() {
   const history = useNavigate();
   const [inputs, setInputs] = useState({
     fullName: "",
@@ -140,8 +140,12 @@ function AddDeliveryRequest() { // Changed name to uppercase
               <option value="">Select Status</option>
               <option value="Confirm Delivery">Confirm Delivery</option>
               <option value="Start Packaging">Start Packaging</option>
-              <option value="On the way to Warehouse">On the way to Warehouse</option>
-              <option value="Departure from Warehouse">Departure from Warehouse</option>
+              <option value="On the way to Warehouse">
+                On the way to Warehouse
+              </option>
+              <option value="Departure from Warehouse">
+                Departure from Warehouse
+              </option>
               <option value="Delivered">Delivered</option>
             </select>
           </label>
@@ -161,4 +165,4 @@ function AddDeliveryRequest() { // Changed name to uppercase
   );
 }
 
-export default AddDeliveryRequest; // Changed name to uppercase
+export default AddDeliveryRequest; 

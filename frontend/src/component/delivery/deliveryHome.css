@@ -2,7 +2,7 @@
 
 .home-wrapper {
   position: relative;
-  background-image: url('../images/deliveryHome.png'); /* Assuming correct path */
+  background-image: url('../../images/deliveryHome.png'); /* Assuming correct path */
   background-size: cover;
   background-position: center;
   height: 100vh;

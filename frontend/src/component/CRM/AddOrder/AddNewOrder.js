@@ -108,7 +108,7 @@ function AddNewOrder() {
           className=" w-4/5 mx-auto mt-5 p-5 rounded-lg flex flex-row"
           onSubmit={handleSubmit}
         >
-          <div className="flex flex-row bg-green-300 p-3 py-5 rounded-lg w-3/5 shadow-2xl mx-auto">
+          <div className="flex flex-row bg-blue-300 p-3 py-5 rounded-lg w-3/5 shadow-2xl mx-auto">
             <div>
             <div className="mt-3 ml-8">
                 <label className="font-bold text-slate-700 text-2xl ">
@@ -283,10 +283,10 @@ function AddNewOrder() {
                 />
               </div>
               {/* Place Order Button */}
-              <div className="mt-5 ml-10">
+              <div className="mt-10 ml-10">
                 <button
                   type="submit"
-                  className="bg-blue-500 hover:bg-blue-600 text-white font-bold mt-5 py-2 px-4 rounded-lg w-72 h-12"
+                  className="bg-blue-700 hover:bg-blue-600 text-white font-bold mt-5 py-2 px-4 rounded-lg w-72 h-12"
                 >
                   Place Order
                 </button>
