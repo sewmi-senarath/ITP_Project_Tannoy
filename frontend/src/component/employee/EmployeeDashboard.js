@@ -1,44 +1,106 @@
+// export default EmployeeDashboard;
 import React, { useState, useEffect } from 'react';
-import '../../App.css';
+import '../../styles/employee.css'; // Assuming your CSS is here
 import Logo from '../../images/logo.jpeg';
-import manager from '../../images/manager.jpeg';
+import manager from '../../images/manager.jpeg'; // Manager's image
+import { useNavigate } from 'react-router-dom';
 
 const EmployeeDashboard = () => {
   const [employees, setEmployees] = useState([]); // State to hold employee data
+  const [error, setError] = useState(''); // To handle errors
+  const [searchQuery, setSearchQuery] = useState(''); // State to hold the search query
+  const [filteredEmployees, setFilteredEmployees] = useState([]); // State to hold filtered results
+  const navigate = useNavigate();
 
+  // Fetch employee data from the backend API when the component mounts
   useEffect(() => {
     const fetchEmployees = async () => {
       try {
-        const response = await fetch('/api/employees'); // Adjust this URL to your actual API endpoint
+        const response = await fetch('http://localhost:5000/api/employees'); // Backend URL
         if (!response.ok) {
-          throw new Error('Failed to fetch');
+          throw new Error('Failed to fetch employees');
         }
         const data = await response.json();
-        setEmployees(data);
+        console.log('Employees fetched:', data); // Check the fetched employees
+        setEmployees(data); // Set the employees state with the fetched data
+        setFilteredEmployees(data); // Initialize the filtered employees with all data
       } catch (error) {
         console.error('Error fetching employees:', error);
+        setError('Could not fetch employee data');
       }
     };
 
-    fetchEmployees();
-  }, []);
+    fetchEmployees(); // Fetch employees on component mount
+  }, []); // Empty dependency array ensures it runs only once
+
+  // UseEffect to filter employees as searchQuery changes (dynamic filtering)
+  useEffect(() => {
+    if (searchQuery) {
+      const query = searchQuery.toLowerCase();
+      const filtered = employees.filter((employee) =>
+        (employee.email?.toLowerCase() || '').includes(query) ||
+        (employee.contactNumber?.toLowerCase() || '').includes(query) ||
+        (employee.empId?.toLowerCase() || '').includes(query)
+      );
+      setFilteredEmployees(filtered); // Update filtered employees with the filtered result
+    } else {
+      setFilteredEmployees(employees); // If no search query, show all employees
+    }
+  }, [searchQuery, employees]);
+  // Trigger filtering when searchQuery or employees change
+
+  // Function to handle deleting an employee
+  const deleteEmployee = async (employeeId) => {
+    const confirmed = window.confirm('Are you sure you want to delete this employee?');
+    if (!confirmed) return; // If the user cancels, do nothing
+
+    try {
+      const response = await fetch(`http://localhost:5000/api/employees/${employeeId}`, {
+        method: 'DELETE',
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to delete employee');
+      }
+
+      // If deletion is successful, update the frontend state
+      setEmployees((prevEmployees) => prevEmployees.filter((emp) => emp._id !== employeeId));
+      setFilteredEmployees((prevFiltered) => prevFiltered.filter((emp) => emp._id !== employeeId)); // Remove from filtered list as well
+      alert('Employee deleted successfully');
+    } catch (error) {
+      console.error('Error deleting employee:', error);
+      alert('Failed to delete employee');
+    }
+  };
+
+  // Handle the edit button to navigate to AddEmployee with the employee ID
+  const handleEdit = (employeeId) => {
+    navigate(`/add-employee/${employeeId}`);
+  };
+
+  // Helper function to format the date (e.g., Date of Birth)
+  const formatDate = (dob) => {
+    const date = new Date(dob);
+    return date.toLocaleDateString();
+  };
 
   return (
     <div className="employee-dashboard">
+      {/* Sidebar Section */}
       <div className="sidebar">
         <div className="logo">
           <img src={Logo} alt="Tannoy Electricals Logo" /><br />
-          <h2>Tannoy Electricals</h2>
+          
         </div>
         <ul className="nav-links">
-          <li><a href="#">Employee Details</a></li>
-          <li><a href="/employee-dashboard">Add Employee</a></li>
-          <li><a href="#" className="active">Employee Overview</a></li>
+          <li><a href="/mark-attendance">Mark Attendance</a></li>
+          <li><a href="/add-employee">Add Employee</a></li>
+          <li><a href="/employeesalaryReport">Salary Report</a></li>
         </ul>
         <div className="profile">
-          <img src={manager} alt="Manager Photo" />
-          <p>HR Manager</p>
-          <p>hrmanager@tannoy.com</p>
+          <center><img src={manager} alt="Manager Photo" /></center>
+          <p>Employee Manager</p>
+          <p>employeemanager@tannoy.com</p>
         </div>
         <ul className="settings">
           <li><a href="#">Settings</a></li>
@@ -46,15 +108,28 @@ const EmployeeDashboard = () => {
         </ul>
       </div>
 
+      {/* Main Content Section */}
       <div className="main-content">
         <header>
-          <input type="text" placeholder="Search..." />
+          <input
+            type="text"
+            placeholder="Search by employee ID"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)} // Update search query on input change
+          />
         </header>
-        <h1>Dashboard</h1>
-        <h2>Employee Details</h2>
-        <table>
-          <thead>
-            <tr>
+        <div>
+            <h1 style={{ fontFamily: 'Arial, sans-serif', fontSize: '36px', fontWeight: 'bold' }}>Dashboard</h1>
+            <h2 style={{ fontFamily: 'Times New Roman, serif', fontSize: '28px', fontStyle: 'italic' }}>Employee Details</h2>
+        </div>
+
+        {/* Display an error message if fetching fails */}
+        {error && <p className="error-message">{error}</p>}
+
+        {/* Employee Table */}
+        <table> {/*change kala methana*/}
+        <thead>
+        <tr>
               <th>Employee ID</th>
               <th>Name</th>
               <th>Date of Birth</th>
@@ -68,27 +143,55 @@ const EmployeeDashboard = () => {
               <th>Employee Type</th>
               <th>Actions</th>
             </tr>
-          </thead>
+        </thead>
+
           <tbody>
-            {employees.map((employee) => (
-              <tr key={employee._id}>
-                <td>{employee.employeeId}</td>
-                <td>{employee.name}</td>
-                <td>{employee.dob}</td>
-                <td>{employee.gender}</td>
-                <td><img src={employee.photo} alt={`${employee.name} Photo`} /></td>
-                <td>{employee.address}</td>
-                <td>{employee.contactNumber}</td>
-                <td>{employee.email}</td>
-                <td>{employee.position}</td>
-                <td>{employee.department}</td>
-                <td>{employee.employeeType}</td>
-                <td>
-                  <button className="edit-btn">Edit</button>
-                  <button className="delete-btn">Delete</button>
+            {filteredEmployees.length > 0 ? (
+              filteredEmployees.map((employee) => (
+                <tr key={employee._id}>
+                  <td>{employee.empId}</td>
+                  <td>{employee.name}</td>
+                  <td>{formatDate(employee.dob)}</td>
+                  <td>{employee.gender}</td>
+                  <td>
+                    {employee.photo ? (
+                      <img
+                        src={employee.photo}
+                        alt={`${employee.name} Photo`}
+                        className="employee-photo"
+                      />
+                    ) : (
+                      <img
+                        src="path/to/placeholder.png" // Use a placeholder image if no photo
+                        alt="Placeholder"
+                        className="employee-photo"
+                      />
+                    )}
+                  </td>
+                  <td>{employee.address}</td>
+                  <td>{employee.contactNumber}</td>
+                  <td>{employee.email}</td>
+                  <td>{employee.position}</td>
+                  <td>{employee.department}</td>
+                  <td>{employee.employmentType}</td>
+                  <td>
+                    <button className="edit-btn" onClick={() => handleEdit(employee._id)}>Edit</button> 
+                    <button
+                      className="delete-btn"
+                      onClick={() => deleteEmployee(employee._id)} // Call deleteEmployee on click
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="12" style={{ textAlign: 'center' }}>
+                  No employees found
                 </td>
               </tr>
-            ))}
+            )}
           </tbody>
         </table>
       </div>
@@ -97,4 +200,3 @@ const EmployeeDashboard = () => {
 };
 
 export default EmployeeDashboard;
-//sewmi

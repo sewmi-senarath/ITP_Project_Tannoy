@@ -23,12 +23,12 @@ const getAllRecyclingProducts = async(req, res, next) => {
 
 //data insert
 const addRecyclingProducts = async(req, res, next) => {
-  const {recyclingProductName, quantity, stage, status} = req.body;
+  const {recyclingProductName, quantity, stage, quality, status, date} = req.body;
 
   let recyclingProduct;
 
   try {
-    recyclingProduct = new RecyclingProduct({recyclingProductName, quantity, stage, status  });
+    recyclingProduct = new RecyclingProduct({recyclingProductName, quantity, stage, quality, status, date  });
     await recyclingProduct.save();
   }catch(err){
     console.log(err);
@@ -66,13 +66,13 @@ const getById = async(req, res, next) => {
 //Update recyclingProduct details
 const updateRecyclingProduct = async(req, res, next) => {
   const id = req.params.id;
-  const {recyclingProductName, quantity, stage, status} = req.body;
+  const {recyclingProductName, quantity, stage, quality, status, date} = req.body;
 
   let recyclingProducts;
 
   try{
     recyclingProducts = await RecyclingProduct.findByIdAndUpdate(id,
-      {recyclingProductName:recyclingProductName, quantity:quantity, stage:stage, status:status });
+      {recyclingProductName:recyclingProductName, quantity:quantity, stage:stage, quality:quality, status:status, date:date });
       recyclingProducts = await recyclingProducts.save();
   }catch(err){
     console.log(err);

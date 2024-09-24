@@ -1,11 +1,10 @@
-// controllers/employeeController.js
-
-const Employee = require("../Model/EmployeeModel");
+const Employee = require("../Model/EmployeeModel"); // Assuming your model is in the ../Model/EmployeeModel.js
 
 // Create a new employee
 exports.createEmployee = async (req, res) => {
   try {
     const {
+      empId,
       name,
       dob,
       gender,
@@ -18,9 +17,8 @@ exports.createEmployee = async (req, res) => {
       photo,
     } = req.body;
 
-    console.log(req.body);  // Log the incoming request body
-
     const employee = new Employee({
+      empId,
       name,
       dob,
       gender,
@@ -33,15 +31,20 @@ exports.createEmployee = async (req, res) => {
       photo,
     });
 
-    const savedEmployee = await employee.save();
-    res.status(201).json(savedEmployee);
+    await employee.save();
+    res.status(201).json({ message: "Employee added successfully", employee });
   } catch (error) {
-    console.error("Error creating employee:", error);
-    res.status(500).json({
-      message: "Error creating employee",
-      error: error.message,
-      validationErrors: error.errors  // Include specific validation errors
-    });
+    if (error.code === 11000) {  // MongoDB duplicate key error
+      // Check which field is duplicate
+      if (error.keyValue.empId) {
+        return res.status(400).json({ message: `Employee ID ${error.keyValue.empId} already exists.` });
+      }
+      if (error.keyValue.email) {
+        return res.status(400).json({ message: `Email ${error.keyValue.email} already exists.` });
+      }
+    }
+    console.error("Error adding employee:", error);
+    res.status(500).json({ message: "Failed to add employee", error });
   }
 };
 
@@ -49,29 +52,31 @@ exports.createEmployee = async (req, res) => {
 // Get all employees
 exports.getAllEmployees = async (req, res) => {
   try {
-    const employees = await Employee.find();
+    const employees = await Employee.find(); // Retrieve all employees
     res.status(200).json(employees);
   } catch (error) {
     console.error("Error retrieving employees:", error);
-    res
-      .status(500)
-      .json({ message: "Error retrieving employees", error: error.message });
+    res.status(500).json({
+      message: "Error retrieving employees",
+      error: error.message,
+    });
   }
 };
 
 // Get a single employee by ID
 exports.getEmployeeById = async (req, res) => {
   try {
-    const employee = await Employee.findById(req.params.id);
+    const employee = await Employee.findById(req.params.id); // Find employee by ID
     if (!employee) {
       return res.status(404).json({ message: "Employee not found" });
     }
     res.status(200).json(employee);
   } catch (error) {
     console.error("Error retrieving employee by ID:", error);
-    res
-      .status(500)
-      .json({ message: "Error retrieving employee", error: error.message });
+    res.status(500).json({
+      message: "Error retrieving employee",
+      error: error.message,
+    });
   }
 };
 
@@ -80,8 +85,8 @@ exports.updateEmployee = async (req, res) => {
   try {
     const updatedEmployee = await Employee.findByIdAndUpdate(
       req.params.id,
-      req.body,
-      { new: true } // Return the updated document
+      req.body, // Update with request body data
+      { new: true, runValidators: true } // Return the updated document and validate fields
     );
 
     if (!updatedEmployee) {
@@ -91,16 +96,17 @@ exports.updateEmployee = async (req, res) => {
     res.status(200).json(updatedEmployee);
   } catch (error) {
     console.error("Error updating employee:", error);
-    res
-      .status(500)
-      .json({ message: "Error updating employee", error: error.message });
+    res.status(500).json({
+      message: "Error updating employee",
+      error: error.message,
+    });
   }
 };
 
 // Delete an employee by ID
 exports.deleteEmployee = async (req, res) => {
   try {
-    const deletedEmployee = await Employee.findByIdAndDelete(req.params.id);
+    const deletedEmployee = await Employee.findByIdAndDelete(req.params.id); // Find and delete employee by ID
 
     if (!deletedEmployee) {
       return res.status(404).json({ message: "Employee not found" });
@@ -109,15 +115,9 @@ exports.deleteEmployee = async (req, res) => {
     res.status(200).json({ message: "Employee deleted successfully" });
   } catch (error) {
     console.error("Error deleting employee:", error);
-    res
-      .status(500)
-      .json({ message: "Error deleting employee", error: error.message });
+    res.status(500).json({
+      message: "Error deleting employee",
+      error: error.message,
+    });
   }
 };
-
-// Export the functions
-// exports.getAllEmployees = getAllEmployees;
-// exports.createEmployee = createEmployee;
-// exports.getEmployeeById = getEmployeeById;
-// exports.updateEmployee = updateEmployee;
-// exports.deleteEmployee = deleteEmployee;
