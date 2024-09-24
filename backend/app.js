@@ -53,6 +53,7 @@ app.use('/api/products', productRoutes);
 app.use('/api/items',itemRoutes);
 app.post("/CRMRegister", CRMRegister);
 app.post("/loginCRM", loginCRM);
+app.use(require("./Route/TechnicalRoutes.js"));
 
 
 // routes customer management

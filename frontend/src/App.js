@@ -9,6 +9,11 @@ import MarkAttendance from "./component/employee/MarkAttendance";
 import Home from "./component/home/home";
 import Login from "./component/delivery/Login";
 import DeliveryHome from "./component/delivery/deliveryHome"; 
+import TechnicalHome from './component/technical/technicalHome';
+import Addmachine from "./component/technical/addmachine";
+//juthmini
+import "./App.css";
+import MachinePage from "./component/technical/page/MachinePage";
 import DisplayParselList from "./component/delivery/displayParselList";
 import AddParselRequest from "./component/delivery/addDeliveryRequest";
 import UpdateParselReq from "./component/delivery/updateParselReq";
@@ -37,6 +42,7 @@ import RecycledProducts from "./component/recycledProducts/RecycledProducts";
 
 function App() {
   return (
+    
     <BrowserRouter>
       <div>
         <Header />
@@ -44,6 +50,10 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/employee-dashboard" element={<EmployeeDashboard />} />
           <Route path="/add-employee" element={<AddEmployee />} />
+          <Route path="/technicalHome" element={<TechnicalHome />} />
+          <Route path="/addmachine" element={<Addmachine />} />
+          <Route path="/machine" element={< MachinePage/>} />
+          
           <Route path="/add-employee/:employeeId" element={<AddEmployee />} />
           <Route path="/login" element={<Login />} /> 
           <Route path="/deliveryHome" element={<DeliveryHome />} /> 
