@@ -22,35 +22,22 @@ function DisplayParselList() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(false)
   const [searchQuery, setSearchQuery] = useState("")
-  const [noResults, setNoResults] = useState(false)
 
   const location = useLocation()
   const navigate = useNavigate()
   const tableRef = useRef()
 
   useEffect(() => {
-    const params = new URLSearchParams(location.search);
-    const searchParam = params.get("search") || ""
-    setSearchQuery(searchParam)
-
     fetchHandler().then((data) => {
       if (data && data.parcels) {
-        const filteredParsels = data.parcels.filter((parsel) =>
-          Object.values(parsel).some((field) =>
-            field.toString().toLowerCase().includes(searchParam.toLowerCase())
-          )
-        )
-        setParselData(filteredParsels)
-        setNoResults(filteredParsels.length === 0)
+        setParselData(data.parcels)
         setLoading(false)
       } else {
         setLoading(false)
         setError(true)
       }
     })
-  }, [location.search])
-
-  const history = useNavigate()
+  }, [])
 
   const deleteHandler = async (id) => {
     try {
@@ -77,11 +64,25 @@ function DisplayParselList() {
     window.open(whatsAppUrl, "_blank")
   }
 
+  // Filter parcels based on search query
+  const filteredParselData = parselData.filter((parsel) =>
+    Object.values(parsel).some((field) =>
+      field.toString().toLowerCase().includes(searchQuery.toLowerCase())
+    )
+  )
+
   return (
     <div id="container">
       <Sidebar />
 
       <div id="main-content">
+        {/* Total Order Requests Count Section */}
+        <div id="order-count">
+          <h2>
+            Total Order Requests: {parselData.length}
+          </h2>
+        </div>
+        <br></br>
         <button id="btn-back" onClick={() => navigate("/deliveryHome")}>
           <span id="back-arrow">←</span> Back
         </button>
@@ -102,20 +103,14 @@ function DisplayParselList() {
           placeholder="Search Parcel Details"
         />
         <br />
-        <button
-          id="btn-back"
-          onClick={() => navigate(`/parsel-list?search=${searchQuery}`)}
-        >
-          Search
-        </button>
 
-        {noResults ? (
+        {filteredParselData.length === 0 ? (
           <p>No parcels found</p>
         ) : loading ? (
           <p>Loading parcels...</p>
         ) : error ? (
           <p>Failed to load parcel data. Please try again.</p>
-        ) : parselData.length > 0 ? (
+        ) : filteredParselData.length > 0 ? (
           <table id="table" ref={tableRef}>
             <thead>
               <tr>
@@ -126,7 +121,7 @@ function DisplayParselList() {
               </tr>
             </thead>
             <tbody>
-              {parselData.map((parsel) => (
+              {filteredParselData.map((parsel) => (
                 <tr key={parsel._id}>
                   <td>{parsel._id}</td>
                   <td>{parsel.fullName}</td>

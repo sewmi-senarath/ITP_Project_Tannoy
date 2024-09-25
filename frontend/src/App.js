@@ -9,6 +9,7 @@ import MarkAttendance from "./component/employee/MarkAttendance";
 import Home from "./component/home/home";
 import Login from "./component/delivery/Login";
 import DeliveryHome from "./component/delivery/deliveryHome"; 
+import CusParselList from "./component/delivery/cusParsel"; 
 import TechnicalHome from './component/technical/technicalHome';
 import Addmachine from "./component/technical/addmachine";
 //juthmini
@@ -58,6 +59,7 @@ function App() {
           <Route path="/login" element={<Login />} /> 
           <Route path="/deliveryHome" element={<DeliveryHome />} /> 
           <Route path="/parsel-list" element={<DisplayParselList />} />
+          <Route path="/cusParsel-list" element={<CusParselList />} />
           <Route path="/parsel-list/:id" element={<UpdateParselReq />} />
           <Route path="/Add-parsel" element={<AddParselRequest />} />
           <Route path="/register" element={<DeliveryRegister />} />
