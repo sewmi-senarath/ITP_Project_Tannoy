@@ -1,10 +1,11 @@
 /* Main container for the form */
 .add-supplier-container {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    height:120vh;
+    justify-content: space-between;
+    align-items: flex-start;
+    min-height: calc(100vh - 100px); /* Adjust this based on the height of the header and footer */
     background-color: #f4f6f9;
+    padding: 20px; /* Optional: add some padding */
   }
   
   .form-container {
@@ -14,19 +15,40 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     max-width: 500px;
     width: 100%;
+    
+   
   }
-  
+
+  /* Image styles for right alignment */
+.supplier-img {
+  width: 300px; /* Adjust width as needed */
+  height: auto;
+  margin-left: 20px; /* Add spacing between the form and the image */
+  border-radius: 8px;
+  align-self: flex-start; /* Align the image to the top of the container */
+}
+
   h1 {
     text-align: center;
     font-size: 24px;
-    color: #333;
+    font-weight: bold;
+    color: #1344e4;
     margin-bottom: 20px;
   }
   
-  .supplier-form {
+
+  .supplier-form  {
     display: flex;
     flex-direction: column;
+    gap: 20px;
+    background-color: #c7ddf8; /* Change this color to your desired background color */
+    padding: 10px; /* Optional: add some padding to make the background more visible */
+    width: 500px;
+    max-width:100%;
+    height:auto;
   }
+  
+
   
   .form-group {
     margin-bottom: 20px;

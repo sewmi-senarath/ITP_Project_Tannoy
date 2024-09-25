@@ -1,5 +1,7 @@
+
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import jsPDF from 'jspdf';  // For generating PDFs
 import '../../styles/employee.css';  // Your CSS file
 import Logo from '../../images/logo.jpeg';
 import manager from '../../images/manager.jpeg';
@@ -9,9 +11,10 @@ const ProductDashboard = () => {
   const [products, setProducts] = useState([]);  // Hold product data
   const [loading, setLoading] = useState(true);  // Loading state
   const [error, setError] = useState('');  // Error handling
-  const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState('');  // Search query state
-  const [filteredProducts, setFilteredProducts] = useState([]);  // Corrected line
+  const [filteredProducts, setFilteredProducts] = useState([]);  // Filtered products
+  const [availabilityFilter, setAvailabilityFilter] = useState('');  // Availability filter
+  const navigate = useNavigate();
 
   // Fetch product data from the backend API when the component mounts
   useEffect(() => {
@@ -29,21 +32,21 @@ const ProductDashboard = () => {
     fetchProducts();
   }, []);
 
+  // Filter products by search query and availability
   useEffect(() => {
     const lowerCaseQuery = searchQuery.toLowerCase(); // Make search case-insensitive
-    const filtered = products.filter(product => 
+    let filtered = products.filter(product =>
       product.ProductCode.toLowerCase().includes(lowerCaseQuery)
     );
+    
+    if (availabilityFilter === 'in-stock') {
+      filtered = filtered.filter(product => product.availability === 'In Stock');
+    } else if (availabilityFilter === 'out-of-stock') {
+      filtered = filtered.filter(product => product.availability === 'Out of Stock');
+    }
+
     setFilteredProducts(filtered);
-  }, [searchQuery, products]);  // Run this effect when searchQuery or products changes
-
-  if (loading) {
-    return <p>Loading products...</p>;
-  }
-
-  if (error) {
-    return <p>{error}</p>;
-  }
+  }, [searchQuery, availabilityFilter, products]);  // Run this effect when searchQuery, availabilityFilter, or products changes
 
   const handleEdit = (productId) => {
     navigate(`/Addproduct/${productId}`);  // Pass the product ID correctly
@@ -65,6 +68,37 @@ const ProductDashboard = () => {
       alert('Failed to delete product.');
     }
   };
+
+  // Generate PDF report
+  const generateReport = () => {
+    const doc = new jsPDF();
+    
+    doc.text('Product Report', 10, 10);
+
+    // Add table headers
+    doc.text('Product Code | Product Name | Stock Size | Category | Availability', 10, 20);
+
+    let yOffset = 30; // Start position for table content
+    filteredProducts.forEach((product) => {
+      doc.text(
+        `${product.ProductCode} | ${product.ProductName} | ${product.stockSize} | ${product.ProductCategory} | ${product.availability || 'Unknown'}`,
+        10,
+        yOffset
+      );
+      yOffset += 10; // Move to the next line
+    });
+
+    // Save the PDF
+    doc.save('Product_Report.pdf');
+  };
+
+  if (loading) {
+    return <p>Loading products...</p>;
+  }
+
+  if (error) {
+    return <p>{error}</p>;
+  }
   
   return (
     <div className="employee-dashboard">
@@ -74,7 +108,7 @@ const ProductDashboard = () => {
           <h2>Tannoy Electricals</h2>
         </div>
         <ul className="nav-links">
-        <li><a href="/productDashboard">Product Details</a></li>
+          <li><a href="/productDashboard">Product Details</a></li>
           <li><a href="/Addproduct">Add Product</a></li>
           <li><a href="/supplierDashboard">Supplier details</a></li>
           <li><a href="/Addsupplier">Add Supplier</a></li>
@@ -93,17 +127,34 @@ const ProductDashboard = () => {
         </ul>
       </div>
 
+
+        
       <div className="main-content">
-        <header>
+     
+      <h1>Product Details</h1>
+        <div className="filter-bar">
+        <select
+            value={availabilityFilter}
+            onChange={(e) => setAvailabilityFilter(e.target.value)}
+            className="availability-filter"
+          >
+            <option value="">All Products</option>
+            <option value="in-stock">In Stock</option>
+            <option value="out-of-stock">Out of Stock</option>
+          </select>
+
+
+
           <input
             type="text"
             placeholder="Search by Product Code..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)} // Update search query
+            className="search-bar"
           />
-        </header>
-        <h1>Dashboard</h1>
-        <h2>Product Details</h2>
+          
+        
+        </div>
 
         <table>
           <thead>
@@ -140,6 +191,11 @@ const ProductDashboard = () => {
             )}
           </tbody>
         </table>
+
+        {/* Generate Report Button */}
+        <button className="generate-report-btn" onClick={generateReport}>
+          Generate Report
+        </button>
       </div>
     </div>
   );
