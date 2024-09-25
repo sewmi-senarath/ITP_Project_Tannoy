@@ -1,53 +1,59 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios'; // For making HTTP requests
+import axios from 'axios';
+import { jsPDF } from 'jspdf'; // Import jsPDF for PDF generation
+import 'jspdf-autotable'; // Plugin for creating table in PDF
 import Logo from '../../images/logo.jpeg';
 import manager from '../../images/manager.jpeg';
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 
 const StockDashboard = () => {
-  const [items, setItems] = useState([]); // State to store inventory items
-  const [loading, setLoading] = useState(true); // Loading state
-  const [error, setError] = useState(''); // Error state for handling API errors
-  const [searchQuery, setSearchQuery] = useState(''); // State for search query
-  const [filteredItems, setFilteredItems] = useState([]); // State to store filtered items
+  const [items, setItems] = useState([]); 
+  const [loading, setLoading] = useState(true); 
+  const [error, setError] = useState(''); 
+  const [searchQuery, setSearchQuery] = useState(''); 
+  const [filteredItems, setFilteredItems] = useState([]); 
+  const [availabilityFilter, setAvailabilityFilter] = useState('All');
   const navigate = useNavigate(); 
 
-  // Fetch items from the backend API when the component mounts
   useEffect(() => {
     const fetchItems = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/items'); // Adjust the API route
-        setItems(response.data); // Store the fetched items in the state
-        setFilteredItems(response.data); // Initialize filtered items
-        setLoading(false); // Set loading to false when data is loaded
+        const response = await axios.get('http://localhost:5000/api/items'); 
+        setItems(response.data); 
+        setFilteredItems(response.data); 
+        setLoading(false); 
       } catch (err) {
         setError('Error fetching items');
-        setLoading(false); // Stop loading if there's an error
+        setLoading(false); 
       }
     };
 
     fetchItems();
-  }, []); // Empty dependency array means this effect runs once on component mount
+  }, []); 
 
-  // Handle search functionality
   useEffect(() => {
-    const lowerCaseQuery = searchQuery.toLowerCase(); // Make search case-insensitive
-    const filtered = items.filter(item =>
-      item.itemCode.toLowerCase().includes(lowerCaseQuery) || // Search by item code
-      item.itemCategory.toLowerCase().includes(lowerCaseQuery) // Search by item category
-    );
-    setFilteredItems(filtered); // Update the filtered items based on search query
-  }, [searchQuery, items]); // Re-run the effect when search query or items change
+    const lowerCaseQuery = searchQuery.toLowerCase(); 
 
-  // Handle delete action
+    let filtered = items.filter(item =>
+      item.itemCode.toLowerCase().includes(lowerCaseQuery) || 
+      item.itemCategory.toLowerCase().includes(lowerCaseQuery)
+    );
+
+    if (availabilityFilter !== 'All') {
+      filtered = filtered.filter(item => item.availability === availabilityFilter);
+    }
+
+    setFilteredItems(filtered); 
+  }, [searchQuery, items, availabilityFilter]); 
+
   const handleDelete = async (itemId) => {
     const confirmed = window.confirm('Are you sure you want to delete this item?');
     if (!confirmed) return;
-  
+
     try {
-      await axios.delete(`http://localhost:5000/api/items/${itemId}`); // Use backticks for template literal
-      setItems(prevItems => prevItems.filter(item => item._id !== itemId)); // Update state after deletion
-      setFilteredItems(prevItems => prevItems.filter(item => item._id !== itemId)); // Update filtered items
+      await axios.delete(`http://localhost:5000/api/items/${itemId}`); 
+      setItems(prevItems => prevItems.filter(item => item._id !== itemId)); 
+      setFilteredItems(prevItems => prevItems.filter(item => item._id !== itemId)); 
       alert('Item deleted successfully');
     } catch (err) {
       alert('Failed to delete item');
@@ -63,7 +69,36 @@ const StockDashboard = () => {
   }
 
   const handleEdit = (itemId) => {
-    navigate(`/addStock/${itemId}`);  // Pass the item ID to the edit route
+    navigate(`/addStock/${itemId}`);
+  };
+
+  // Function to generate PDF report
+  const generatePDFReport = () => {
+    const doc = new jsPDF();
+    doc.text('Stock Inventory Report', 14, 16);
+    
+    const tableColumn = ['Item Code', 'Item Name', 'Item Category', 'Description', 'Stock Size', 'Availability'];
+    const tableRows = [];
+
+    filteredItems.forEach(item => {
+      const itemData = [
+        item.itemCode,
+        item.itemName,
+        item.itemCategory,
+        item.itemDescription || 'No description',
+        item.stockSize,
+        item.availability === 'Available' ? 'Available' : 'Unavailable',
+      ];
+      tableRows.push(itemData);
+    });
+
+    doc.autoTable({
+      head: [tableColumn],
+      body: tableRows,
+      startY: 20
+    });
+
+    doc.save('Stock_Inventory_Report.pdf');
   };
 
   return (
@@ -94,16 +129,30 @@ const StockDashboard = () => {
       </div>
 
       <div className="main-content">
-        <header>
-          <input
-            type="text"
-            placeholder="Search by Item Code or Category..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)} // Update search query
-          />
-        </header>
         <h1>Dashboard</h1>
         <h2>Inventory Details</h2>
+
+        {/* Filter Bar - Dropdown and Search Bar */}
+        <div className="filter-bar">
+          <select
+            value={availabilityFilter}
+            onChange={(e) => setAvailabilityFilter(e.target.value)}
+            className="availability-filter"
+          >
+            <option value="All">All</option>
+            <option value="Available">Available</option>
+            <option value="Unavailable">Unavailable</option>
+          </select>
+
+          <input
+            type="text"
+            className="search-bar"
+            placeholder="Search by Item Code or Category..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)} 
+          />
+        </div>
+
         <table>
           <thead>
             <tr>
@@ -125,7 +174,7 @@ const StockDashboard = () => {
                   <td>{item.itemCategory}</td>
                   <td>{item.itemDescription || 'No description'}</td>
                   <td>{item.stockSize}</td>
-                  <td>{item.availability ? 'Available' : 'Unavailable'}</td>
+                  <td>{item.availability === 'Available' ? 'Available' : 'Unavailable'}</td>
                   <td>
                     <button className="edit-btn" onClick={() => handleEdit(item._id)}>Edit</button><br /><br />
                     <button className="delete-btn" onClick={() => handleDelete(item._id)}>Delete</button>
@@ -139,6 +188,11 @@ const StockDashboard = () => {
             )}
           </tbody>
         </table>
+
+        {/* Generate Report Button */}
+        <button className="generate-report-btn" onClick={generatePDFReport}>
+          Generate Report
+        </button>
       </div>
     </div>
   );
