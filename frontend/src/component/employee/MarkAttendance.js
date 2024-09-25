@@ -152,5 +152,3 @@ const MarkAttendance = () => {
 };
 
 export default MarkAttendance;
-
-

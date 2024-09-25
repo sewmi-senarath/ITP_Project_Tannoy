@@ -7,10 +7,17 @@ import AddEmployee from "./component/employee/AddEmployee";
 import DisplayAttendance from "./component/employee/DisplayAttendance";
 import MarkAttendance from "./component/employee/MarkAttendance";
 import Home from "./component/home/home";
+import Login from "./component/delivery/Login";
 import DeliveryHome from "./component/delivery/deliveryHome"; 
+import TechnicalHome from './component/technical/technicalHome';
+import Addmachine from "./component/technical/addmachine";
+//juthmini
+import "./App.css";
+import MachinePage from "./component/technical/page/MachinePage";
 import DisplayParselList from "./component/delivery/displayParselList";
 import AddParselRequest from "./component/delivery/addDeliveryRequest";
 import UpdateParselReq from "./component/delivery/updateParselReq";
+import DeliveryRegister from "./component/delivery/Register";
 import AddNewOrder from "./component/CRM/AddOrder/AddNewOrder";
 import OrderDtails from "./component/CRM/OrderDtails/OrderDtails";
 import UpdateOrder from "./component/CRM/UpdateOrder/UpdateOrder";
@@ -31,11 +38,11 @@ import RecycleProducts from "./component/recycledProducts/RecycleProducts";
 import RecyclingProductsTable from "./component/recycledProducts/RecyclingProductsTable";
 import RecycledProducts from "./component/recycledProducts/RecycledProducts";
 
-//juthmini
-import "./App.css";
+
 
 function App() {
   return (
+    
     <BrowserRouter>
       <div>
         <Header />
@@ -43,11 +50,17 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/employee-dashboard" element={<EmployeeDashboard />} />
           <Route path="/add-employee" element={<AddEmployee />} />
+          <Route path="/technicalHome" element={<TechnicalHome />} />
+          <Route path="/addmachine" element={<Addmachine />} />
+          <Route path="/machine" element={< MachinePage/>} />
+          
           <Route path="/add-employee/:employeeId" element={<AddEmployee />} />
+          <Route path="/login" element={<Login />} /> 
           <Route path="/deliveryHome" element={<DeliveryHome />} /> 
           <Route path="/parsel-list" element={<DisplayParselList />} />
           <Route path="/parsel-list/:id" element={<UpdateParselReq />} />
           <Route path="/Add-parsel" element={<AddParselRequest />} />
+          <Route path="/register" element={<DeliveryRegister />} />
           <Route path="/mark-attendance" element={<MarkAttendance />} />  
           <Route path="/displayattendance" element={<DisplayAttendance />} />
           {/* Dilmi  */}

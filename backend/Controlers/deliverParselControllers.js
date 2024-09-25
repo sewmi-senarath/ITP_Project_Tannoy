@@ -1,13 +1,12 @@
 //insert the model
 const Parsel = require("../Model/deliverParselModel");
 
-
 //display data
 const getAllParsel = async (req, res, next) => {
   let parcels;
 
   try {
-    parcels = await Parsel.find();  
+    parcels = await Parsel.find(); // Correct model usage
   } catch (err) {
     console.log(err);
     return res.status(500).json({ message: "Error fetching parcels" });
@@ -30,7 +29,7 @@ const addParsel = async (req, res, next) => {
     postalCode,
     productType,
     productQty,
-    status
+    status,
   } = req.body;
 
   let newParsel;
@@ -74,7 +73,6 @@ const getById = async (req, res, next) => {
 
   return res.status(200).json({ parsel });
 };
-
 
 //Update User details
 const updateParsel = async (req, res, next) => {

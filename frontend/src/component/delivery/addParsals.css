@@ -1,10 +1,14 @@
 .container {
   display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  min-height: 100vh; /* Full viewport height */
 }
 
 .form-container {
   flex: 1;
   padding: 20px;
+  max-width: 400px; /* Optional: limit form width */
 }
 
 form {

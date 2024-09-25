@@ -2,10 +2,11 @@ import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import Sidebar from './deliveryHeader';
+import '../delivery/addParsals.css';
 
 
-function updateParselReq() {
+
+function UpdateParselReq() {
 
   const [inputs, setInputs] = useState({});
   const history = useNavigate();
@@ -51,7 +52,6 @@ function updateParselReq() {
 
   return (
     <div className="container">
-      <Sidebar />
       <div className="form-container">
         <h1>Update Delivery Request</h1>
         <form onSubmit={handleSubmit}>
@@ -164,4 +164,4 @@ function updateParselReq() {
   )
 }
 
-export default updateParselReq;
+export default UpdateParselReq;

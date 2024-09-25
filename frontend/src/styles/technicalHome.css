@@ -1,0 +1,112 @@
+/* src/pages/technicalHome.css */
+
+/* General Layout */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f5;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+}
+
+header {
+    background-color: #007ACC;
+    padding: 20px;
+    color: white;
+    text-align: center;
+}
+
+header input[type="search"] {
+    margin-top: 10px;
+    padding: 8px;
+    width: 200px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+/* Sidebar Styles */
+aside {
+    background-color: #333;
+    width: 200px;
+    padding: 20px;
+    height: 100%;
+}
+
+aside nav ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+aside nav ul li {
+    margin: 20px 0;
+    color: white;
+    cursor: pointer;
+}
+
+aside nav ul li:hover {
+    text-decoration: underline;
+}
+
+/* Main Content */
+main {
+    flex-grow: 1;
+    padding: 20px;
+    background-color: #ffffff;
+}
+
+h1, h2, h3 {
+    color: #333;
+}
+
+/* Machine Status Styles */
+.machine-status {
+    background-color: #f5f5f5;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.machine-status .status-box {
+    display: flex;
+    justify-content: space-around;
+    font-size: 18px;
+}
+
+.machine-status .status-box p {
+    margin: 0;
+    font-weight: bold;
+}
+
+/* Maintenance Progress Chart */
+.maintenance-progress {
+    background-color: #f5f5f5;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.maintenance-progress canvas {
+    margin-top: 20px;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+
+    aside {
+        width: 100%;
+        height: auto;
+    }
+
+    main {
+        padding: 10px;
+    }
+}
