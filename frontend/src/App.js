@@ -24,6 +24,8 @@ import AddProduct from "./component/Inventory/AddProduct";
 import RecycleProducts from "./component/recycledProducts/RecycleProducts";
 import RecyclingProductsTable from "./component/recycledProducts/RecyclingProductsTable";
 import RecycledProducts from "./component/recycledProducts/RecycledProducts";
+import AddRecycleProduct from "./component/recycledProducts/AddRecycleProducts";
+import RecycleReportGeneration from "./component/recycledProducts/RecycleReportGeneration";
 
 //juthmini
 import "./App.css";
@@ -56,6 +58,8 @@ function App() {
           <Route path="/recycle-product-dashbord" element={<RecycleProducts/>} /> {/* Gangani */}
           <Route path="/recycling-products" element={<RecyclingProductsTable/>} /> {/* Gangani */}
           <Route path="/recycled-products" element={<RecycledProducts/>} /> {/* Gangani */}
+          <Route path="/add-recycle-product" element={<AddRecycleProduct/>} /> {/* Gangani */}
+          <Route path="/recycle-product-report" element={<RecycleReportGeneration/>} /> {/* Gangani */}
         </Routes>
         <Footer />
       </div>
