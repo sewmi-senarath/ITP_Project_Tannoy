@@ -1,63 +1,7 @@
-// import React, { useState, useEffect } from 'react';
-// import axios from 'axios';
-// import '../../styles/DisplayAttendance.css'; // Add your styles here
-
-// const DisplayAttendance = () => {
-//   const [attendanceRecords, setAttendanceRecords] = useState([]); // Hold attendance records
-
-//   // Fetch attendance data from backend API
-//   useEffect(() => {
-//     const fetchAttendanceRecords = async () => {
-//       try {
-//         const response = await axios.get('http://localhost:5000/api/attendance'); // Adjust the URL to your API
-//         setAttendanceRecords(response.data);
-//       } catch (error) {
-//         console.error('Error fetching attendance records:', error);
-//       }
-//     };
-//     fetchAttendanceRecords();
-//   }, []);
-
-//   return (
-//     <div className="attendance-table-container">
-//       <h1>Employee Attendance Records</h1>
-//       <table className="attendance-table">
-//         <thead>
-//           <tr>
-//             <th>Employee ID</th>
-//             <th>Date</th>
-//             <th>Status</th>
-//             <th>OT Hours</th>
-//           </tr>
-//         </thead>
-//         <tbody>
-//           {attendanceRecords.length > 0 ? (
-//             attendanceRecords.map((record) => (
-//               <tr key={record._id}>
-//                 <td>{record.empId}</td>
-//                 <td>{new Date(record.date).toLocaleDateString()}</td>
-//                 <td>{record.status}</td>
-//                 <td>{record.otHours}</td>
-//               </tr>
-//             ))
-//           ) : (
-//             <tr>
-//               <td colSpan="4" style={{ textAlign: 'center' }}>
-//                 No attendance records found.
-//               </td>
-//             </tr>
-//           )}
-//         </tbody>
-//       </table>
-//     </div>
-//   );
-// };
-
-
-
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import jsPDF from 'jspdf';  // Import jsPDF for PDF generation
+import 'jspdf-autotable';  // Import jsPDF-AutoTable for table generation
 import '../../styles/DisplayAttendance.css'; // Add your styles here
 
 const DisplayAttendance = () => {
@@ -139,30 +83,42 @@ const DisplayAttendance = () => {
     setFilteredRecords(filtered); // Set the filtered records
   };
 
-  // Function to generate the report PDF
+  // Function to generate the report PDF using jsPDF and jsPDF AutoTable
   const generateReport = () => {
     const doc = new jsPDF();
 
     // Set Title
-    doc.text('Employee Attendance Report', 10, 10);
-    
+    doc.text('Employee Attendance Report', 14, 10);
+
     // If any filter is applied, include that info in the report
-    if (selectedDate) doc.text(`Date: ${selectedDate}`, 10, 20);
-    if (selectedEmployee) doc.text(`Employee: ${selectedEmployee}`, 10, 30);
-    if (selectedStatus) doc.text(`Status: ${selectedStatus}`, 10, 40);
+    let yPosition = 20;
+    if (selectedDate) {
+      doc.text(`Date: ${selectedDate}`, 14, yPosition);
+      yPosition += 10;
+    }
+    if (selectedEmployee) {
+      doc.text(`Employee: ${selectedEmployee}`, 14, yPosition);
+      yPosition += 10;
+    }
+    if (selectedStatus) {
+      doc.text(`Status: ${selectedStatus}`, 14, yPosition);
+      yPosition += 10;
+    }
 
-    // Create table header
-    doc.text('Employee ID  |  Date  |  Status  |  OT Hours', 10, 60);
+    // Prepare data for autoTable
+    const tableColumn = ["Employee ID", "Date", "Status", "OT Hours"];
+    const tableRows = filteredRecords.map((record) => [
+      record.empId,
+      new Date(record.date).toLocaleDateString(),
+      record.status,
+      record.otHours
+    ]);
 
-    // Loop over filtered records and add them to the PDF
-    let yOffset = 70;  // Starting Y position for records
-    filteredRecords.forEach((record) => {
-      doc.text(
-        `${record.empId}  |  ${new Date(record.date).toLocaleDateString()}  |  ${record.status}  |  ${record.otHours}`,
-        10,
-        yOffset
-      );
-      yOffset += 10;
+    // Add table to the PDF
+    doc.autoTable({
+      startY: yPosition + 10,
+      head: [tableColumn],
+      body: tableRows,
     });
 
     // Save the generated PDF

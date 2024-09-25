@@ -1,7 +1,7 @@
-
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import jsPDF from 'jspdf';  // For generating PDFs
+import 'jspdf-autotable';   // For creating tables in PDFs
 import '../../styles/employee.css';  // Your CSS file
 import Logo from '../../images/logo.jpeg';
 import manager from '../../images/manager.jpeg';
@@ -69,23 +69,30 @@ const ProductDashboard = () => {
     }
   };
 
-  // Generate PDF report
+  // Generate PDF report using jsPDF and jsPDF AutoTable
   const generateReport = () => {
     const doc = new jsPDF();
+
+    // Title
+    doc.text('Product Report', 14, 22);
+
+    // Define the columns for the table
+    const tableColumn = ["Product Code", "Product Name", "Stock Size", "Category", "Availability"];
     
-    doc.text('Product Report', 10, 10);
+    // Map the product data into table rows
+    const tableRows = filteredProducts.map(product => [
+      product.ProductCode,
+      product.ProductName,
+      product.stockSize,
+      product.ProductCategory,
+      product.availability || 'Unknown'
+    ]);
 
-    // Add table headers
-    doc.text('Product Code | Product Name | Stock Size | Category | Availability', 10, 20);
-
-    let yOffset = 30; // Start position for table content
-    filteredProducts.forEach((product) => {
-      doc.text(
-        `${product.ProductCode} | ${product.ProductName} | ${product.stockSize} | ${product.ProductCategory} | ${product.availability || 'Unknown'}`,
-        10,
-        yOffset
-      );
-      yOffset += 10; // Move to the next line
+    // Generate the table using autoTable
+    doc.autoTable({
+      head: [tableColumn],  // Table headers
+      body: tableRows,      // Table body
+      startY: 30            // Start position on the Y-axis
     });
 
     // Save the PDF
