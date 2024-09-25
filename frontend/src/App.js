@@ -12,7 +12,7 @@ import DeliveryHome from "./component/delivery/deliveryHome";
 import TechnicalHome from './component/technical/technicalHome';
 import Addmachine from "./component/technical/addmachine";
 //juthmini
-import "./App.css";
+//import "./App.css";
 import MachinePage from "./component/technical/page/MachinePage";
 import DisplayParselList from "./component/delivery/displayParselList";
 import AddParselRequest from "./component/delivery/addDeliveryRequest";

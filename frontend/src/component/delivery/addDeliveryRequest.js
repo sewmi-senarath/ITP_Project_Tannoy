@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-
+import Sidebar from "./deliveryHeader";
 
 function AddDeliveryRequest() {
   const history = useNavigate();
@@ -45,108 +45,106 @@ function AddDeliveryRequest() {
   };
 
   return (
+    
     <div className="container">
       
       <div className="form-container">
+        
         <h1>Create New Delivery Request</h1>
         <form onSubmit={handleSubmit}>
-          <label>
-            Full Name
-            <input
-              type="text"
-              name="fullName"
-              value={inputs.fullName}
-              onChange={handleChange}
-              placeholder="Enter Your Full Name"
-              required
-            />
-          </label>
-          <label>
-            Phone Number
-            <input
-              type="text"
-              name="phoneNo"
-              value={inputs.phoneNo}
-              onChange={handleChange}
-              placeholder="Enter Your Phone Number"
-              required
-            />
-          </label>
-          <label>
-            Email
-            <input
-              type="email"
-              name="email"
-              value={inputs.email}
-              onChange={handleChange}
-              placeholder="Enter Your Email"
-              required
-            />
-          </label>
-          <label>
-            Address
-            <input
-              type="text"
-              name="address"
-              value={inputs.address}
-              onChange={handleChange}
-              placeholder="Enter Your Address"
-              required
-            />
-          </label>
-          <label>
-            Postal Code
-            <input
-              type="text"
-              name="postalCode"
-              value={inputs.postalCode}
-              onChange={handleChange}
-              placeholder="Enter Your Postal Code"
-              required
-            />
-          </label>
-          <label>
-            Product Type
-            <input
-              type="text"
-              name="productType"
-              value={inputs.productType}
-              onChange={handleChange}
-              placeholder="Enter Product Type"
-              required
-            />
-          </label>
-          <label>
-            Product Quantity
-            <input
-              type="number"
-              name="productQty"
-              value={inputs.productQty}
-              onChange={handleChange}
-              placeholder="Enter Product Quantity"
-              required
-            />
-          </label>
-          <label>
-            Status
-            <select
-              name="status"
-              value={inputs.status}
-              onChange={handleChange}
-              required
-            >
-              <option value="">Select Status</option>
-              <option value="Confirm Delivery">Confirm Delivery</option>
-              <option value="Start Packaging">Start Packaging</option>
-              <option value="On the way to Warehouse">
-                On the way to Warehouse
-              </option>
-              <option value="Departure from Warehouse">
-                Departure from Warehouse
-              </option>
-              <option value="Delivered">Delivered</option>
-            </select>
-          </label>
+          <label htmlFor="fullName">Full Name</label>
+          <input
+            type="text"
+            id="fullName"
+            name="fullName"
+            value={inputs.fullName}
+            onChange={handleChange}
+            placeholder="Enter Your Full Name"
+            required
+          />
+
+          <label htmlFor="phoneNo">Phone Number</label>
+          <input
+            type="text"
+            id="phoneNo"
+            name="phoneNo"
+            value={inputs.phoneNo}
+            onChange={handleChange}
+            placeholder="Enter Your Phone Number"
+            required
+          />
+
+          <label htmlFor="email">Email</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            value={inputs.email}
+            onChange={handleChange}
+            placeholder="Enter Your Email"
+            required
+          />
+
+          <label htmlFor="address">Address</label>
+          <input
+            type="text"
+            id="address"
+            name="address"
+            value={inputs.address}
+            onChange={handleChange}
+            placeholder="Enter Your Address"
+            required
+          />
+
+          <label htmlFor="postalCode">Postal Code</label>
+          <input
+            type="text"
+            id="postalCode"
+            name="postalCode"
+            value={inputs.postalCode}
+            onChange={handleChange}
+            placeholder="Enter Your Postal Code"
+            required
+          />
+
+          <label htmlFor="productType">Product Type</label>
+          <input
+            type="text"
+            id="productType"
+            name="productType"
+            value={inputs.productType}
+            onChange={handleChange}
+            placeholder="Enter Product Type"
+            required
+          />
+
+          <label htmlFor="productQty">Product Quantity</label>
+          <input
+            type="number"
+            id="productQty"
+            name="productQty"
+            value={inputs.productQty}
+            onChange={handleChange}
+            placeholder="Enter Product Quantity"
+            required
+          />
+
+          <label htmlFor="status">Status</label>
+          <select
+            id="status"
+            name="status"
+            value={inputs.status}
+            onChange={handleChange}
+            required
+          >
+            <option value="">Select Status</option>
+            <option value="Confirm Delivery">Confirm Delivery</option>
+            <option value="Start Packaging">Start Packaging</option>
+            <option value="On the way to Warehouse">On the way to Warehouse</option>
+            <option value="Departure from Warehouse">Departure from Warehouse</option>
+            <option value="Delivered">Delivered</option>
+          </select>
+
           <button type="submit" className="submit-button">
             Submit
           </button>
@@ -163,4 +161,4 @@ function AddDeliveryRequest() {
   );
 }
 
-export default AddDeliveryRequest; 
+export default AddDeliveryRequest;
