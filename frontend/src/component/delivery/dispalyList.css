@@ -25,7 +25,8 @@
   border-collapse: collapse;
 }
 
-#table th, #table td {
+#table th,
+#table td {
   border: 1px solid #080808;
   padding: 8px;
   text-align: center;
@@ -117,4 +118,20 @@
   margin-right: 5px;
   font-weight: bold;
   font-size: 18px;
+}
+
+/* Total Order Requests Count Section */
+#order-count {
+  background-color: #ADD8E6; /* Light blue background */
+  padding: 10px 15px; /* Padding for the container */
+  margin-bottom: 20px; /* Space below the container */
+  text-align: center; /* Center text horizontally */
+  border-radius: 5px; /* Rounded corners */
+  width: fit-content; /* Container size adjusts to content */
+  margin: 0 auto; /* Center the container itself */
+}
+
+#order-count h2 {
+  font-size: 18px; /* Medium size font */
+  font-weight: bold; /* Bold font */
 }
