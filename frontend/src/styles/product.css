@@ -20,17 +20,30 @@
   
   h1 {
     font-size: 24px;
-    color: #333;
+    color: black;
     margin-bottom: 20px;
     text-align: center;
   }
+ 
   
   /* Form styling */
+
+  .title{
+    color: #007bff;
+    font-size: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+  }
   .product-form {
     display: flex;
     flex-direction: column;
     gap: 20px;
+    background-color: #c1dbef; /* Change this color to your desired background color */
+    padding: 20px; /* Optional: add some padding to make the background more visible */
   }
+  
   
   .form-group {
     display: flex;
@@ -102,7 +115,7 @@
     text-align: center;
   }
   
-  /* Styling for the product image */
+  /* Styling for the product image 
   .product-img {
     margin-top: 20px;
     max-width: 100%;
@@ -110,7 +123,8 @@
     display: block;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
+  }*/
+  
   
   /* Adding some responsive design */
   @media (max-width: 600px) {

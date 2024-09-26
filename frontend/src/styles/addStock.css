@@ -1,12 +1,13 @@
 .add-stock-container {
-    display: flex;
+    /* display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: center; */
     padding: 20px;
   }
   
   .form-container {
     width: 50%;
+    
   }
   
   .stock-form {

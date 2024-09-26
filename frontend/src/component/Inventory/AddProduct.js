@@ -89,8 +89,9 @@ const AddProduct = () => {
   return (
     <div className="product-dashboard">
       <div className="Add-main-content">
-        <h1>{productId ? 'Edit Product' : 'Add Product'}</h1>
+        <div className='title'>{productId ? 'Edit Product' : 'Add Product'}</div>
         <form className="product-form" onSubmit={handleSubmit}>
+          
           {/* Product Code */}
           <div className="form-group">
             <label htmlFor="ProductCode">Product Code:</label>
@@ -102,7 +103,7 @@ const AddProduct = () => {
               value={formData.ProductCode}
               onChange={handleInputChange}
               required
-              disabled={!!productId} // Disable when editing
+              disabled={!!productId} 
             />
           </div>
 
@@ -184,7 +185,7 @@ const AddProduct = () => {
 
         {message && <p>{message}</p>}
 
-        <img src={productImage} alt="Product" className="product-img" />
+        {/* <img src={productImage} alt="Product" className="product-img" /> */}
       </div>
     </div>
   );

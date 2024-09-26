@@ -53,6 +53,7 @@ app.use('/api/products', productRoutes);
 app.use('/api/items',itemRoutes);
 app.post("/CRMRegister", CRMRegister);
 app.post("/loginCRM", loginCRM);
+app.use(require("./Route/TechnicalRoutes.js"));
 
 
 // routes customer management
@@ -60,6 +61,7 @@ app.get("/", (req, res) => {
     res.send("Home Page");
   });
 
+//Register
 //Call Registration Model
 require("./Model/DelRegister");
 const Register = mongoose.model("Register");
@@ -74,6 +76,27 @@ app.post("/register", async(req, res) => {
     res.send({status:"ok"});
   }catch(err){
     res.send({status:"err"});
+  }
+});
+
+//Login
+app.post("/login", async (req, res) => {
+  const {email, password} = req.body;
+  try{
+    const register = await Register.findOne({email});
+    if(!register){
+      return res.json({err:"Not found"})
+    }
+    if(register.password === password){
+      return res.json({status: "ok"});
+
+    }else{
+      return res.json({err: "Incorrect Password"})
+    }
+
+  }catch(err){
+    console.error(err);
+    res.status(500).json({err:"Server Error"})
   }
 });
 

@@ -23,7 +23,7 @@ function Register() {
     sendRequest()
     .then(() => {
       alert("Registered")
-      history("/deliveryHome")
+      history("/login")
     })
   };
 
@@ -41,7 +41,7 @@ function Register() {
 
   return (
     <div className="container">
-      <Sidebar></Sidebar>
+
       <div className="form-container">
         <h1>Register</h1>
         <form onSubmit={handleSubmit}>

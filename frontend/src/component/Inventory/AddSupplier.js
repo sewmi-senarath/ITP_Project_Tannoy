@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios'; // For making HTTP requests
 import { useNavigate, useParams } from 'react-router-dom'; // For navigation and getting supplierId from the URL
 import '../../styles/addSupplier.css'; // Custom CSS file for styling
+import SupplierImage from '../../images/suppiler-management.png'
 
 const AddSupplier = () => {
   const [formData, setFormData] = useState({
@@ -78,6 +79,7 @@ const AddSupplier = () => {
     <div className="add-supplier-container">
       <div className="form-container">
         <h1>{isEditMode ? 'Edit Supplier' : 'Add New Supplier'}</h1>
+        <img src={SupplierImage}></img>
 
         <form onSubmit={handleSubmit} className="supplier-form">
           <div className="form-group">
@@ -171,6 +173,7 @@ const AddSupplier = () => {
           {message && <p className="form-message">{message}</p>}
         </form>
       </div>
+      <img src="suppiler-management.png" alt="Supplier Image" class="supplier-img" />
     </div>
   );
 };

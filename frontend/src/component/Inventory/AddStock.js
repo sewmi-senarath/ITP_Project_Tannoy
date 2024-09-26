@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom'; // For navigation and getting productId from the URL
 import '../../styles/addStock.css'; 
 
+
 const AddStock = () => {
   const [formData, setFormData] = useState({
     itemCode: '',
@@ -66,6 +67,7 @@ const AddStock = () => {
       setIsSubmitting(false); 
     }
   };
+  
 
   return (
     <div className="add-stock-container">
@@ -148,7 +150,7 @@ const AddStock = () => {
               required
             >
               <option value="Available">Available</option>
-              <option value="Not Available">Not Available</option>
+              <option value="Unavailable">Unavailable</option>
             </select>
           </div>
 
