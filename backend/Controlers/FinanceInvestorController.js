@@ -12,6 +12,7 @@ const getAllInvestors = async(req, res, next) => {
   }catch (err){
     console.log(err)
   }
+
   // If no investors are found
   if(!investors){
     return res.status(404).json({message:"No Investor Found"})
@@ -96,15 +97,15 @@ const updateFinanceInvestor = async(req, res, next) => {
   try{
     investor = await FinanceInvestor.findByIdAndUpdate(id,
       {name,
-        dob,
-        gmail,
-        maidenname,
-        nic,
-        accountnum,
-        bankname,
-        accname,
-        invtdate,
-        amt,
+      dob,
+      gmail,
+      maidenname,
+      nic,
+      accountnum,
+      bankname,
+      accname,
+      invtdate,
+      amt,
         percentage});
       investor = await investor.save();
   }catch(err){
