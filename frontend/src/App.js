@@ -98,7 +98,6 @@ function App() {
           <Route path="/InvestorsDashboard" element={<InvestorsDashboard/>} /> {/* Ruvindi */}
           <Route path="/investor" element={<UpdateInvestorProfile/>} /> {/* Ruvindi */}
           <Route path="/add-investor" element={<Addinvestor/>} /> {/* Ruvindi */}
-
         </Routes>
         <Footer />
       </div>
