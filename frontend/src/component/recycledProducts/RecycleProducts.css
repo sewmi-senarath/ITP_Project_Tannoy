@@ -1,4 +1,8 @@
-
+.component-div {
+  display: inline-block;
+  vertical-align: top;
+  width: calc(100% - 220px); 
+}
 #recycle-product-dashbord{
   margin: 0px;
   display: flex;
@@ -50,6 +54,7 @@ ul a{
 .RecycleProductsLeftDashboardTitle{
   font-size: 24px;
   text-align: center;
+  color: black;
 }
 
 #RecycledProductsButton{

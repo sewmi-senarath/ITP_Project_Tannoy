@@ -38,6 +38,8 @@ import CRMLogin from "./component/CRM/CRMLogin/Login";
 import RecycleProducts from "./component/recycledProducts/RecycleProducts";
 import RecyclingProductsTable from "./component/recycledProducts/RecyclingProductsTable";
 import RecycledProducts from "./component/recycledProducts/RecycledProducts";
+import AddRecycleProduct from "./component/recycledProducts/AddRecycleProducts";
+import RecycleReportGeneration from "./component/recycledProducts/RecycleReportGeneration";
 
 //Ruvindi
 import InvestorsDashboard from "./component/FinanceInvestor/investorsdashboard";
@@ -91,10 +93,12 @@ function App() {
           <Route path="/recycle-product-dashbord" element={<RecycleProducts/>} /> {/* Gangani */}
           <Route path="/recycling-products" element={<RecyclingProductsTable/>} /> {/* Gangani */}
           <Route path="/recycled-products" element={<RecycledProducts/>} /> {/* Gangani */}
+          <Route path="/add-recycle-product" element={<AddRecycleProduct/>} /> {/* Gangani */}
+          <Route path="/recycle-product-report" element={<RecycleReportGeneration/>} /> {/* Gangani */}
           <Route path="/InvestorsDashboard" element={<InvestorsDashboard/>} /> {/* Ruvindi */}
-          
           <Route path="/investor" element={<UpdateInvestorProfile/>} /> {/* Ruvindi */}
           <Route path="/add-investor" element={<Addinvestor/>} /> {/* Ruvindi */}
+
         </Routes>
         <Footer />
       </div>
