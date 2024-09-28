@@ -1,7 +1,7 @@
 import React from 'react';
 import './home.css';
 
-function home() {
+function Home() {
   return (
     <div className="homepage">
       {/* First Section (INTERIOR DESIGN) */}
@@ -48,10 +48,8 @@ function home() {
       </div>
 
       {/* Fourth Section (OUR MISSION) */}
-      <div id="mission-section" className="mission-section">
-        <div className="mission-image">
-          <img src="../../images/deliveryHome.png" alt="mission" /> {/* Update with correct path */}
-        </div>
+      <section id="mission-section" className="mission-section">
+        <div className="mission-image"></div>
         <div className="mission-text">
           <h2 className="mission-title">OUR MISSION</h2>
           <div className="mission-item">
@@ -75,25 +73,23 @@ function home() {
             <p>Build a better future by promoting responsible and efficient production methods.</p>
           </div>
         </div>
-      </div>
+      </section>
 
       {/* Fifth Section (OUR CONTACT) */}
-      <div id="contact-section" className="contact-section">
-        <div className="contact-image">
-          <img src="../../images/logo.jpeg" alt="Contact" /> {/* Update with correct path */}
-        </div>
+      <section id="contact-section" className="contact-section">
+        <div className="contact-image"></div>
         <div className="contact-text">
           <h2 className="contact-title">OUR CONTACT</h2>
           <ul className="contact-details">
-            <li><i className="fa fa-phone"></i> 077-730 7206 OR 076-730 7206</li>
-            <li><i className="fa fa-globe"></i> www.tannoyElectrical.com</li>
-            <li><i className="fa fa-envelope"></i> tannoy266@gmail.com</li>
-            <li><i className="fa fa-map-marker"></i> 266/2A, Mabima, Heiyanthuduwa, Kelaniya, Kelaniya, western Province, Sri Lanka, 11600</li>
+            <li><i className="fa fa-phone" aria-hidden="true"></i> 077-730 7206 OR 076-730 7206</li>
+            <li><i className="fa fa-globe" aria-hidden="true"></i> www.tannoyElectrical.com</li>
+            <li><i className="fa fa-envelope" aria-hidden="true"></i> tannoy266@gmail.com</li>
+            <li><i className="fa fa-map-marker" aria-hidden="true"></i> 266/2A, Mabima, Heiyanthuduwa, Kelaniya, Sri Lanka</li>
           </ul>
         </div>
-      </div>
+      </section>
     </div>
   );
 }
 
-export default home;
+export default Home;
