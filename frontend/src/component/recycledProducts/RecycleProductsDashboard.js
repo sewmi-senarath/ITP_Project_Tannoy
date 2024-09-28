@@ -1,9 +1,9 @@
 import React , {useState , useEffect} from 'react';
 import axios from "axios";
-import "./RecycleProducts.css";
+import "./RecycleProductsDashboard.css";
 import RecycleProductSidebar from "./RecycleProductSidebar";
 
-const RecycleProducts = () => {
+const RecycleProductsDashboard = () => {
     const [filteredProducts, setFilteredProducts] = useState([]);
     const [products, setProducts] = useState([]);
 
@@ -50,7 +50,8 @@ const RecycleProducts = () => {
 
   return (
     <>
-    <div style={{display : "flex"}}>
+    <div className='recycle-product-body'>
+    <div >
        <RecycleProductSidebar />
     <div className='component-div'>
     <div id='recycle-product-dashbord'>
@@ -88,8 +89,9 @@ const RecycleProducts = () => {
     </div>
     </div>
     </div>
+    </div>
   </>
   )
 }
 
-export default RecycleProducts
+export default RecycleProductsDashboard

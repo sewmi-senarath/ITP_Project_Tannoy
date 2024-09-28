@@ -1,7 +1,8 @@
 .component-div {
   display: inline-block;
   vertical-align: top;
-  width: calc(100% - 220px); 
+  width: 100%; 
+  margin-left: 200px;
 }
 #recycle-product-dashbord{
   margin: 0px;
@@ -24,19 +25,19 @@
 
 #RecycleProductsLeftDiv{
   display: inline-flex;
-  width: 60%;
+  width: 65%;
   justify-content: center;
   padding: 20px;
 }
 
 #RecycleProductsRightDiv{
-  display: inline-flex;
+  display: inline-flex !important;
   justify-content: center;
   background-image: linear-gradient(to right, rgb(40, 55, 139, 0.8) , rgb(95, 0, 107,0.8));
-  width: 40%;
+  width:35%;
   justify-content: space-between;
   padding: 20px 40px;
-  border-radius: 20px;
+  border-radius: 5px;
 }
 
 ul {
@@ -58,16 +59,20 @@ ul a{
 }
 
 #RecycledProductsButton{
-  margin: 0px 30px;
+  display: inline;
+  margin: 0px 10px;
   background-image: linear-gradient(to right, rgb(40, 55, 139, 0.8) , rgb(95, 0, 107, 0.8));
   color: white;
-  border-radius: 20px;
+  border-radius: 5px;
+  width: 200px !important;
 }
  
 #RecyclingProductsButton {
+  display: inline;
   background-image: linear-gradient(to right, rgb(40, 55, 139,0.8) , rgb(95, 0, 107, 0.8));
   color: white;
-  border-radius: 20px;
+  border-radius: 5px;
+  width: 200px !important;
 }
 
 #image-div{
@@ -77,5 +82,5 @@ ul a{
   background-repeat: no-repeat;
   background-position: center;
   margin: 20px 0px;
-  border-radius: 30px;
+  border-radius: 10px;
 }

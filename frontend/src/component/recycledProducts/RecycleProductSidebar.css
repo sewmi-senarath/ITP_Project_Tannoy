@@ -1,19 +1,17 @@
-/* src/Sidebar.css */
 .sidebar {
     margin-bottom: 0px;
     top: 0;
-    left: 0; /* Set the width of the sidebar */
-    height: inherit;
-    background-color: #160038; /* Background color */
-    padding: 20px; /* Padding */
-    box-shadow: 2px 0 5px rgba(0,0,0,0.1); /* Optional shadow */
-    display: inline-block; /* Change to inline-block */
-    vertical-align: top; /* Align vertically to the top */
+    left: 0; 
+    background-color: #160038; 
+    padding: 20px; 
+    box-shadow: 2px 0 5px rgba(0,0,0,0.1); 
+    display: inline-block; 
+    vertical-align: top; 
     width: 250px; 
 }
 
 .sidebar h2 {
-    margin-top: 0; /* Remove top margin */
+    margin-top: 0; 
 }
 
 .sidebar ul {
@@ -22,7 +20,7 @@
 }
 
 .sidebar ul li {
-    margin: 10px 0; /* Space between items */
+    margin: 10px 0; 
     background-color: #120027;
     padding: 10px;
     border-radius: 5px;

@@ -4,7 +4,7 @@ import './RecycledProducts.css';
 import RecycleProductSidebar from "./RecycleProductSidebar";
 import UpdateProductForm from "./UpdateRecycleProduct";
 
-const RecyclingProductsTable = () => {
+const RecycledProductsTable = () => {
   const [products, setProducts] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
   const [currentProduct, setCurrentProduct] = useState(null);
@@ -79,7 +79,7 @@ const RecyclingProductsTable = () => {
           </a>
         </div>
         <div id='table-div'>
-          <table>
+          <table className='recycled-table'>
             <thead>
               <tr>
                 <th>Raw Material Name</th>
@@ -126,4 +126,4 @@ const RecyclingProductsTable = () => {
 };
 
 
-export default RecyclingProductsTable;
+export default RecycledProductsTable;

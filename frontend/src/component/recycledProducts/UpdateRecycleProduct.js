@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './RecycledProducts.css'; 
+import './UpdateRecycleProduct.css'; 
 
 const UpdateProductForm = ({ product, onSave, onCancel }) => {
     const [formData, setFormData] = useState({ ...product });

@@ -54,9 +54,11 @@ const RecycleProductForm = () => {
   };
 
   return (
-    
+    <>
     <div className="add-form-body">
       <RecycleProductSidebar />
+    </div>
+    <div className="form-div">
         <form onSubmit={handleSubmit}>
         <div>
           <label htmlFor="recyclingProductName">Raw Material Name</label>
@@ -147,6 +149,7 @@ const RecycleProductForm = () => {
         {successMessage && <p style={{ color: "green" }}>{successMessage}</p>}
       </form>
     </div>
+    </>
   );
 };
 
