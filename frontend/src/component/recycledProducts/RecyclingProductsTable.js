@@ -100,6 +100,7 @@ const RecyclingProductsTable = () => {
                   <th>Status</th>
                   <th>Update</th>
                   <th>Delete</th>
+                  
                 </tr>
               </thead>
               <tbody>
@@ -111,6 +112,7 @@ const RecyclingProductsTable = () => {
                     <td>{formatDate(product.date)}</td>
                     <td>{product.stage}</td>
                     <td>{product.status}</td>
+                    
                     <td>
                       <button id='update-button' onClick={() => handleUpdate(product)}>Update</button>
                     </td>
