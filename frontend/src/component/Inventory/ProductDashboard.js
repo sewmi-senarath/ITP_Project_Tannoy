@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import jsPDF from 'jspdf';  // For generating PDFs
 import 'jspdf-autotable';   // For creating tables in PDFs
-import '../../styles/employee.css';  // Your CSS file
+import '../../styles/employee.css';  // CSS file
 import Logo from '../../images/logo.jpeg';
 import manager from '../../images/manager.jpeg';
 import { useNavigate } from "react-router-dom";

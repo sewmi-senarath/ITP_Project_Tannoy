@@ -37,13 +37,26 @@ const AddStock = () => {
   }, [itemId]);
 
   // Handle form input changes
-  const handleChange = (e) => {
-    const { name, value } = e.target;
+const handleChange = (e) => {
+  const { name, value } = e.target;
+
+  // Validation for itemCode: only allow letters and numbers, and max length of 4
+  if (name === 'itemCode') {
+    const regex = /^[A-Za-z0-9]{0,6}$/; // Allow only letters and numbers, max 4 characters
+    if (regex.test(value)) {
+      setFormData({
+        ...formData,
+        [name]: value,
+      });
+    }
+  } else {
     setFormData({
       ...formData,
       [name]: value,
     });
-  };
+  }
+};
+
 
   // Handle form submission
   const handleSubmit = async (e) => {
@@ -89,17 +102,23 @@ const AddStock = () => {
             />
           </div>
 
-          <div className="form-group">
+
+<div className="form-group">
             <label htmlFor="itemName">Item Name</label>
-            <input
-              type="text"
+            <select
               id="itemName"
               name="itemName"
               value={formData.itemName}
               onChange={handleChange}
-              placeholder="Enter Item Name"
               required
-            />
+            >
+              <option value="">Select Item Category</option>
+              <option value="Plastic1">Plastic 1</option>
+              <option value="Plastic2">Plastic 2</option>
+              <option value="Plastic3">Plastic 3</option>
+              <option value="Plastic4">Plastic 4</option>
+              <option value="Plastic5">Plastic 5</option>
+            </select>
           </div>
 
           <div className="form-group">
@@ -114,30 +133,44 @@ const AddStock = () => {
           </div>
 
           <div className="form-group">
-            <label htmlFor="itemCategory">Item Category</label>
-            <input
-              type="text"
+            <label htmlFor="ItemCategory">Item Category</label>
+            <select
               id="itemCategory"
               name="itemCategory"
               value={formData.itemCategory}
               onChange={handleChange}
-              placeholder="Enter Item Category"
               required
-            />
+            >
+              <option value="">Select Item Category</option>
+              <option value="PPolyethylene Terephthalate">Polyethylene Terephthalate</option>
+              <option value="Polypropylene">Polypropylene</option>
+              <option value="Bio-Based Plastics">Bio-Based Plastics</option>
+              <option value="Polystyrene">Polystyrene</option>
+              
+            </select>
           </div>
 
-          <div className="form-group">
-            <label htmlFor="stockSize">Stock Size</label>
-            <input
-              type="number"
-              id="stockSize"
-              name="stockSize"
-              value={formData.stockSize}
-              onChange={handleChange}
-              placeholder="Enter Stock Size"
-              required
-            />
-          </div>
+
+        <div className="form-group">
+        <label htmlFor="stockSize">Stock Size</label>
+        <input
+          type="number"
+          id="stockSize"
+          name="stockSize"
+          value={formData.stockSize}
+        onChange={(e) => {
+        const value = e.target.value;
+        // Ensure the value is not negative
+        if (value >= 0 || value === "") {
+         handleChange(e); // Allow change only if value is valid (non-negative or empty)
+        }
+       }}
+       placeholder="Enter Stock Size"
+       required
+       min="0" // This disables manual entry of negative values via UI
+       />
+      </div>
+
 
           {/* Availability as a Dropdown */}
           <div className="form-group">

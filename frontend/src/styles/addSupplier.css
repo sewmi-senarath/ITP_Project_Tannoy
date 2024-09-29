@@ -1,14 +1,23 @@
-/* Main container for the form */
+/*Main container for the form*/
 .add-supplier-container {
+    margin-left: 320px;
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
     min-height: calc(100vh - 100px); /* Adjust this based on the height of the header and footer */
-    background-color: #f4f6f9;
+    background-color: rgb(244, 246, 249);
     padding: 20px; /* Optional: add some padding */
   }
   
+  .image-container {
+    position: absolute;
+    top: 0;  /* Adjust based on your needs */
+    left: 0; /* Sticks the image to the left corner */
+    width: 300px; /* Adjust width based on your needs */
+}
+  
   .form-container {
+    margin-left: 500px;
     background-color: #fff;
     padding: 30px;
     border-radius: 10px;
@@ -19,13 +28,16 @@
    
   }
 
+
   /* Image styles for right alignment */
 .supplier-img {
   width: 300px; /* Adjust width as needed */
   height: auto;
-  margin-left: 20px; /* Add spacing between the form and the image */
-  border-radius: 8px;
+  margin-left: 150px; /* Add spacing between the form and the image */
+  margin-top: 250px;
+  border-radius: 200px;
   align-self: flex-start; /* Align the image to the top of the container */
+  background-color: #ffffff; /* Solid white background */
 }
 
   h1 {
@@ -42,7 +54,7 @@
     flex-direction: column;
     gap: 20px;
     background-color: #c7ddf8; /* Change this color to your desired background color */
-    padding: 10px; /* Optional: add some padding to make the background more visible */
+    padding: 10px;  /*Optional: add some padding to make the background more visible */
     width: 500px;
     max-width:100%;
     height:auto;
@@ -51,7 +63,7 @@
 
   
   .form-group {
-    margin-bottom: 20px;
+    margin-bottom: 70px;
   }
   
   label {
@@ -272,10 +284,3 @@ button {
   .delete-btn:hover {
     background-color: #c82333; /* Darker red on hover */
   }
-  .supplier-img {
-    width: 300px;
-    height: auto;
-    margin-left: 20px;
-    border-radius: 8px;
-  }
-  

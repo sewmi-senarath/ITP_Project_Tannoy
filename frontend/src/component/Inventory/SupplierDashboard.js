@@ -156,7 +156,7 @@ const SupplierDashboard = () => {
                 <tr
                   key={supplier._id}
                   style={{
-                    backgroundColor: isHighestDiscountSupplier(supplier) ? 'yellow' : 'inherit' // Highlight highest discount suppliers
+                    backgroundColor: isHighestDiscountSupplier(supplier) ? 'blanchedalmond' : 'inherit' // Highlight highest discount suppliers
                   }}
                 >
                   <td>{supplier.supCode}</td>
