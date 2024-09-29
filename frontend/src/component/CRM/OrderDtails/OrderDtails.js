@@ -49,7 +49,8 @@ function OrderDtails() {
 
   return (
     <div>
-     <Header />
+      <div>
+        <Header />
       <div className="flex flex-row mt-5 mb-2 justify-between">
         <h1 className="text-center font-semibold m-1 ml-5 text-4xl text-slate-700">
           Order Details Display
@@ -85,13 +86,13 @@ function OrderDtails() {
       <div className="mt-2 text-center  p-3">
         <h1 className="text-3xl font-bold mr-2">Order Summary</h1>
         <div className="flex flex-row gap-10 mx-auto items-center w-3/5 mt-5">
-          <h4 className="font-semibold text-2xl ml-14 border-2 p-1 rounded-lg border-dashed border-slate-900">
+          <h4 className="font-semibold text-2xl ml-14 border-2 p-1 rounded-lg border-dashed border-slate-900 text-slate-700">
             Total Orders: {totalOrders}
           </h4>
-          <h4 className="font-semibold text-2xl border-2 rounded-lg p-1 border-dashed border-slate-900">
+          <h4 className="font-semibold text-2xl border-2 rounded-lg p-1 border-dashed border-slate-900 text-slate-700">
             Quantity Less Than 20: {ordersLessThan20}
           </h4>
-          <h4 className="font-semibold text-2xl border-2 rounded-lg p-1 border-dashed border-slate-900">
+          <h4 className="font-semibold text-2xl border-2 rounded-lg p-1 border-dashed border-slate-900 text-slate-700">
             Total Amount : ${totalAmount.toFixed(2)}
           </h4>
         </div>
@@ -161,7 +162,9 @@ function OrderDtails() {
         </div>
       )}
     </div>
+    </div>
   );
+
 }
 
 export default OrderDtails;

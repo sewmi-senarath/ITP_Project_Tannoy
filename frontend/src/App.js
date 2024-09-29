@@ -57,7 +57,6 @@ function App() {
           <Route path="/technicalHome" element={<TechnicalHome />} />
           <Route path="/addmachine" element={<Addmachine />} />
           <Route path="/machine" element={< MachinePage/>} />
-          
           <Route path="/add-employee/:employeeId" element={<AddEmployee />} />
           <Route path="/login" element={<Login />} /> 
           <Route path="/deliveryHome" element={<DeliveryHome />} /> 

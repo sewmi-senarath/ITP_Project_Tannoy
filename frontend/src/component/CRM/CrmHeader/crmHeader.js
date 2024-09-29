@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 function crmHeader() {
   return (
     <div className=" flex flex-col">
-      <header>
         <div className="flex  p-2 bg-slate-300">
           <div className="mx-auto ml-5 mt-1">
             <ul className="flex gap-8 font-bold ">
@@ -32,21 +31,9 @@ function crmHeader() {
                 <li className="hover:underline text-2xl">Log Out</li>
               </Link>
             </ul>
-
-            {/*<form className="bg-slate-100 p-2 rounded-lg flex items-center ">
-            <input
-              type="text"
-              placeholder="Search..."
-              //Responsivness od the components
-              //w-24 --> make the size according to the mobile
-              //sm:w-64 --> above the size of the mobile
-              className="bg-transparent focus:outline-none w-24 sm:w-64"
-            />
-            <FaSearch className="text-slate-600" />
-          </form>*/}
           </div>
         </div>
-      </header>
+      
     </div>
   );
 }
