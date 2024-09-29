@@ -102,4 +102,46 @@
       font-size: 14px;
     }
   }
+  .investor-dashboard {
+    display: flex;
+    justify-content: center; /* Centers horizontally */
+    align-items: center; /* Centers vertically */
+    min-height: 100vh; /* Full height of the viewport */
+    background-color: #f8f9fa; /* Light background color */
+  }
+  
+  .add-main-content {
+    background-color: #ffffff; /* Form background color */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Light shadow */
+    max-width: 600px; /* Max width for the form */
+    width: 100%;
+    margin: 20px; /* Some margin for spacing */
+  }
+  
+  .investor-form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .form-group {
+    margin-bottom: 15px; /* Space between form elements */
+  }
+  
+  .submit-btn, .back-btn {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    cursor: pointer;
+  }
+  
+  .back-btn {
+    background-color: #dcdcdc;
+  }
+  
+  .back-btn:hover {
+    background-color: #c0c0c0;
+  }
+  
   

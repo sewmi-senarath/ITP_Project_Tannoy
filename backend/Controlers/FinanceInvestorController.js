@@ -1,82 +1,63 @@
 //Insert the model
-const FinanceInvestor = require("../Model/FinanceInvestorModel");
+const Investor = require("../Model/FinanceInvestorModel");
 
 
-//Display all registered investors
+//Display data
 const getAllInvestors = async(req, res, next) => {
   
-  let investors ;
+  let investors;
 
   try{
-    investors = await FinanceInvestor.find();
+    investors = await Investor.find();
   }catch (err){
-    console.log(err)
+    console.log(err);
   }
-
-  // If no investors are found
+  // If Investor not found 
   if(!investors){
-    return res.status(404).json({message:"No Investor Found"})
+    return res.status(404).json({message:"Investor not found ..."})
   }
 
-  //To display all investors 
+  //Displaying all investors 
   return res.status(200).json({investors});
 };
 
-//Inserting new investor data
-const addFinanceInvestor = async(req, res, next) => {
-  const {
-    name, 
-    dob, 
-    gmail, 
-    maidenname, 
-    nic, 
-    accountnum, 
-    bankname, 
-    accname, 
-    invtdate, 
-    amt, 
-    percentage} = req.body;
+//Insert investor data 
+const addInvestors = async(req, res, next) => {
+  const {name, dob, email, maidenname, nic, accountnum, 
+    bankname, accname, invtdate, amt, percentage
+  } = req.body;
 
-  let investor;
+  let investors;
 
   try {
-    investor = new FinanceInvestor({  name, 
-      dob, 
-      gmail, 
-      maidenname, 
-      nic, 
-      accountnum, 
-      bankname, 
-      accname, 
-      invtdate, 
-      amt, 
-      percentage });
-    await investor.save();
+    investors = new Investor({ name, dob, email, maidenname, nic, accountnum, 
+      bankname, accname, invtdate, amt, percentage });
+    await investors.save();
   }catch(err){
     console.log(err);
   }
 
-  // Unble to insert investor details
-  if(!investor){
-    return res.status(404).json({message: "Unable to add investor"});
+  // Can't insert data of investors 
+  if(!investors){
+    return res.status(404).json({message: "Unable to add investor ..."});
   }else{
-    return res.status(200).json({investor})
+    return res.status(200).json({investors})
   }
 }
 
-// Getting an investor ID
-const getInvestorById = async(req, res, next) => {
+//get Investor by Id
+const getByInvId = async(req, res, next) => {
   const id = req.params.id;
 
   let investor;
 
   try{
-    investor = await FinanceInvestor.findById(id);
+    investor = await Investor.findById(id);
   } catch(err){
     console.log(err)
   }
 
-  // If investor is not found
+  // not available users
   if(!investor){
     return res.status(404).json({message: "Investor not Found"});
   }else{
@@ -85,70 +66,70 @@ const getInvestorById = async(req, res, next) => {
 }
 
 
-//Update Investor details 
-const updateFinanceInvestor = async(req, res, next) => {
+//Update User details
+const updateInv = async(req, res, next) => {
   const id = req.params.id;
-  const {
-    name, dob, gmail, maidenname, nic, accountnum, bankname, accname, invtdate, amt, percentage
-  } = req.body;
+  const { name, dob, gmail, maidenname, nic, accountnum, 
+    bankname, accname, invtdate, amt, percentage} = req.body;
 
   let investor;
 
   try{
-    investor = await FinanceInvestor.findByIdAndUpdate(id,
-      {name,
-      dob,
-      gmail,
-      maidenname,
-      nic,
-      accountnum,
-      bankname,
-      accname,
-      invtdate,
-      amt,
-        percentage});
-      investor = await investor.save();
+    investor = await Investor.findByIdAndUpdate(id,
+      {
+      name:name, 
+      dob:dob, 
+      email:gmail, 
+      maidenname:maidenname, 
+      nic:nic, 
+      accountnum:accountnum, 
+      bankname:bankname, 
+      accname:accname, 
+      invtdate:invtdate, 
+      amt:amt, 
+      percentage:percentage
+    });
+    investor = await Investor.save();
   }catch(err){
     console.log(err);
   }
 
-  // Investor details update fails
+  // not available users
   if(!investor){
     return res.status(404).json({message: "Unable to update investor details"});
   }else{
     return res.status(200).json({investor})
   }
 
-}
+};
 
-// Delete Investor Details
-const deleteFinanceInvestor = async(req, res, next) => {
+//Delete user Detail
+const deleteInvestor = async(req, res, next) => {
   const id = req.params.id;
 
   let investor;
 
   try{
-    investor = await FinanceInvestor.findByIdAndDelete(id)
+    investor = await Investor.findByIdAndDelete(id)
   }catch(err){
     console.log(err);
   }
 
-  // Investor's details deletion fails 
+  // not available users
   if(!investor){
-    return res.status(404).json({message:"Unable to delete investor"});
+    return res.status(404).json({message: "Unable to Delete Investor details"});
   }else{
-    return res.status(200).json({message: "Investor successfully deleted"})
+    return res.status(200).json({investor})
   }
 }
 
-// Export the functions
 //export the getAllInvestors functions
 exports.getAllInvestors = getAllInvestors;
-//export the addFinanceInvestor functions
-exports.addFinanceInvestor = addFinanceInvestor;
-//export the getInvestorById functions
-exports.getInvestorById = getInvestorById;
-//export updateFinanceInvestor functions
-exports.updateFinanceInvestor = updateFinanceInvestor;
-//export deleteFinanceInvestor functions
-exports.deleteFinanceInvestor = deleteFinanceInvestor;
+//export the addInvestors functions
+exports.addInvestors = addInvestors;
+//export the getByInvId functions
+exports.getByInvId = getByInvId;
+//export updateInv functions
+exports.updateInv = updateInv;
+//export deleteInvestor functions
+exports.deleteInvestor = deleteInvestor;

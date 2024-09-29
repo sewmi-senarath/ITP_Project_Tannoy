@@ -1,48 +1,57 @@
 import React, { useState, useEffect } from 'react';
 import '../../App.css'; // Assuming your CSS is here
-import Logo from '../../images/logo.jpeg'; 
+import Logo from '../../images/logo.jpeg';
 import manager from '../../images/manager.jpeg'; // Manager's image
 import { useNavigate } from 'react-router-dom';
- // Import the Header component
 import '../../styles/InvestorsDashboard.css';
+import jsPDF from 'jspdf'; // Import jsPDF
+import 'jspdf-autotable'; // Import jsPDF autoTable plugin
 
 
-function InvestorsDashboard  ()  {
+function InvestorsDashboard() {
   const [investors, setInvestors] = useState([]); // State to hold investor data
   const [error, setError] = useState(''); // To handle errors
   const [searchQuery, setSearchQuery] = useState(''); // State to hold the search query
   const [filteredInvestors, setFilteredInvestors] = useState([]); // State to hold filtered results
+  const [loading, setLoading] = useState(true); // Loading state
   const navigate = useNavigate();
 
   // Fetch investor data from the backend API when the component mounts
   useEffect(() => {
     const fetchInvestors = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/investors'); // Backend URL for investors
+        const response = await fetch('http://localhost:5000/FinanceInvestor');
+      
+
+
         if (!response.ok) {
           throw new Error('Failed to fetch investors');
         }
         const data = await response.json();
-        console.log('Investors fetched:', data); // Check the fetched investors
-        setInvestors(data); // Set the investors state with the fetched data
-        setFilteredInvestors(data); // Initialize the filtered investors with all data
+        console.log(data.investors); // Log the fetched data
+
+        // Ensure data structure is correct
+        setInvestors(data.investors); // Adjust if necessary
+        setFilteredInvestors(data.investors); // Adjust if necessary
       } catch (error) {
         console.error('Error fetching investors:', error);
         setError('Could not fetch investor data');
+      } finally {
+        setLoading(false);
       }
     };
 
-    fetchInvestors(); // Fetch investors on component mount
+    fetchInvestors();
   }, []); // Empty dependency array ensures it runs only once
 
   // UseEffect to filter investors as searchQuery changes (dynamic filtering)
-  useEffect(() => {
+ useEffect(() => {
     if (searchQuery) {
       const query = searchQuery.toLowerCase();
       const filtered = investors.filter((investor) =>
-        (investor.email?.toLowerCase() || '').includes(query) ||
-        (investor.contactNumber?.toLowerCase() || '').includes(query) ||
-        (investor.invId?.toLowerCase() || '').includes(query)
+        (investor.gmail?.toLowerCase() || '').includes(query) || // Check for email
+        (investor.nic?.toLowerCase() || '').includes(query) || // Check for NIC
+        (investor._id?.toLowerCase() || '').includes(query) // Check for Investor ID
       );
       setFilteredInvestors(filtered); // Update filtered investors with the filtered result
     } else {
@@ -56,7 +65,7 @@ function InvestorsDashboard  ()  {
     if (!confirmed) return; // If the user cancels, do nothing
 
     try {
-      const response = await fetch(`http://localhost:5000/api/investors/${investorId}`, {
+      const response = await fetch(`http://localhost:5000/FinanceInvestor/${investorId}`, {
         method: 'DELETE',
       });
 
@@ -76,19 +85,47 @@ function InvestorsDashboard  ()  {
 
   // Handle the edit button to navigate to AddInvestor with the investor ID
   const handleEdit = (investorId) => {
-    navigate(`/investor-dashboard/${investorId}`);
+    navigate(`/update-investor/${investorId}`); // Navigate to the edit page with the investor ID
   };
 
   // Helper function to format the date (e.g., Date of Investment)
   const formatDate = (date) => {
+    if (!date) return 'N/A';
     const formattedDate = new Date(date);
     return formattedDate.toLocaleDateString();
   };
 
+  // Generate PDF Function
+  const generatePDF = () => {
+    const doc = new jsPDF();
+    doc.text('Investor Details', 20, 10); // Title
+
+// Add the table
+doc.autoTable({
+  head: [['ID', 'Name', 'DOB', 'Email', "Maiden Name", 'NIC', 'A/C Number', 'Bank', 'A/C Name', 'Invested Date', 'Amount', 'Percentage']],
+  body: filteredInvestors.map(investor => [
+    investor._id, 
+    investor.name, 
+    formatDate(investor.dob), 
+    investor.gmail, 
+    investor.maidenname, 
+    investor.nic, 
+    investor.accountnum, 
+    investor.bankname, 
+    investor.accname, 
+    formatDate(investor.invtdate), 
+    investor.amt, 
+    investor.percentage
+  ])
+});
+
+doc.save('investor_report.pdf'); // Save the generated PDF
+};
+
   return (
     <div className="investor-dashboard">
       {/* Include the Header component here */}
-      
+
       {/* Sidebar Section */}
       <div className="sidebar">
         <div className="logo">
@@ -116,13 +153,16 @@ function InvestorsDashboard  ()  {
         <header>
           <input
             type="text"
-            placeholder="Search by email or contact number..."
+            placeholder="Search by email or NIC number..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)} // Update search query on input change
           />
         </header>
         <h1>Investor Dashboard</h1>
         <h2>Investor Details</h2>
+
+        {/* Display loading message while data is being fetched */}
+        {loading && <p>Loading investor data...</p>}
 
         {/* Display an error message if fetching fails */}
         {error && <p className="error-message">{error}</p>}
@@ -133,10 +173,16 @@ function InvestorsDashboard  ()  {
             <tr>
               <th>Investor ID</th>
               <th>Name</th>
-              <th>Date of Investment</th>
-              <th>Email Address</th>
-              <th>Contact Number</th>
-              <th>Investment Amount</th>
+              <th>DOB</th>
+              <th>Email</th>
+              <th>Maidenname</th>
+              <th>NIC Number</th>
+              <th>A/C Number</th>
+              <th>Bank</th>
+              <th>A/C Name</th>
+              <th>Invested Date</th>
+              <th>Invested Amount</th>
+              <th>Invested Percentage</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -144,12 +190,18 @@ function InvestorsDashboard  ()  {
             {filteredInvestors.length > 0 ? (
               filteredInvestors.map((investor) => (
                 <tr key={investor._id}>
-                  <td>{investor.invId}</td>
+                  <td>{investor._id}</td>
                   <td>{investor.name}</td>
-                  <td>{formatDate(investor.investmentDate)}</td>
-                  <td>{investor.email}</td>
-                  <td>{investor.contactNumber}</td>
-                  <td>{investor.investmentAmount}</td>
+                  <td>{formatDate(investor.dob)}</td> {/* Format the date */}
+                  <td>{investor.gmail}</td> {/* Correct this to gmail */}
+                  <td>{investor.maidenname}</td>
+                  <td>{investor.nic}</td>
+                  <td>{investor.accountnum}</td>
+                  <td>{investor.bankname}</td>
+                  <td>{investor.accname}</td>
+                  <td>{formatDate(investor.invtdate)}</td> {/* Format the date */}
+                  <td>{investor.amt}</td>
+                  <td>{investor.percentage}</td>
                   <td>
                     <button className="edit-btn" onClick={() => handleEdit(investor._id)}>Edit</button>
                     <button
@@ -163,13 +215,15 @@ function InvestorsDashboard  ()  {
               ))
             ) : (
               <tr>
-                <td colSpan="7" style={{ textAlign: 'center' }}>
-                  No investors found
+                <td colSpan="13" style={{ textAlign: 'center' }}>
+                  {searchQuery ? 'No investors match your search query.' : 'No investors found.'}
                 </td>
               </tr>
             )}
           </tbody>
         </table>
+        {/* Add a button to generate PDF */}
+        <button onClick={generatePDF} className="pdf-btn">Generate PDF</button>
       </div>
     </div>
   );

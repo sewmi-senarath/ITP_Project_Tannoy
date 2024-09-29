@@ -15,7 +15,7 @@ const Header = () => {
                 <a href="/recycle-product-dashbord">Recycle Products</a> {/* Gangani */}
                 <a href="/employee-dashboard">Employee Team</a>
                 <a href="/deliveryHome">Delivery</a>
-                <a href="/investors">FinanceInvestor</a>
+                <a href="/InvestorsDashboard">FinanceInvestor</a>
                 <a href="/login">Login</a>
                 <a href="/register">Register</a>
             </nav>

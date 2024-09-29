@@ -26,10 +26,6 @@ const productRoutes=require("./Route/InventoryProductRoutes")
 
 
 
-
-
-
-
 //Middleware
 app.use(cors());
 app.use(express.json());

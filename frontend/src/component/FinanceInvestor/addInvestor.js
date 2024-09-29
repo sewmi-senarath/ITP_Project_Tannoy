@@ -1,29 +1,28 @@
-// export default AddInvestor;
 import React, { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom"; // useParams to get investorId from the URL
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-import '../../styles/AddInvestor.css';
+import jsPDF from "jspdf"; // jsPDF for generating PDFs
+import "jspdf-autotable"; // Import jsPDF autoTable plugin
 
-
-
-const AddInvestor = () => {
+function AddInvestor() {
   const navigate = useNavigate();
-  const { investorId } = useParams(); // Get the investor ID from the URL
-
-  const [formData, setFormData] = useState({
-    investorId: "",
-    name: "",
-    email: "",
-    contactNumber: "",
-    investmentAmount: "",
-    address: "",
-    dob: "",
-    gender: "Male",
-    companyName: "",
-    photo: null, // Store the base64 image here
+  const { investorId } = useParams(); // Get investorId from URL parameters
+  const [inputs, setInputs] = useState({
+    investorId: "", // Unique identifier for investor
+    name: "", // Name of the investor
+    dob: "", // Date of birth
+    maidenname: "", // Investor's maiden name
+    nic: "", // NIC number
+    accountnum: "", // Bank account number
+    bankname: "", // Bank name
+    invtdate: "", // Investment date
+    email: "", // Email address
+    amt: "", // Investment amount
+    percentage: "", // Investment percentage
+    accname:''
   });
 
-  const [isLoading, setIsLoading] = useState(true); // To show a loading indicator while fetching data
+  const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -32,22 +31,22 @@ const AddInvestor = () => {
     const fetchInvestor = async () => {
       if (investorId) {
         try {
-          const response = await axios.get(`http://localhost:5000/api/investors/${investorId}`);
+          const response = await axios.get(`http://localhost:5000/api/FinanceInvestor/${investorId}`);
           console.log("Fetched Investor Data:", response.data);
 
-          // Ensure date is in the format YYYY-MM-DD
-          const formattedDob = response.data.dob
-            ? new Date(response.data.dob).toISOString().substring(0, 10)
-            : "";
-          
-          setFormData({
+          // Format dates for input
+          const formattedDob = response.data.dob ? new Date(response.data.dob).toISOString().substring(0, 10) : "";
+          const formattedInvtDate = response.data.invtdate ? new Date(response.data.invtdate).toISOString().substring(0, 10) : "";
+
+          setInputs({
             ...response.data,
             dob: formattedDob,
+            invtdate: formattedInvtDate,
           });
-          setIsLoading(false);
         } catch (error) {
           console.error("Error fetching investor:", error);
           setErrorMessage("Failed to fetch investor data.");
+        } finally {
           setIsLoading(false);
         }
       } else {
@@ -59,40 +58,45 @@ const AddInvestor = () => {
 
   // Handle form input changes
   const handleInputChange = (event) => {
-    const { name, value, files } = event.target;
-    if (name === "photo" && files && files.length > 0) {
-      const reader = new FileReader();
-      reader.readAsDataURL(files[0]);
-      reader.onload = () => setFormData((prev) => ({ ...prev, [name]: reader.result }));
-    } else {
-      setFormData((prev) => ({ ...prev, [name]: value }));
-    }
+    const { name, value } = event.target;
+    setInputs((prev) => ({ ...prev, [name]: value }));
   };
 
   // Handle form submission
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     setIsSubmitting(true);
+    console.log(inputs);
 
     try {
       if (investorId) {
-        await axios.put(`http://localhost:5000/api/investors/${investorId}`, formData);
+        await axios.put(`http://localhost:5000/api/investors/${investorId}`, {
+          ...inputs,
+          dob: new Date(inputs.dob),
+          invtdate: new Date(inputs.invtdate),
+          amt: Number(inputs.amt),
+          percentage: Number(inputs.percentage),
+        });
       } else {
-        await axios.post("http://localhost:5000/api/investors", formData);
+        await axios.post("http://localhost:5000/FinanceInvestor", {
+          ...inputs,
+          dob: new Date(inputs.dob),
+          invtdate: new Date(inputs.invtdate),
+          amt: Number(inputs.amt),
+          percentage: Number(inputs.percentage),
+        });
       }
-      navigate("/investor-dashboard");
+      navigate("/InvestorsDashboard");
     } catch (error) {
-      if (error.response && error.response.data.message) {
-        setErrorMessage(error.response.data.message);  // Display the server error message
-      } else {
-        setErrorMessage("Failed to save investor.");
-      }
+      setErrorMessage(error.response?.data?.message || "Failed to save investor.");
       console.error("Error saving investor:", error);
     } finally {
       setIsSubmitting(false);
     }
   };
 
+  
+  // Show a loading spinner or message while the data is being fetched
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -102,139 +106,32 @@ const AddInvestor = () => {
       <div className="Add-main-content">
         <h1>{investorId ? "Edit Investor" : "Add Investor"}</h1>
         <form className="investor-form" onSubmit={handleSubmit}>
-          <div className="form-group">
-            <label htmlFor="investorId">Investor ID:</label>
-            <input
-              type="text"
-              id="investorId"
-              name="investorId"
-              placeholder="Enter Investor ID"
-              value={formData.investorId}
-              onChange={handleInputChange}
-              required
-              disabled={!!investorId}
-            />
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="name">Name:</label>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              placeholder="Enter full name"
-              value={formData.name}
-              onChange={handleInputChange}
-              required
-            />
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="email">Email:</label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              placeholder="Enter email"
-              value={formData.email}
-              onChange={handleInputChange}
-              required
-            />
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="contactNumber">Contact Number:</label>
-            <input
-              type="text"
-              id="contactNumber"
-              name="contactNumber"
-              placeholder="Enter contact number"
-              value={formData.contactNumber}
-              onChange={handleInputChange}
-              required
-            />
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="investmentAmount">Investment Amount:</label>
-            <input
-              type="number"
-              id="investmentAmount"
-              name="investmentAmount"
-              placeholder="Enter investment amount"
-              value={formData.investmentAmount}
-              onChange={handleInputChange}
-              required
-            />
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="address">Address:</label>
-            <input
-              type="text"
-              id="address"
-              name="address"
-              placeholder="Enter address"
-              value={formData.address}
-              onChange={handleInputChange}
-              required
-            />
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="dob">Date of Birth:</label>
-            <input
-              type="date"
-              id="dob"
-              name="dob"
-              value={formData.dob}
-              onChange={handleInputChange}
-              required
-            />
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="gender">Gender:</label>
-            <select
-              id="gender"
-              name="gender"
-              value={formData.gender}
-              onChange={handleInputChange}
-              required
-            >
-              <option value="Male">Male</option>
-              <option value="Female">Female</option>
-              <option value="Other">Other</option>
-            </select>
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="companyName">Company Name:</label>
-            <input
-              type="text"
-              id="companyName"
-              name="companyName"
-              placeholder="Enter company name"
-              value={formData.companyName}
-              onChange={handleInputChange}
-            />
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="photo">Photo (Optional):</label>
-            <input type="file" id="photo" name="photo" onChange={handleInputChange} />
-            {formData.photo && (
-              <div>
-                <img src={formData.photo} alt="Investor" style={{ width: '100px', height: '100px' }} />
-              </div>
-            )}
-          </div>
-
+          {Object.entries(inputs).map(([key, value]) => (
+            <div className="form-group" key={key}>
+              <label htmlFor={key}>{key.charAt(0).toUpperCase() + key.slice(1)}:</label>
+              <input
+                type={key === "dob" || key === "invtdate" ? "date" : key === "email" ? "email" : "text"}
+                id={key}
+                name={key}
+                placeholder={`Enter ${key}`}
+                value={value}
+                onChange={handleInputChange}
+                required={key !== "maidenname"} // Make maidenname optional
+                disabled={key === "investorId" && !!investorId} // Disable investorId input if editing
+              />
+            </div>
+          ))}
+          
           <button type="submit" className="submit-btn" disabled={isSubmitting}>
             {isSubmitting ? "Saving..." : investorId ? "Edit Investor" : "Add Investor"}
           </button>
 
           {errorMessage && <p className="error-message">{errorMessage}</p>}
+
+          {/* Back button */}
+          <button type="button" className="back-btn" onClick={() => navigate(-1)}>
+            Back
+          </button>
         </form>
       </div>
     </div>
