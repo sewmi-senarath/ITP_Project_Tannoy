@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "../../component/delivery/deliveryHome.css"; // Import the CSS file
+import "../../component/delivery/deliveryHome.css"; 
 
 const DeliveryHome = () => {
   const navigate = useNavigate();
@@ -9,14 +9,14 @@ const DeliveryHome = () => {
   // Function to handle redirection to the Parcel List page with search query
   const handleDeliveryClickView = () => {
     if (trackingNumber) {
-      navigate(`/parsel-list?search=${trackingNumber}`); // Navigates to displayParselList with search query
+      navigate(`/parsel-list?search=${trackingNumber}`); 
     } else {
-      navigate("/parsel-list"); // Navigate without search query
+      navigate("/parsel-list"); 
     }
   };
 
   const handleDeliveryClickAdd = () => {
-    navigate("/Add-parsel"); // Navigates to add parsel page
+    navigate("/Add-parsel"); 
   };
 
   // Function to handle pressing the Enter key in the input field
@@ -35,8 +35,8 @@ const DeliveryHome = () => {
         placeholder="Enter Your Tracking number here..."
         id="input-box"
         value={trackingNumber}
-        onChange={(e) => setTrackingNumber(e.target.value)} // Update tracking number state
-        onKeyPress={handleKeyPress} // Trigger search on Enter key press
+        onChange={(e) => setTrackingNumber(e.target.value)} 
+        onKeyPress={handleKeyPress} 
       />
       <div id="button-wrapper">
         <button id="button-primary" onClick={handleDeliveryClickAdd}>
