@@ -172,6 +172,7 @@ const ProductDashboard = () => {
               <th>Stock Size</th>
               <th>Category</th>
               <th>Availability</th>
+              <th>Price</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -185,6 +186,7 @@ const ProductDashboard = () => {
                   <td>{product.stockSize}</td>
                   <td>{product.ProductCategory}</td>
                   <td>{product.availability || 'Unknown'}</td>
+                  <td>{product.price}</td>
                   <td>
                     <button className="edit-btn" onClick={() => handleEdit(product._id)}>Edit</button>
                     <button className="delete-btn" onClick={() => deleteProduct(product._id)}>Delete</button>

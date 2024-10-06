@@ -27,7 +27,7 @@ exports.getProductById = async (req, res) => {
 
 // Add a new Product
 exports.addProduct = async (req, res) => {
-  const { ProductName, ProductDescription, ProductCategory, stockSize, ProductCode, availability } = req.body;
+  const { ProductName, ProductDescription, ProductCategory, stockSize, ProductCode, availability ,price} = req.body;
 
   try {
     // Create a new product instance
@@ -37,7 +37,8 @@ exports.addProduct = async (req, res) => {
       ProductCategory,
       stockSize,
       ProductCode,
-      availability
+      availability,
+      price
     });
 
     // Save the product in the database

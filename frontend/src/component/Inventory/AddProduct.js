@@ -14,6 +14,7 @@ const AddProduct = () => {
     ProductCategory: '',
     stockSize: '',
     availability: '',
+    price: '',
   });
   const [formErrors, setFormErrors] = useState({
     ProductCode: '', // Initialize error state
@@ -35,6 +36,7 @@ const AddProduct = () => {
             ProductCategory: response.data.ProductCategory,
             stockSize: response.data.stockSize,
             availability: response.data.availability || '',
+            price: response.data.price,
           });
           setIsLoading(false);
         } catch (error) {
@@ -214,6 +216,25 @@ const AddProduct = () => {
               <option value="In Stock">In Stock</option>
               <option value="Out of Stock">Out of Stock</option>
             </select>
+          </div>
+
+           {/* price */}
+           <div className="form-group">
+            <label htmlFor="price">Price:</label>
+            <input
+              type="number"
+              id="price"
+              name="price"
+              placeholder="Enter price"
+              value={formData.price}
+              onChange={(e) => {
+                const value = e.target.value;
+                if (value >= 0 || value === "") {
+                  handleInputChange(e); // Call the input handler only if the value is valid
+                }
+              }}
+              required
+            />
           </div>
 
           <button type="submit" className="submit-btn" disabled={isSubmitting}>

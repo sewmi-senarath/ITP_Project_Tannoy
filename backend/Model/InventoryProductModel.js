@@ -30,8 +30,12 @@ const ProductSchema = new mongoose.Schema({
     type: String,
     enum: ['In Stock', 'Out of Stock'], // Enforcing valid availability values
     default: 'In Stock' // Default value if not provided
+  },
+  price: {
+    type: Number,
+    required: true,
+    min: 0
   }
-  
 });
 
 const Product = mongoose.model('Product', ProductSchema);
