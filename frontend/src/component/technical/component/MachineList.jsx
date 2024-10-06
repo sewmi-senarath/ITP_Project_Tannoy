@@ -189,10 +189,10 @@ function Machine({ machine, handler }) {
       className="item flex justify-center bg-gray-50 rounded-md mt-2"
       style={{ borderRight: `8px solid ${machine.color ?? "#e5e5e5"}` }}
     >
-      <button className="px-8" onClick={() => handler(machine.id)}>
+      <button className="w-80" onClick={() => handler(machine.id)}>
         <box-icon color={machine.color ?? "#e5e5e5"} size="20px" name="trash" />
       </button>
-      <button className="px-3" onClick={handleOpen}>
+      <button className="w-80" onClick={handleOpen}>
         <box-icon
           color={machine.color ?? "#e5e5e5"}
           size="20px"
