@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios'; // For making HTTP requests
-import '../../styles/addSupplier.css'; // Assuming your CSS file is here
+import '../../styles/addSupplier.css'; // CSS file 
 import Logo from '../../images/logo.jpeg';
 import manager from '../../images/manager.jpeg';
 import { useNavigate } from 'react-router-dom';

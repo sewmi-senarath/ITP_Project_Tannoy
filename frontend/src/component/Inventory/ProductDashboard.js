@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import jsPDF from 'jspdf';  // For generating PDFs
 import 'jspdf-autotable';   // For creating tables in PDFs
-import '../../styles/employee.css';  // CSS file
+//import '../../styles/employee.css';  // CSS file
 import Logo from '../../images/logo.jpeg';
 import manager from '../../images/manager.jpeg';
 import { useNavigate } from "react-router-dom";
@@ -15,6 +15,9 @@ const ProductDashboard = () => {
   const [filteredProducts, setFilteredProducts] = useState([]);  // Filtered products
   const [availabilityFilter, setAvailabilityFilter] = useState('');  // Availability filter
   const navigate = useNavigate();
+
+  // Define a threshold for low stock levels
+  const lowStockThreshold = 10;
 
   // Fetch product data from the backend API when the component mounts
   useEffect(() => {
@@ -47,6 +50,15 @@ const ProductDashboard = () => {
 
     setFilteredProducts(filtered);
   }, [searchQuery, availabilityFilter, products]);  // Run this effect when searchQuery, availabilityFilter, or products changes
+  
+  // Get low stock items
+  const lowStockProducts = filteredProducts.filter(product => {
+    const stockSize = Number(product.stockSize); // Ensure stockSize is a number
+    return stockSize < lowStockThreshold;
+  });
+
+  // Debugging log to see low stock items
+  console.log('Low stock products:', lowStockProducts);
 
   const handleEdit = (productId) => {
     navigate(`/Addproduct/${productId}`);  // Pass the product ID correctly
@@ -108,6 +120,7 @@ const ProductDashboard = () => {
   }
   
   return (
+   
     <div className="employee-dashboard">
       <div className="sidebar">
         <div className="logo">
@@ -163,6 +176,17 @@ const ProductDashboard = () => {
         
         </div>
 
+        {/* Notify User for Low Stock Levels */}
+        <div className="low-stock-notification">
+          {lowStockProducts.length > 0 ? (
+            <p style={{ color: 'red' }}>
+              ⚠️ Warning: The following products are running low on stock! IDs: {lowStockProducts.map(product => product.ProductCode).join(', ')}
+            </p>
+          ) : null}
+        </div>
+
+       
+
         <table>
           <thead>
             <tr>
@@ -207,6 +231,7 @@ const ProductDashboard = () => {
         </button>
       </div>
     </div>
+    
   );
 };
 

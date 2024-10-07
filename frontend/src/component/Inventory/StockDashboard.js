@@ -15,6 +15,10 @@ const StockDashboard = () => {
   const [availabilityFilter, setAvailabilityFilter] = useState('All');
   const navigate = useNavigate(); 
 
+  // Define the low stock threshold
+  const lowStockThreshold = 10;
+
+
   useEffect(() => {
     const fetchItems = async () => {
       try {
@@ -101,6 +105,9 @@ const StockDashboard = () => {
     doc.save('Stock_Inventory_Report.pdf');
   };
 
+  // Get low stock items
+  const lowStockItems = filteredItems.filter(item => item.stockSize < lowStockThreshold);
+
   return (
     <div className="employee-dashboard">
       <div className="sidebar">
@@ -151,6 +158,15 @@ const StockDashboard = () => {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)} 
           />
+        </div>
+
+        {/* Notify User for Low Stock Levels */}
+        <div className="low-stock-notification">
+          {lowStockItems.length > 0 ? (
+            <p style={{ color: 'red' }}>
+              ⚠️ Warning: The following items are running low on stock! IDs: {lowStockItems.map(item => item.itemCode).join(', ')}
+            </p>
+          ) : null}
         </div>
 
         <table>
