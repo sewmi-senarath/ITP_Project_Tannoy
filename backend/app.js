@@ -100,6 +100,17 @@ app.post("/login", async (req, res) => {
   }
 });
 
+app.get('/recyclingProducts/report', (req, res) => {
+    const { startDate, endDate, status } = req.query;
+    
+  // Filter data based on date range and status
+  RecyclingProduct.find({
+    date: { $gte: new Date(startDate), $lte: new Date(endDate) },
+    status: status,
+  })
+    .then((products) => res.json(products))
+    .catch((error) => res.status(500).json({ error: error.message }));
+});
 
 //Database connection
 mongoose.connect(config.get('db.uri'))

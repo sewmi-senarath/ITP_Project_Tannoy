@@ -9,10 +9,11 @@ import MarkAttendance from "./component/employee/MarkAttendance";
 import Home from "./component/home/home";
 import Login from "./component/delivery/Login";
 import DeliveryHome from "./component/delivery/deliveryHome"; 
+import CusParselList from "./component/delivery/cusParsel"; 
 import TechnicalHome from './component/technical/technicalHome';
 import Addmachine from "./component/technical/addmachine";
 //juthmini
-import "./App.css";
+//import "./App.css";
 import MachinePage from "./component/technical/page/MachinePage";
 import DisplayParselList from "./component/delivery/displayParselList";
 import AddParselRequest from "./component/delivery/addDeliveryRequest";
@@ -34,11 +35,16 @@ import StockReport from "./component/Inventory/StockReport";
 import CRMRegister from "./component/CRM/CRMRegister/Register";
 import CRMLogin from "./component/CRM/CRMLogin/Login";
 //Gangani
-import RecycleProducts from "./component/recycledProducts/RecycleProducts";
+import RecycleProductsDashboard from "./component/recycledProducts/RecycleProductsDashboard";
 import RecyclingProductsTable from "./component/recycledProducts/RecyclingProductsTable";
 import RecycledProducts from "./component/recycledProducts/RecycledProducts";
+import AddRecycleProduct from "./component/recycledProducts/AddRecycleProducts";
+import RecycleReportGeneration from "./component/recycledProducts/RecycleReportGeneration";
 
-
+//Ruvindi
+import InvestorsDashboard from "./component/FinanceInvestor/investorsdashboard";
+import Addinvestor from "./component/FinanceInvestor/addInvestor";
+import UpdateInvestorProfile from "./component/FinanceInvestor/updateInvestorprofile";
 
 function App() {
   return (
@@ -58,6 +64,7 @@ function App() {
           <Route path="/login" element={<Login />} /> 
           <Route path="/deliveryHome" element={<DeliveryHome />} /> 
           <Route path="/parsel-list" element={<DisplayParselList />} />
+          <Route path="/cusParsel-list" element={<CusParselList />} />
           <Route path="/parsel-list/:id" element={<UpdateParselReq />} />
           <Route path="/Add-parsel" element={<AddParselRequest />} />
           <Route path="/register" element={<DeliveryRegister />} />
@@ -83,9 +90,14 @@ function App() {
           <Route path="/addStock/:itemId" element={<AddStock />} />
           <Route path="/supplierDashboard" element={<SupplierDashboard/>} />
           <Route path="/StockReport/:supplierId" element={<StockReport />} />
-          <Route path="/recycle-product-dashbord" element={<RecycleProducts/>} /> {/* Gangani */}
+          <Route path="/recycle-product-dashbord" element={<RecycleProductsDashboard/>} /> {/* Gangani */}
           <Route path="/recycling-products" element={<RecyclingProductsTable/>} /> {/* Gangani */}
           <Route path="/recycled-products" element={<RecycledProducts/>} /> {/* Gangani */}
+          <Route path="/add-recycle-product" element={<AddRecycleProduct/>} /> {/* Gangani */}
+          <Route path="/recycle-product-report" element={<RecycleReportGeneration/>} /> {/* Gangani */}
+          <Route path="/InvestorsDashboard" element={<InvestorsDashboard/>} /> {/* Ruvindi */}
+          <Route path="/investor" element={<UpdateInvestorProfile/>} /> {/* Ruvindi */}
+          <Route path="/add-investor" element={<Addinvestor/>} /> {/* Ruvindi */}
         </Routes>
         <Footer />
       </div>
