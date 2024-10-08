@@ -99,8 +99,8 @@ const SupplierDashboard = () => {
   }
 
   return (
-    <div className="flex">
-      <div className="w-1/6 bg-gray-800 text-white h-screen p-4"> {/* Reduced sidebar width */}
+    <div className="flex min-h-screen"> {/* Flexbox with full screen height */}
+      <div className="w-1/6 bg-gray-800 text-white p-4"> {/* Sidebar with reduced width */}
         <div className="logo mb-4">
           <img src={Logo} alt="Tannoy Electricals Logo" className="w-24" /><br />
           <h2 className="text-lg">Tannoy Electricals</h2>
@@ -125,7 +125,7 @@ const SupplierDashboard = () => {
         </ul>
       </div>
 
-      <div className="flex-grow p-6"> {/* Adjusted main content to fill available space */}
+      <div className="flex-grow p-6"> {/* Main content area fills remaining space */}
         <header>
           <input
             type="text"
