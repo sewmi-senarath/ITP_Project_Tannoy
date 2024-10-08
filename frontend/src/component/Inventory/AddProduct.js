@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom'; // useParams to get productId from the URL
 import axios from 'axios';
 import productImage from '../../images/product.jpeg'; // Adjust the path to your image file
-import '../../styles/product.css'
-
+import '../../styles/product.css';
 
 const AddProduct = () => {
   const navigate = useNavigate();
@@ -15,6 +14,10 @@ const AddProduct = () => {
     ProductCategory: '',
     stockSize: '',
     availability: '',
+    price: '',
+  });
+  const [formErrors, setFormErrors] = useState({
+    ProductCode: '', // Initialize error state
   });
   const [isLoading, setIsLoading] = useState(true); // To show a loading indicator while fetching data
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -33,6 +36,7 @@ const AddProduct = () => {
             ProductCategory: response.data.ProductCategory,
             stockSize: response.data.stockSize,
             availability: response.data.availability || '',
+            price: response.data.price,
           });
           setIsLoading(false);
         } catch (error) {
@@ -50,6 +54,25 @@ const AddProduct = () => {
   // Handle form input changes
   const handleInputChange = (event) => {
     const { name, value } = event.target;
+
+    // Add validation for ProductCode
+    if (name === "ProductCode") {
+      const regex = /^[a-zA-Z0-9]{0,6}$/; // Allow only alphanumeric, max 6 characters
+      if (!regex.test(value)) {
+        setFormErrors({
+          ...formErrors,
+          ProductCode: "Product Code must be up to 6 alphanumeric characters.",
+        });
+        return; // Stop processing if validation fails
+      } else {
+        setFormErrors({
+          ...formErrors,
+          ProductCode: "", // Clear error if valid
+        });
+      }
+    }
+
+    // Update form data
     setFormData({
       ...formData,
       [name]: value,
@@ -66,12 +89,11 @@ const AddProduct = () => {
         // Update existing product
         await axios.put(`http://localhost:5000/api/products/${productId}`, formData);
         setMessage('Product updated successfully!');
-        navigate('/productDashboard')
+        navigate('/productDashboard');
       } else {
         // Add new product
         await axios.post('http://localhost:5000/api/products', formData);
         setMessage('Product added successfully!');
-       
       }
       navigate('/productDashboard'); // Redirect after submission
     } catch (error) {
@@ -91,8 +113,7 @@ const AddProduct = () => {
       <div className="Add-main-content">
         <div className='title'>{productId ? 'Edit Product' : 'Add Product'}</div>
         <form className="product-form" onSubmit={handleSubmit}>
-          
-          {/* Product Code */}
+          {/* Product Code Input */}
           <div className="form-group">
             <label htmlFor="ProductCode">Product Code:</label>
             <input
@@ -102,23 +123,33 @@ const AddProduct = () => {
               placeholder="Enter Product Code"
               value={formData.ProductCode}
               onChange={handleInputChange}
+              maxLength="6" // Limit input to 4 characters
               required
-              disabled={!!productId} 
+              disabled={!!productId}
             />
+            {formErrors.ProductCode && (
+              <p className="error-message">{formErrors.ProductCode}</p> // Show error if validation fails
+            )}
           </div>
 
           {/* Product Name */}
           <div className="form-group">
             <label htmlFor="ProductName">Product Name:</label>
-            <input
-              type="text"
+            <select
               id="ProductName"
               name="ProductName"
-              placeholder="Enter Product Name"
               value={formData.ProductName}
               onChange={handleInputChange}
               required
-            />
+            >
+              <option value="">Select Product</option>
+              <option value="Holders">Holders</option>
+              <option value="Junction Boxes">Junction Boxes</option>
+              <option value="Sunk Boxes">Sunk Boxes</option>
+              <option value="Double Holder">Double Holder</option>
+              <option value="Round Block">Round Block</option>
+              <option value="Celling Rose">Celling Rose</option>
+            </select>
           </div>
 
           {/* Product Description */}
@@ -137,15 +168,19 @@ const AddProduct = () => {
           {/* Product Category */}
           <div className="form-group">
             <label htmlFor="ProductCategory">Category:</label>
-            <input
-              type="text"
+            <select
               id="ProductCategory"
               name="ProductCategory"
-              placeholder="Enter Product Category"
               value={formData.ProductCategory}
               onChange={handleInputChange}
               required
-            />
+            >
+              <option value="">Select Category</option>
+              <option value="Electrical Enclosures">Electrical Enclosures</option>
+              <option value="Electrical Fixtures">Electrical Fixtures</option>
+              <option value="Wiring Boxes & Enclosures">Wiring Boxes & Enclosures</option>
+              <option value="Lighting Fixtures & Components">Lighting Fixtures & Components</option>
+            </select>
           </div>
 
           {/* Stock Size */}
@@ -157,7 +192,12 @@ const AddProduct = () => {
               name="stockSize"
               placeholder="Enter Stock Size"
               value={formData.stockSize}
-              onChange={handleInputChange}
+              onChange={(e) => {
+                const value = e.target.value;
+                if (value >= 0 || value === "") {
+                  handleInputChange(e); // Call the input handler only if the value is valid
+                }
+              }}
               required
             />
           </div>
@@ -176,6 +216,25 @@ const AddProduct = () => {
               <option value="In Stock">In Stock</option>
               <option value="Out of Stock">Out of Stock</option>
             </select>
+          </div>
+
+           {/* price */}
+           <div className="form-group">
+            <label htmlFor="price">Price:</label>
+            <input
+              type="number"
+              id="price"
+              name="price"
+              placeholder="Enter price"
+              value={formData.price}
+              onChange={(e) => {
+                const value = e.target.value;
+                if (value >= 0 || value === "") {
+                  handleInputChange(e); // Call the input handler only if the value is valid
+                }
+              }}
+              required
+            />
           </div>
 
           <button type="submit" className="submit-btn" disabled={isSubmitting}>

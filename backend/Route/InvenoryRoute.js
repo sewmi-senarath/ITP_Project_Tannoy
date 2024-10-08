@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const InventoryController = require("../Controlers/InventoryController"); // Ensure the path is correct
-// Adjust the path according to your project structure
+// Adjust the path according to  project structure
 
 router.get('/', InventoryController.getAllItems);
 router.get('/:id', InventoryController.getItemById);
