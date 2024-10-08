@@ -46,6 +46,9 @@ import InvestorsDashboard from "./component/FinanceInvestor/investorsdashboard";
 import Addinvestor from "./component/FinanceInvestor/addInvestor";
 import UpdateInvestorProfile from "./component/FinanceInvestor/updateInvestorprofile";
 
+import Mylogin from './UserManagement/login';
+import RegisterForm from './UserManagement/register';
+
 function App() {
   return (
     
@@ -53,7 +56,10 @@ function App() {
       <div>
         <Header />
         <Routes>
-          <Route path="/" element={<Home />} />
+        <Route path="/Register" element={<RegisterForm />} />
+        <Route path="/" element={<Mylogin />} />
+
+          <Route path="/home" element={<Home />} />
           <Route path="/employee-dashboard" element={<EmployeeDashboard />} />
           <Route path="/add-employee" element={<AddEmployee />} />
           <Route path="/technicalHome" element={<TechnicalHome />} />

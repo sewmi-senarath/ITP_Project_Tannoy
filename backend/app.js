@@ -23,6 +23,7 @@ const { loginCRM } = require("./CRMAuthHandler/CRMLoginHandler");
 const app = express();
 const itemRoutes = require("./Route/InvenoryRoute");
 const productRoutes=require("./Route/InventoryProductRoutes")
+const loginRoute = require('./Route/loginRoute.js');
 
 
 
@@ -30,7 +31,7 @@ const productRoutes=require("./Route/InventoryProductRoutes")
 app.use(cors());
 app.use(express.json());
 app.use(cors());
-app.use("/Users", userRouter);
+//app.use("/Users", userRouter);
 app.use("/api/employees", employeeRouter);
 app.use("/RecyclingProducts", recyclingProductRouter);
 app.use(cookieParser());
@@ -50,6 +51,14 @@ app.use('/api/items',itemRoutes);
 app.post("/CRMRegister", CRMRegister);
 app.post("/loginCRM", loginCRM);
 app.use(require("./Route/TechnicalRoutes.js"));
+
+const jwt = require('jsonwebtoken');
+
+const JWT_SECRET = "your-secure-secret-key"; // You can replace this with any strong key
+app.use("/api/user", loginRoute);
+
+// You can also pass JWT_SECRET directly to other routes or components that require it
+app.set('jwtSecretKey', JWT_SECRET);
 
 
 // routes customer management

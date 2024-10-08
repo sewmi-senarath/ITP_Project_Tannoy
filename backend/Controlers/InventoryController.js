@@ -2,7 +2,7 @@
 const Item = require("../Model/InventoryModel");
 
 
-// Get all items
+// Get all items in database
 exports.getAllItems = async (req, res) => {
   try {
     const items = await Item.find();
