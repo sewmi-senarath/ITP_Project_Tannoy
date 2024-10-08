@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios'; // For making HTTP requests
-import '../../styles/addSupplier.css'; // CSS file 
 import Logo from '../../images/logo.jpeg';
 import manager from '../../images/manager.jpeg';
 import { useNavigate } from 'react-router-dom';
@@ -100,54 +99,55 @@ const SupplierDashboard = () => {
   }
 
   return (
-    <div className="employee-dashboard">
-      <div className="sidebar">
-        <div className="logo">
-          <img src={Logo} alt="Tannoy Electricals Logo" /><br />
-          <h2>Tannoy Electricals</h2>
+    <div className="flex">
+      <div className="w-1/6 bg-gray-800 text-white h-screen p-4"> {/* Reduced sidebar width */}
+        <div className="logo mb-4">
+          <img src={Logo} alt="Tannoy Electricals Logo" className="w-24" /><br />
+          <h2 className="text-lg">Tannoy Electricals</h2>
         </div>
-        <ul className="nav-links">
-          <li><a href="/productDashboard">Product Details</a></li>
-          <li><a href="/Addproduct">Add Product</a></li>
-          <li><a href="/supplierdashboard">Supplier details</a></li>
-          <li><a href="/Addsupplier">Add Supplier</a></li>
-          <li><a href="/stockDashboard">Stock Details</a></li>
-          <li><a href="/addStock">Add Stock</a></li>
-          <li><a href="/stock-add">Add Inquiry</a></li>
+        <ul className="nav-links space-y-2">
+          <li><a href="/productDashboard" className="hover:text-gray-300">Product Details</a></li>
+          <li><a href="/Addproduct" className="hover:text-gray-300">Add Product</a></li>
+          <li><a href="/supplierdashboard" className="hover:text-gray-300">Supplier details</a></li>
+          <li><a href="/Addsupplier" className="hover:text-gray-300">Add Supplier</a></li>
+          <li><a href="/stockDashboard" className="hover:text-gray-300">Stock Details</a></li>
+          <li><a href="/addStock" className="hover:text-gray-300">Add Stock</a></li>
+          <li><a href="/stock-add" className="hover:text-gray-300">Add Inquiry</a></li>
         </ul>
-        <div className="profile">
-          <img src={manager} alt="Manager Photo" />
+        <div className="profile mt-8">
+          <img src={manager} alt="Manager Photo" className="w-16 rounded-full" />
           <p>Supply Manager</p>
           <p>supplymanager@tannoy.com</p>
         </div>
-        <ul className="settings">
-          <li><a href="#">Settings</a></li>
-          <li><a href="#">Log out</a></li>
+        <ul className="settings mt-8 space-y-2">
+          <li><a href="#" className="hover:text-gray-300">Settings</a></li>
+          <li><a href="#" className="hover:text-gray-300">Log out</a></li>
         </ul>
       </div>
 
-      <div className="main-content">
+      <div className="flex-grow p-6"> {/* Adjusted main content to fill available space */}
         <header>
           <input
             type="text"
             placeholder="Search by Supplier Code or Contact Number..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)} // Update search query on input change
+            className="border border-gray-300 rounded p-2 w-full mb-4"
           />
         </header>
-        <h1>Dashboard</h1>
-        <h2>Supplier Details</h2>
+        <h1 className="text-2xl font-bold mb-4">Dashboard</h1>
+        <h2 className="text-xl mb-4">Supplier Details</h2>
 
-        <table>
+        <table className="min-w-full bg-white border border-gray-300">
           <thead>
-            <tr>
-              <th>Supplier Code</th>
-              <th>Supplier Name</th>
-              <th>Contact Info</th>
-              <th>Delivery Item</th>
-              <th>Item Price</th>
-              <th>Discount</th>
-              <th>Actions</th>
+            <tr className="bg-gray-100">
+              <th className="py-2 px-4 border">Supplier Code</th>
+              <th className="py-2 px-4 border">Supplier Name</th>
+              <th className="py-2 px-4 border">Contact Info</th>
+              <th className="py-2 px-4 border">Delivery Item</th>
+              <th className="py-2 px-4 border">Item Price</th>
+              <th className="py-2 px-4 border">Discount</th>
+              <th className="py-2 px-4 border">Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -155,31 +155,29 @@ const SupplierDashboard = () => {
               filteredSuppliers.map(supplier => (
                 <tr
                   key={supplier._id}
-                  style={{
-                    backgroundColor: isHighestDiscountSupplier(supplier) ? 'blanchedalmond' : 'inherit' // Highlight highest discount suppliers
-                  }}
+                  className={`hover:bg-gray-50 ${isHighestDiscountSupplier(supplier) ? 'bg-blanchedalmond' : ''}`} // Highlight highest discount suppliers
                 >
-                  <td>{supplier.supCode}</td>
-                  <td>{supplier.SupplierName}</td>
-                  <td>{supplier.ContactInfo}</td>
-                  <td>{supplier.DeliveryItem}</td>
-                  <td>{supplier.ItemPrice}</td>
-                  <td>{supplier.Discount}</td>
-                  <td>
+                  <td className="py-2 px-4 border">{supplier.supCode}</td>
+                  <td className="py-2 px-4 border">{supplier.SupplierName}</td>
+                  <td className="py-2 px-4 border">{supplier.ContactInfo}</td>
+                  <td className="py-2 px-4 border">{supplier.DeliveryItem}</td>
+                  <td className="py-2 px-4 border">{supplier.ItemPrice}</td>
+                  <td className="py-2 px-4 border">{supplier.Discount}</td>
+                  <td className="py-2 px-4 border">
                     {/* Show "Generate Report" button only for the highest discount suppliers */}
                     {isHighestDiscountSupplier(supplier) && (
-                      <button className="report-btn" onClick={() => navigate(`/StockReport/${supplier._id}`)}>
+                      <button className="bg-blue-500 text-white px-2 py-1 rounded mr-2" onClick={() => navigate(`/StockReport/${supplier._id}`)}>
                         Generate Report
                       </button>
                     )}
-                    <button className="edit-btn" onClick={() => handleEdit(supplier._id)}>Edit</button><br /><br />
-                    <button className="delete-btn" onClick={() => handleDelete(supplier._id)}>Delete</button>
+                    <button className="bg-yellow-500 text-white px-2 py-1 rounded mr-2" onClick={() => handleEdit(supplier._id)}>Edit</button>
+                    <button className="bg-red-500 text-white px-2 py-1 rounded" onClick={() => handleDelete(supplier._id)}>Delete</button>
                   </td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan="7" style={{ textAlign: 'center' }}>No suppliers found</td>
+                <td className="py-2 px-4 border text-center" colSpan="7">No suppliers found.</td>
               </tr>
             )}
           </tbody>

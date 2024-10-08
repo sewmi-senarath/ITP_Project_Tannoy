@@ -1,31 +1,29 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import jsPDF from 'jspdf';  // For generating PDFs
-import 'jspdf-autotable';   // For creating tables in PDFs
-//import '../../styles/employee.css';  // CSS file
+import jsPDF from 'jspdf'; // For generating PDFs
+import 'jspdf-autotable'; // For creating tables in PDFs
+import '../../styles/productDashoard.css'; // CSS file
 import Logo from '../../images/logo.jpeg';
 import manager from '../../images/manager.jpeg';
 import { useNavigate } from "react-router-dom";
 
 const ProductDashboard = () => {
-  const [products, setProducts] = useState([]);  // Hold product data
-  const [loading, setLoading] = useState(true);  // Loading state
-  const [error, setError] = useState('');  // Error handling
-  const [searchQuery, setSearchQuery] = useState('');  // Search query state
-  const [filteredProducts, setFilteredProducts] = useState([]);  // Filtered products
-  const [availabilityFilter, setAvailabilityFilter] = useState('');  // Availability filter
+  const [products, setProducts] = useState([]); // Hold product data
+  const [loading, setLoading] = useState(true); // Loading state
+  const [error, setError] = useState(''); // Error handling
+  const [searchQuery, setSearchQuery] = useState(''); // Search query state
+  const [filteredProducts, setFilteredProducts] = useState([]); // Filtered products
+  const [availabilityFilter, setAvailabilityFilter] = useState(''); // Availability filter
   const navigate = useNavigate();
 
-  // Define a threshold for low stock levels
   const lowStockThreshold = 10;
 
-  // Fetch product data from the backend API when the component mounts
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/products');  // Adjust API route as needed
+        const response = await axios.get('http://localhost:5000/api/products');
         setProducts(response.data);
-        setFilteredProducts(response.data); 
+        setFilteredProducts(response.data);
         setLoading(false);
       } catch (err) {
         setError('Error fetching products.');
@@ -35,13 +33,12 @@ const ProductDashboard = () => {
     fetchProducts();
   }, []);
 
-  // Filter products by search query and availability
   useEffect(() => {
-    const lowerCaseQuery = searchQuery.toLowerCase(); // Make search case-insensitive
+    const lowerCaseQuery = searchQuery.toLowerCase();
     let filtered = products.filter(product =>
       product.ProductCode.toLowerCase().includes(lowerCaseQuery)
     );
-    
+
     if (availabilityFilter === 'in-stock') {
       filtered = filtered.filter(product => product.availability === 'In Stock');
     } else if (availabilityFilter === 'out-of-stock') {
@@ -49,29 +46,24 @@ const ProductDashboard = () => {
     }
 
     setFilteredProducts(filtered);
-  }, [searchQuery, availabilityFilter, products]);  // Run this effect when searchQuery, availabilityFilter, or products changes
-  
-  // Get low stock items
+  }, [searchQuery, availabilityFilter, products]);
+
   const lowStockProducts = filteredProducts.filter(product => {
-    const stockSize = Number(product.stockSize); // Ensure stockSize is a number
+    const stockSize = Number(product.stockSize);
     return stockSize < lowStockThreshold;
   });
 
-  // Debugging log to see low stock items
-  console.log('Low stock products:', lowStockProducts);
-
   const handleEdit = (productId) => {
-    navigate(`/Addproduct/${productId}`);  // Pass the product ID correctly
+    navigate(`/Addproduct/${productId}`);
   };
-  
+
   const deleteProduct = async (productId) => {
     const confirmed = window.confirm('Are you sure you want to delete this product?');
-    if (!confirmed) return; // If user cancels, do nothing
+    if (!confirmed) return;
 
     try {
       const response = await axios.delete(`http://localhost:5000/api/products/${productId}`);
       if (response.status === 200) {
-        // Remove the product from the local state
         setProducts((prevProducts) => prevProducts.filter(product => product._id !== productId));
         alert('Product deleted successfully');
       }
@@ -81,33 +73,27 @@ const ProductDashboard = () => {
     }
   };
 
-  // Generate PDF report using jsPDF and jsPDF AutoTable
   const generateReport = () => {
     const doc = new jsPDF();
-
-    // Title
     doc.text('Product Report', 14, 22);
 
-    // Define the columns for the table
-    const tableColumn = ["Product Code", "Product Name", "Stock Size", "Category", "Availability"];
-    
-    // Map the product data into table rows
+    const tableColumn = ["Product Code", "Product Name", "Description", "Stock Size", "Category", "Availability", "Price"];
     const tableRows = filteredProducts.map(product => [
       product.ProductCode,
       product.ProductName,
+      product.ProductDescription,
       product.stockSize,
       product.ProductCategory,
-      product.availability || 'Unknown'
+      product.availability || 'Unknown',
+      product.price
     ]);
 
-    // Generate the table using autoTable
     doc.autoTable({
-      head: [tableColumn],  // Table headers
-      body: tableRows,      // Table body
-      startY: 30            // Start position on the Y-axis
+      head: [tableColumn],
+      body: tableRows,
+      startY: 30
     });
 
-    // Save the PDF
     doc.save('Product_Report.pdf');
   };
 
@@ -118,122 +104,132 @@ const ProductDashboard = () => {
   if (error) {
     return <p>{error}</p>;
   }
-  
+
   return (
-   
-    <div className="employee-dashboard">
-      <div className="sidebar">
-        <div className="logo">
-          <img src={Logo} alt="Tannoy Electricals Logo" /><br />
-          <h2>Tannoy Electricals</h2>
+    <div className="flex">
+      <div className="w-64 bg-gray-800 h-screen text-white">
+        <div className="p-4">
+          <img src={Logo} alt="Tannoy Electricals Logo" className="h-16 mx-auto" />
+          <h2 className="text-center mt-2">Tannoy Electricals</h2>
         </div>
-        <ul className="nav-links">
-          <li><a href="/productDashboard">Product Details</a></li>
-          <li><a href="/Addproduct">Add Product</a></li>
-          <li><a href="/supplierDashboard">Supplier details</a></li>
-          <li><a href="/Addsupplier">Add Supplier</a></li>
-          <li><a href="/stockDashboard">Stock Details</a></li>
-          <li><a href="/addStock">Add Stock</a></li>
-          <li><a href="/stock-add">Add Inquiry</a></li>
+        <ul className="mt-6 space-y-2">
+          <li><a href="/productDashboard" className="block py-2 px-4 hover:bg-gray-700">Product Details</a></li>
+          <li><a href="/Addproduct" className="block py-2 px-4 hover:bg-gray-700">Add Product</a></li>
+          <li><a href="/supplierDashboard" className="block py-2 px-4 hover:bg-gray-700">Supplier details</a></li>
+          <li><a href="/Addsupplier" className="block py-2 px-4 hover:bg-gray-700">Add Supplier</a></li>
+          <li><a href="/stockDashboard" className="block py-2 px-4 hover:bg-gray-700">Stock Details</a></li>
+          <li><a href="/addStock" className="block py-2 px-4 hover:bg-gray-700">Add Stock</a></li>
+          <li><a href="/stock-add" className="block py-2 px-4 hover:bg-gray-700">Add Inquiry</a></li>
         </ul>
-        <div className="profile">
-          <img src={manager} alt="Manager Photo" />
-          <p>Stock Manager</p>
-          <p>stockmanager@tannoy.com</p>
+        <div className="mt-auto p-4">
+          <img src={manager} alt="Manager Photo" className="h-16 w-16 rounded-full mx-auto" />
+          <p className="text-center mt-2">Stock Manager</p>
+          <p className="text-center text-gray-400">stockmanager@tannoy.com</p>
+          <ul className="mt-4 space-y-2">
+          <li><a href="#" className="block py-2 px-4 hover:bg-gray-700">Settings</a></li>
+          <li><a href="#" className="block py-2 px-4 hover:bg-gray-700">Log out</a></li>
+        </ul>
         </div>
-        <ul className="settings">
-          <li><a href="#">Settings</a></li>
-          <li><a href="#">Log out</a></li>
-        </ul>
+        {/* <ul className="mt-4 space-y-2">
+          <li><a href="#" className="block py-2 px-4 hover:bg-gray-700">Settings</a></li>
+          <li><a href="#" className="block py-2 px-4 hover:bg-gray-700">Log out</a></li>
+        </ul> */}
       </div>
 
-
-        
-      <div className="main-content">
-     
-      <h1>Product Details</h1>
-        <div className="filter-bar">
-        <select
+      <div className="flex-1 p-6 bg-gray-100 overflow-auto h-screen">
+        <h1 className="text-2xl font-bold mb-4">Product Details</h1>
+        <div className="flex items-center space-x-4 mb-4">
+          <select
             value={availabilityFilter}
             onChange={(e) => setAvailabilityFilter(e.target.value)}
-            className="availability-filter"
+            className="border border-gray-300 rounded p-2 w-1/4"
           >
             <option value="">All Products</option>
             <option value="in-stock">In Stock</option>
             <option value="out-of-stock">Out of Stock</option>
           </select>
 
-
-
           <input
             type="text"
             placeholder="Search by Product Code..."
             value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)} // Update search query
-            className="search-bar"
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="border border-gray-300 rounded p-2 w-1/4" // Made the search bar same width as the dropdown
           />
-          
-        
         </div>
 
-        {/* Notify User for Low Stock Levels */}
-        <div className="low-stock-notification">
-          {lowStockProducts.length > 0 ? (
-            <p style={{ color: 'red' }}>
+        <div>
+          {lowStockProducts.length > 0 && (
+            <p className="text-red-600">
               ⚠️ Warning: The following products are running low on stock! IDs: {lowStockProducts.map(product => product.ProductCode).join(', ')}
             </p>
-          ) : null}
+          )}
         </div>
 
-       
-
-        <table>
-          <thead>
+        <table className="min-w-full bg-white shadow-md rounded-lg">
+          <thead className="bg-gray-200">
             <tr>
-              <th>Product Code</th>
-              <th>Product Name</th>
-              <th>Description</th>
-              <th>Stock Size</th>
-              <th>Category</th>
-              <th>Availability</th>
-              <th>Price</th>
-              <th>Actions</th>
+              <th className="py-2 px-4">Product Code</th>
+              <th className="py-2 px-4">Product Name</th>
+              <th className="py-2 px-4">Description</th>
+              <th className="py-2 px-4">Stock Size</th>
+              <th className="py-2 px-4">Category</th>
+              <th className="py-2 px-4">Availability</th>
+              <th className="py-2 px-4">Price</th>
+              <th className="py-2 px-4">Actions</th>
             </tr>
           </thead>
           <tbody>
             {filteredProducts.length > 0 ? (
               filteredProducts.map((product) => (
                 <tr key={product._id}>
-                  <td>{product.ProductCode}</td>
-                  <td>{product.ProductName}</td>
-                  <td>{product.ProductDescription}</td>
-                  <td>{product.stockSize}</td>
-                  <td>{product.ProductCategory}</td>
-                  <td>{product.availability || 'Unknown'}</td>
-                  <td>{product.price}</td>
-                  <td>
-                    <button className="edit-btn" onClick={() => handleEdit(product._id)}>Edit</button>
-                    <button className="delete-btn" onClick={() => deleteProduct(product._id)}>Delete</button>
+                  <td className="py-2 px-4 border">{product.ProductCode}</td>
+                  <td className="py-2 px-4 border">{product.ProductName}</td>
+                  <td className="py-2 px-4 border">{product.ProductDescription}</td>
+                  <td className="py-2 px-4 border">{product.stockSize}</td>
+                  <td className="py-2 px-4 border">{product.ProductCategory}</td>
+                  <td className="py-2 px-4 border">{product.availability}</td>
+                  <td className="py-2 px-4 border">{product.price}</td>
+                  <td className="py-2 px-4 border">
+                    <button
+                      className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded mr-2"
+                      onClick={() => handleEdit(product._id)}
+                    >
+                      Edit
+                    </button>
+                    <button
+                      className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded"
+                      onClick={() => deleteProduct(product._id)}
+                    >
+                      Delete
+                    </button>
                   </td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan="7" style={{ textAlign: 'center' }}>No products found</td>
+                <td colSpan="8" className="py-2 px-4 text-center">No products found.</td>
               </tr>
             )}
           </tbody>
         </table>
 
-        {/* Generate Report Button */}
-        <button className="generate-report-btn" onClick={generateReport}>
-          Generate Report
-        </button>
+        <div className="mt-4">
+          <button
+            className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+            onClick={generateReport}
+          >
+            Generate Report
+          </button>
+        </div>
       </div>
     </div>
-    
   );
 };
 
 export default ProductDashboard;
-/* G */
+
+
+
+
+

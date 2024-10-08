@@ -1,3 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
 /*Main container for the form*/
 .add-supplier-container {
     margin-left: 320px;
