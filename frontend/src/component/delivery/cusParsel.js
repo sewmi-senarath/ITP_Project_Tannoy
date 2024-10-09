@@ -3,7 +3,8 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Sidebar from "./deliveryHeader"; // Import the Sidebar component
 import "../../component/delivery/dispalyList.css";
-import { useReactToPrint } from "react-to-print"; // Import react-to-print for generating PDF
+import "jspdf-autotable"
+import jsPDF from "jspdf"
 
 const URL = "http://localhost:5000/deliverParsel";
 
@@ -65,11 +66,42 @@ function DisplayParselList() {
     }
   };
 
-  const handlePrint = useReactToPrint({
-    content: () => tableRef.current,
-    documentTitle: "Parsel Report",
-    onAfterPrint: () => alert("Parsel Report Successfully Downloaded!"),
-  });
+  const handlePrint = () => {
+    const doc = new jsPDF()
+
+    // Get the table rows and headers
+    const tableHeaders = [
+      [
+        "Tracking ID",
+        "Customer Name",
+        "Address",
+        "Product QTY",
+        "Email",
+        "Status",
+      ],
+    ]
+    const tableRows = filteredParselData.map((parsel) => [
+      parsel._id,
+      parsel.fullName,
+      parsel.address,
+      parsel.productQty,
+      parsel.email,
+      parsel.status,
+    ])
+
+    // Add the title to the PDF
+    doc.text("Parsel Report", 14, 16)
+
+    // Add table to the PDF
+    doc.autoTable({
+      head: tableHeaders,
+      body: tableRows,
+      startY: 22,
+    })
+
+    // Save the PDF
+    doc.save("Parsel_Report.pdf")
+  }
 
   const handleSendReport = () => {
     const phoneNumber = "+94715331167";
