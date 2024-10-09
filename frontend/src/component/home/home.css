@@ -2,21 +2,21 @@
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  
 }
 
 h1, h2, h3, h4, h5, h6 {
-  color: white; /* Ensure all heading (topics) are white */
+  color: white; /* Ensure all headings are white */
 }
 
 /* Styles for Home Component */
 
 /* Styles for INTERIOR DESIGN section */
 #interior-design {
-  background-image: url('../../images/deliveryHome.png'); /* Replace with correct path */
-  background-size: cover;
+  background-image: url('../../images/hBack.png');
+  background-size: cover; /* Adjust as needed */
   background-position: center;
-  height: 100vh;
+  background-repeat: no-repeat; /* Prevent image repetition */
+  height: 80vh; /* Adjust height to show more content */
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -42,27 +42,27 @@ h1, h2, h3, h4, h5, h6 {
   background-color: rgba(0, 0, 0, 0.5);
   padding: 20px;
   border-radius: 10px;
-  color: white; 
+  color: white;
 }
 
 .company-name {
   font-size: 1.2rem;
   letter-spacing: 2px;
-  color: white; 
+  color: white;
 }
 
 .headline {
   font-size: 3rem;
   font-weight: bold;
   margin: 10px 0;
-  color: white; 
+  color: white;
 }
 
 .description {
   font-size: 1rem;
   max-width: 600px;
   margin: 0 auto;
-  color: white; 
+  color: white;
 }
 
 /* Styles for WELCOME TO OUR COMPANY section */
@@ -71,12 +71,13 @@ h1, h2, h3, h4, h5, h6 {
   justify-content: space-between;
   align-items: center;
   padding: 50px;
-  color: white; 
+  color: white;
   background-color: #2e2e2e; /* Dark background */
+
 }
 
 .welcome-image {
-  background-image: url('../../images/deliveryHome.png'); /* Replace with correct path */
+  background-image: url('../../images/treeRe.png'); /* Replace with correct path */
   background-size: cover;
   background-position: center;
   width: 50%;
@@ -87,21 +88,22 @@ h1, h2, h3, h4, h5, h6 {
 .welcome-text {
   width: 45%;
   padding: 20px;
-  color: white; 
+  color: white;
 }
 
 .welcome-title {
   font-size: 2.5rem;
   margin-bottom: 20px;
-  color: white; 
+  color: white;
 }
 
 .welcome-description {
   font-size: 1rem;
   line-height: 1.6;
   margin-bottom: 20px;
-  color: white; 
+  color: white;
 }
+
 
 /* Styles for OUR SERVICE section */
 #service-section {
@@ -110,24 +112,25 @@ h1, h2, h3, h4, h5, h6 {
   align-items: center;
   padding: 50px;
   background-color: #1c1c1c;
-  color: white; 
+  color: white;
+  height: 60vh; /* Adjust height */
 }
 
 .service-content {
   width: 30%;
-  color: white; 
+  color: white;
 }
 
 .service-title {
   font-size: 2.5rem;
   margin-bottom: 20px;
-  color: white; 
+  color: white;
 }
 
 .service-description {
   font-size: 1rem;
   line-height: 1.6;
-  color: white; 
+  color: white;
 }
 
 .service-images {
@@ -137,36 +140,37 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .service-image-left, .service-image-right {
-  background-size: cover;
+  background-size: contain; /* Ensure the full image is visible */
   background-position: center;
+  background-repeat: no-repeat; /* Prevent image repetition */
   width: 48%;
-  height: 250px;
+  height: 200px; /* Reduced height */
 }
 
 .service-image-left {
-  background-image: url('../../images/logo.jpeg'); /* Replace with the correct path */
+  background-image: url('../../images/world.png');
 }
 
 .service-image-right {
-  background-image: url('../../images/deliveryHome.png'); /* Replace with the correct path */
+  background-image: url('../../images/process.png');
 }
 
 .service-statistics {
   width: 15%;
   text-align: center;
-  color: white; 
+  color: white;
 }
 
 .service-statistics h3 {
   font-size: 3rem;
   margin: 0;
-  color: white; 
+  color: white;
 }
 
 .service-statistics p {
   font-size: 1rem;
   margin-top: 10px;
-  color: white; 
+  color: white;
 }
 
 /* Styles for OUR MISSION section */
@@ -175,24 +179,33 @@ h1, h2, h3, h4, h5, h6 {
   justify-content: space-between;
   align-items: center;
   padding: 50px;
-  color: white; 
+  color: white;
   background-color: #2e2e2e; /* Dark background */
+
+}
+
+.mission-image {
+  background-image: url('../../images/symbol.png');
+  background-size: cover;
+  background-position: center;
+  width: 50%;
+  height: 100vh;
 }
 
 .mission-text {
   width: 45%;
-  color: white; 
+  color: white;
 }
 
 .mission-title {
   font-size: 2.5rem;
   margin-bottom: 20px;
-  color: white; 
+  color: white;
 }
 
 .mission-item {
   margin-bottom: 20px;
-  color: white; 
+  color: white;
 }
 
 .mission-item h3 {
@@ -206,12 +219,6 @@ h1, h2, h3, h4, h5, h6 {
   color: white; /* Ensuring paragraph is white */
 }
 
-.mission-image img {
-  width: 50%;
-  height: auto;
-  border-radius: 10px;
-}
-
 /* Styles for OUR CONTACT section */
 #contact-section {
   display: flex;
@@ -219,11 +226,16 @@ h1, h2, h3, h4, h5, h6 {
   align-items: center;
   padding: 50px;
   background-color: #2e2e2e; /* Dark background */
+  height: 50vh; /* Reduced height */
 }
 
-.contact-image img {
-  width: 50%;
-  height: auto;
+.contact-image {
+  background-image: url('../../images/robot.png');
+  background-size: contain; /* Ensure the full image is visible */
+  background-position: center;
+  background-repeat: no-repeat; /* Prevent image repetition */
+  width: 45%;
+  height: 100%; /* Make it take full height of the section */
   border-radius: 10px;
 }
 

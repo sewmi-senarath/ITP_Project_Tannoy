@@ -2,7 +2,7 @@
 
 #home-wrapper {
   position: relative;
-  background-image: url('../../images/deliveryHome.png'); /* Assuming correct path */
+  background-image: url('../../images/deliveryHome.png'); 
   background-size: cover;
   background-position: center;
   height: 100vh;
@@ -15,7 +15,7 @@
   z-index: 1;
 }
 
-/* Add a dark overlay over the background image to reduce brightness */
+
 #home-wrapper::before {
   content: '';
   position: absolute;

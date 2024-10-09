@@ -23,6 +23,7 @@ const { loginCRM } = require("./CRMAuthHandler/CRMLoginHandler");
 const app = express();
 const itemRoutes = require("./Route/InvenoryRoute");
 const productRoutes=require("./Route/InventoryProductRoutes")
+const loginRoute = require('./Route/loginRoute.js');
 
 
 
@@ -34,7 +35,7 @@ const productRoutes=require("./Route/InventoryProductRoutes")
 app.use(cors());
 app.use(express.json());
 app.use(cors());
-app.use("/Users", userRouter);
+//app.use("/Users", userRouter);
 app.use("/api/employees", employeeRouter);
 app.use("/RecyclingProducts", recyclingProductRouter);
 app.use(cookieParser());
@@ -54,6 +55,14 @@ app.use('/api/items',itemRoutes);
 app.post("/CRMRegister", CRMRegister);
 app.post("/loginCRM", loginCRM);
 app.use(require("./Route/TechnicalRoutes.js"));
+
+const jwt = require('jsonwebtoken');
+
+const JWT_SECRET = "your-secure-secret-key"; // You can replace this with any strong key
+app.use("/api/user", loginRoute);
+
+// You can also pass JWT_SECRET directly to other routes or components that require it
+app.set('jwtSecretKey', JWT_SECRET);
 
 
 // routes customer management
@@ -100,6 +109,17 @@ app.post("/login", async (req, res) => {
   }
 });
 
+app.get('/recyclingProducts/report', (req, res) => {
+    const { startDate, endDate, status } = req.query;
+    
+  // Filter data based on date range and status
+  RecyclingProduct.find({
+    date: { $gte: new Date(startDate), $lte: new Date(endDate) },
+    status: status,
+  })
+    .then((products) => res.json(products))
+    .catch((error) => res.status(500).json({ error: error.message }));
+});
 
 //Database connection
 mongoose.connect(config.get('db.uri'))

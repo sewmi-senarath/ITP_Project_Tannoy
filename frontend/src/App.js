@@ -35,14 +35,19 @@ import StockReport from "./component/Inventory/StockReport";
 import CRMRegister from "./component/CRM/CRMRegister/Register";
 import CRMLogin from "./component/CRM/CRMLogin/Login";
 //Gangani
-import RecycleProducts from "./component/recycledProducts/RecycleProducts";
+import RecycleProductsDashboard from "./component/recycledProducts/RecycleProductsDashboard";
 import RecyclingProductsTable from "./component/recycledProducts/RecyclingProductsTable";
 import RecycledProducts from "./component/recycledProducts/RecycledProducts";
+import AddRecycleProduct from "./component/recycledProducts/AddRecycleProducts";
+import RecycleReportGeneration from "./component/recycledProducts/RecycleReportGeneration";
 
 //Ruvindi
 import InvestorsDashboard from "./component/FinanceInvestor/investorsdashboard";
 import Addinvestor from "./component/FinanceInvestor/addInvestor";
 import UpdateInvestorProfile from "./component/FinanceInvestor/updateInvestorprofile";
+
+import Mylogin from './UserManagement/login';
+import RegisterForm from './UserManagement/register';
 
 function App() {
   return (
@@ -51,7 +56,10 @@ function App() {
       <div>
         <Header />
         <Routes>
-          <Route path="/" element={<Home />} />
+        <Route path="/Register" element={<RegisterForm />} />
+        <Route path="/" element={<Mylogin />} />
+
+          <Route path="/home" element={<Home />} />
           <Route path="/employee-dashboard" element={<EmployeeDashboard />} />
           <Route path="/add-employee" element={<AddEmployee />} />
           <Route path="/technicalHome" element={<TechnicalHome />} />
@@ -88,11 +96,12 @@ function App() {
           <Route path="/addStock/:itemId" element={<AddStock />} />
           <Route path="/supplierDashboard" element={<SupplierDashboard/>} />
           <Route path="/StockReport/:supplierId" element={<StockReport />} />
-          <Route path="/recycle-product-dashbord" element={<RecycleProducts/>} /> {/* Gangani */}
+          <Route path="/recycle-product-dashbord" element={<RecycleProductsDashboard/>} /> {/* Gangani */}
           <Route path="/recycling-products" element={<RecyclingProductsTable/>} /> {/* Gangani */}
           <Route path="/recycled-products" element={<RecycledProducts/>} /> {/* Gangani */}
+          <Route path="/add-recycle-product" element={<AddRecycleProduct/>} /> {/* Gangani */}
+          <Route path="/recycle-product-report" element={<RecycleReportGeneration/>} /> {/* Gangani */}
           <Route path="/InvestorsDashboard" element={<InvestorsDashboard/>} /> {/* Ruvindi */}
-          
           <Route path="/investor" element={<UpdateInvestorProfile/>} /> {/* Ruvindi */}
           <Route path="/add-investor" element={<Addinvestor/>} /> {/* Ruvindi */}
         </Routes>

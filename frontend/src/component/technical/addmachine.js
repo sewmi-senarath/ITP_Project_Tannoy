@@ -41,7 +41,7 @@ const Addmachine = () => {
     };
 
     try {
-      const result = await axios.post("http://localhost:3066/api/addmachine", machine);
+      const result = await axios.post("http://localhost:5000/api/addmachine", machine);
       console.log(result.data);
 
       message.success('Machine added successfully!').then(() => {
