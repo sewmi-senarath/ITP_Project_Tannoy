@@ -118,6 +118,7 @@ function DisplayParselList() {
                 <th>Customer Name</th>
                 <th>Address</th>
                 <th>Product QTY</th>
+                <th>Email</th>
                 <th>Status</th>
                 <th>Actions</th>
               </tr>
@@ -129,6 +130,7 @@ function DisplayParselList() {
                   <td>{parsel.fullName}</td>
                   <td>{parsel.address}</td>
                   <td>{parsel.productQty}</td>
+                  <td>{parsel.email}</td>
                   <td>
                     <span id={`status ${parsel.status}`}>{parsel.status}</span>
                   </td>

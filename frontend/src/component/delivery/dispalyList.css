@@ -1,18 +1,18 @@
 #container {
-  display: flex; /* Ensures the sidebar and content are aligned side by side */
+  display: flex; 
   width: 100%;
-  height: 100vh; /* Full height layout */
+  height: 100vh; 
 }
 
 #sidebar {
-  width: 250px; /* Set a fixed width for the sidebar */
-  background-color: #f4f4f4; /* Optional: Add a background color */
+  width: 250px; 
+  background-color: #f4f4f4; 
 }
 
 #main-content {
-  flex-grow: 1; /* Ensures the main content takes up the remaining space */
+  flex-grow: 1; 
   padding: 20px;
-  overflow-y: auto; /* If the content is long, it will become scrollable */
+  overflow-y: auto; 
 }
 
 #heading {
@@ -111,7 +111,7 @@
 }
 
 #btn-back:hover {
-  background-color: #cce7ff; /* Darker blue on hover */
+  background-color: #cce7ff; 
 }
 
 #back-arrow {
@@ -122,16 +122,16 @@
 
 /* Total Order Requests Count Section */
 #order-count {
-  background-color: #ADD8E6; /* Light blue background */
-  padding: 10px 15px; /* Padding for the container */
-  margin-bottom: 20px; /* Space below the container */
-  text-align: center; /* Center text horizontally */
-  border-radius: 5px; /* Rounded corners */
-  width: fit-content; /* Container size adjusts to content */
-  margin: 0 auto; /* Center the container itself */
+  background-color: #ADD8E6; 
+  padding: 10px 15px; 
+  margin-bottom: 20px; 
+  text-align: center; 
+  border-radius: 5px; 
+  width: fit-content; 
+  margin: 0 auto; 
 }
 
 #order-count h2 {
-  font-size: 18px; /* Medium size font */
-  font-weight: bold; /* Bold font */
+  font-size: 18px; 
+  font-weight: bold; 
 }
