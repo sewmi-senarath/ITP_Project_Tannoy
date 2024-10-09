@@ -62,7 +62,7 @@ ul a{
   display: inline;
   margin: 0px 10px;
   background-image: linear-gradient(to right, rgb(40, 55, 139, 0.8) , rgb(95, 0, 107, 0.8));
-  
+  padding: 10px;
   color: white;
   border-radius: 5px;
   width: 200px !important;
@@ -74,6 +74,7 @@ ul a{
   color: white;
   border-radius: 5px;
   width: 200px !important;
+  padding: 10px;
 }
 
 #image-div{

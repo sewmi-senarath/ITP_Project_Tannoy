@@ -32,6 +32,14 @@ const recyclingProductSchema = new Schema({
     default: Date.now, // Set the default value to the current date and time
     required: true, // validate
   },
+machineName:{
+  type:String,//Data Type
+  required:true,//validate
+},
+machineCondition:{
+  type:String,//Data Type "GOOD, BROKEN"
+  required:true,//validate
+},
 },{ collection: 'recyclingProduct' });
 
 const RecyclingProduct = mongoose.model('RecyclingProduct', recyclingProductSchema);
