@@ -40,6 +40,8 @@ import RecyclingProductsTable from "./component/recycledProducts/RecyclingProduc
 import RecycledProducts from "./component/recycledProducts/RecycledProducts";
 import AddRecycleProduct from "./component/recycledProducts/AddRecycleProducts";
 import RecycleReportGeneration from "./component/recycledProducts/RecycleReportGeneration";
+import Products from "./component/recycledProducts/Products";
+import AddPoduct from "./component/recycledProducts/AddProducts";
 
 //Ruvindi
 import InvestorsDashboard from "./component/FinanceInvestor/investorsdashboard";
@@ -101,6 +103,8 @@ function App() {
           <Route path="/recycled-products" element={<RecycledProducts/>} /> {/* Gangani */}
           <Route path="/add-recycle-product" element={<AddRecycleProduct/>} /> {/* Gangani */}
           <Route path="/recycle-product-report" element={<RecycleReportGeneration/>} /> {/* Gangani */}
+          <Route path="/products" element={<Products/>} /> {/* Gangani */}
+          <Route path="/add-product" element={<AddPoduct/>} /> {/* Gangani */}
           <Route path="/InvestorsDashboard" element={<InvestorsDashboard/>} /> {/* Ruvindi */}
           <Route path="/investor" element={<UpdateInvestorProfile/>} /> {/* Ruvindi */}
           <Route path="/add-investor" element={<Addinvestor/>} /> {/* Ruvindi */}

@@ -1,3 +1,7 @@
+#search-product-input{
+  width: 300px;
+}
+
 .component-div {
   display: inline-block; 
   vertical-align: top; 
@@ -7,15 +11,43 @@
 
 #AddRecycleProductsButton {
   margin: 0px 20px; /* Add some space between the button and the search input */
-    background-image: linear-gradient(to right, rgba(86, 40, 139, 0.8) , rgb(95, 0, 107, 0.8));
-    color: white;
-    border-radius: 5px;
-}
-.page-title{
-  font-size: 24px;
-  font-weight: 600;
+  background-image: linear-gradient(to right, rgba(86, 40, 139, 0.8) , rgb(95, 0, 107, 0.8));
+  color: white;
+  border-radius: 5px;
+  padding: 10px;
 }
 
+#AddProductButton{
+  margin: 0px 20px; /* Add some space between the button and the search input */
+  background-image: linear-gradient(to right, rgba(86, 40, 139, 0.8) , rgb(95, 0, 107, 0.8));
+  color: white;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+#GeneratePDFButton:hover{
+  background-color: rgb(185, 109, 255);
+}
+
+#GenerateReportButton:hover{
+  background-color: rgb(185, 109, 255);
+}
+input{
+  margin: 3px !important;
+}
+
+.product-title{
+  font-size: 24px;
+  font-weight: 600;
+  color: black;
+  text-align: center;
+}
+
+.re-page-title{
+  font-size: 24px;
+  font-weight: 600;
+  color: black;
+}
 .page-title-div {
   margin: 0px;
   display: inline-flex;

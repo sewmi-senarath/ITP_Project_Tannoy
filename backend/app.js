@@ -3,6 +3,7 @@ const express = require("express");
 const userRouter = require("./Route/UserRoutes");
 const employeeRouter = require("./Route/EmployeeRoute");
 const recyclingProductRouter = require("./Route/RecyclingProductRoute");
+const reProductRouter = require("./Route/ProductRoute");
 const delivermanRoute = require("./Route/delivermanRoute");
 const deliverParselRoute =require("./Route/deliverParselRoutes")
 const financeRoute = require("./Route/FinanceInvestorRoutes");
@@ -37,6 +38,7 @@ app.use(express.json());
 app.use(cors());
 //app.use("/Users", userRouter);
 app.use("/api/employees", employeeRouter);
+app.use("/products", reProductRouter);
 app.use("/RecyclingProducts", recyclingProductRouter);
 app.use(cookieParser());
 app.use(express.urlencoded({extended: false}));
