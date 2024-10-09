@@ -192,15 +192,15 @@ export default function MachineList() {
             <thead>
               <tr>
                 <th className= "w-80">Machine Name</th>
-                <th>Status</th>
+                <th>Machine Status</th>
                 
               </tr>
             </thead>
             <tbody>
           {filteredProducts.map((product) => (
             <tr key={product._id}>
-              <td>{product.recyclingProductName}</td>
-              <td>{product.status}</td>
+              <td>{product.machineName}</td>
+              <td>{product.machineCondition}</td>
             </tr>
           ))}
         </tbody>

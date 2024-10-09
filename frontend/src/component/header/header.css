@@ -1,0 +1,28 @@
+.tannoy-header {
+  background-color: #011c39;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.tannoy-logo img {
+  height: 50px;
+}
+
+.tannoy-logo h1 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: normal;
+}
+
+.tannoy-nav a {
+  margin: 0 10px;
+  text-decoration: none;
+  color: #ffffff;
+  font-weight: bold;
+}
+
+.tannoy-nav a:hover {
+  color: #007bff;
+}

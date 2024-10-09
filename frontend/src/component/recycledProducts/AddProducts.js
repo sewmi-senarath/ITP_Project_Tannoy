@@ -1,16 +1,16 @@
-import React, { useState } from "react";
-import axios from "axios";
-import "./AddRecycleProducts.css";
+import React, { useState } from 'react';
+import axios from 'axios';
+import './AddProducts.css';
 import RecycleProductSidebar from "./RecycleProductSidebar";
 
-const RecycleProductForm = () => {
+const AddProductForm = () => {
   const [formData, setFormData] = useState({
-    recyclingProductName: "",
-    quantity: "",
-    quality: "",
-    date: "",
-    stage: "",
-    status:""
+    productName:"",
+    productId:"",
+    quantity:"",
+    quality:"",
+    date:"",
+    status:"",
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -31,7 +31,7 @@ const RecycleProductForm = () => {
     setSuccessMessage(null);
 
     try {
-      const response = await axios.post("http://localhost:5000/recyclingProducts/", formData);
+      const response = await axios.post("http://localhost:5000/Products/", formData);
 
       if (response.status !== 200 && response.status !== 201) {
         throw new Error("Failed to submit the form");
@@ -39,12 +39,12 @@ const RecycleProductForm = () => {
 
       setSuccessMessage("Form submitted successfully!");
       setFormData({
-        recyclingProductName: "",
-        quantity: "",
-        quality: "",
-        date: "",
-        stage: "",
-        status:""
+        productName:"",
+        productId:"",
+        quantity:"",
+        quality:"",
+        date:"",
+        status:"",
       });
     } catch (err) {
       setError(err.message);
@@ -61,14 +61,26 @@ const RecycleProductForm = () => {
     <div className="form-div">
         <form onSubmit={handleSubmit}>
         <div>
-          <label htmlFor="recyclingProductName">Raw Material Name</label>
+          <label htmlFor="productName">Product Name</label>
           <input
             type="text"
-            id="recyclingProductName"
-            name="recyclingProductName"
-            value={formData.recyclingProductName}
+            id="productName"
+            name="productName"
+            value={formData.productName}
             onChange={handleChange}
-            placeholder="Enter raw material"
+            placeholder="Enter Product Name"
+            required
+          />
+        </div>
+        <div>
+          <label htmlFor="productId">Product Id</label>
+          <input
+            type="text"
+            id="productId"
+            name="productId"
+            value={formData.productId}
+            onChange={handleChange}
+            placeholder="Enter product Id"
             required
           />
         </div>
@@ -109,62 +121,15 @@ const RecycleProductForm = () => {
         </div>
         <div>
           <label htmlFor="stage">Stage</label>
-          <select
-            id="stage"
-            name="stage"
-            value={formData.stage}
-            onChange={handleChange}
-            required
-          >
-            <option>Select Stage</option>
-              <option value="SORTING">SORTING</option>
-              <option value="CLEANING">CLEANING</option>
-              <option value="MELTING">MELTING</option>
-              <option value="SHREDDING">SHREDDING</option>
-              <option value="PELLETIZING">PELLETIZING</option>
-          </select>
-        </div>
-
-        <div>
-          <label htmlFor="status">Status</label>
-          <select
+          <input
+            type="text"
             id="status"
             name="status"
             value={formData.status}
             onChange={handleChange}
-            required
-          >
-            <option>Select Status</option>
-              <option value="REJECT">REJECT</option>
-              <option value="INPROGRESS">INPROGRESS</option>
-              <option value="COMPLETE">COMPLETE</option>
-          </select>
-        </div>
-        <div>
-          <label htmlFor="machineName">Machine Name</label>
-          <input
-            type="text"
-            id="machineName"
-            name="machineName"
-            value={formData.machineName}
-            onChange={handleChange}
-            placeholder="Enter machine name"
+            placeholder="Enter status"
             required
           />
-        </div>
-        <div>
-          <label htmlFor="machineCondition">Machine Condition</label>
-          <select
-            id="machineCondition"
-            name="machineCondition"
-            value={formData.machineCondition}
-            onChange={handleChange}
-            required
-          >
-            <option>Select Condition</option>
-              <option value="BROKEN">BROKEN</option>
-              <option value="GOOD">GOOD</option>
-          </select>
         </div>
 
         <button type="submit" className="submit-button" disabled={isSubmitting}>
@@ -179,4 +144,4 @@ const RecycleProductForm = () => {
   );
 };
 
-export default RecycleProductForm;
+export default AddProductForm;
