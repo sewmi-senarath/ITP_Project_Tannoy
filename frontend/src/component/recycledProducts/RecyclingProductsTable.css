@@ -11,9 +11,10 @@
     color: white;
     border-radius: 5px;
 }
-.page-title{
+.re-page-title{
   font-size: 24px;
   font-weight: 600;
+  color: black;
 }
 
 .page-title-div {

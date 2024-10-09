@@ -94,6 +94,32 @@ const UpdateProductForm = ({ product, onSave, onCancel }) => {
                 <option value="COMPLETE">COMPLETE</option>
               </select>
             </div>
+            <div className='lebel-div'>
+              <label htmlFor="machineName">Machine Name</label>
+              <input
+                type="text"
+                id="machineName"
+                name="machineName"
+                value={formData.machineName}
+                onChange={handleChange}
+                placeholder="Enter machine name"
+                required
+              />
+            </div>
+            <div className='lebel-div'>
+              <label htmlFor="machineCondition">Machine Condition</label>
+              <select
+                id="machineCondition"
+                name="machineCondition"
+                value={formData.machineCondition}
+                onChange={handleChange}
+                required
+              >
+                <option>Select Condition</option>
+                  <option value="BROKEN">BROKEN</option>
+                  <option value="GOOD">GOOD</option>
+              </select>
+            </div>
             <div className='button-div'>
                 <button className='window-save-button' type="submit">Save</button>
                 <button className='window-cancel-button' type="button" onClick={onCancel}>Cancel</button>

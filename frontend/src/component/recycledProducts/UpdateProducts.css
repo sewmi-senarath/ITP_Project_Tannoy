@@ -1,0 +1,51 @@
+.update-product-form {
+    border: 1px solid #ccc;
+    padding: 20px;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    margin-top: 20px;
+  }
+  
+  .form-group {
+    margin-bottom: 15px;
+  }
+  
+  .form-group label {
+    display: inline;
+    margin-bottom: 5px;
+  }
+  
+  .form-group input {
+    display: inline;
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+  }
+  
+  .form-actions {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  #button-save {
+    padding: 10px 15px;
+    background-image: linear-gradient(to right, rgb(40, 55, 139, 0.8) , rgb(95, 0, 107,0.8));
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  #button-cancel{
+    padding: 10px 15px;
+    background-color: #ccc;
+    color: rgb(29, 29, 29);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  button:hover {
+    background-color: #0056b3;
+  }
+  

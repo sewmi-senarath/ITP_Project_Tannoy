@@ -51,6 +51,7 @@
   z-index: 1000 !important;
   width: 100%; 
   background-color: #ffffff;
+  height: 100vh !important;
 }
   
 .window-content {
