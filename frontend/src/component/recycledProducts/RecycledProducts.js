@@ -89,7 +89,7 @@ const RecycledProductsTable = () => {
                 <th>Stage</th>
                 <th>Status</th>
                 <th>Machine Name</th>
-                <th>Machine Condition</th>
+                <th>Machine Status</th>
                 <th>Update</th>
                 <th>Delete</th>
               </tr>
