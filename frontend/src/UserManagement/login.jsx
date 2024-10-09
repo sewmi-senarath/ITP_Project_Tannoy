@@ -57,7 +57,7 @@ function LoginForm() {
         } 
 
         else if (email === "inquirymanager@gmail.com") {
-          navigate("/");
+          navigate("/inquiries-manager");
         } 
         else if (email === "technicalmanagr@gmail.com") {
           navigate("/technicalHome");
