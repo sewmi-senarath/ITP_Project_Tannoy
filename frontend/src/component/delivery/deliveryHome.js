@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "../../component/delivery/deliveryHome.css"; // Import the CSS file
+import "../../component/delivery/deliveryHome.css"; 
 
 const DeliveryHome = () => {
   const navigate = useNavigate();
@@ -9,14 +9,14 @@ const DeliveryHome = () => {
   // Function to handle redirection to the Parcel List page with search query
   const handleDeliveryClickView = () => {
     if (trackingNumber) {
-      navigate(`/parsel-list?search=${trackingNumber}`); // Navigates to displayParselList with search query
+      navigate(`/parsel-list?search=${trackingNumber}`); 
     } else {
-      navigate("/parsel-list"); // Navigate without search query
+      navigate("/parsel-list"); 
     }
   };
 
   const handleDeliveryClickAdd = () => {
-    navigate("/Add-parsel"); // Navigates to add parsel page
+    navigate("/Add-parsel"); 
   };
 
   // Function to handle pressing the Enter key in the input field
@@ -27,22 +27,22 @@ const DeliveryHome = () => {
   };
 
   return (
-    <div className="home-wrapper">
-      <h2 className="title">Quick Track Your Package</h2>
-      <p className="subtitle">Fast & Free Shipping #Wheneverthingseasier</p>
+    <div id="home-wrapper">
+      <h2 id="title">Quick Track Your Package</h2>
+      <p id="subtitle">Fast & Free Shipping #Wheneverthingseasier</p>
       <input
         type="text"
         placeholder="Enter Your Tracking number here..."
-        className="input-box"
+        id="input-box"
         value={trackingNumber}
-        onChange={(e) => setTrackingNumber(e.target.value)} // Update tracking number state
-        onKeyPress={handleKeyPress} // Trigger search on Enter key press
+        onChange={(e) => setTrackingNumber(e.target.value)} 
+        onKeyPress={handleKeyPress} 
       />
-      <div className="button-wrapper">
-        <button className="button button-primary" onClick={handleDeliveryClickAdd}>
+      <div id="button-wrapper">
+        <button id="button-primary" onClick={handleDeliveryClickAdd}>
           Add Delivery Request
         </button>
-        <button className="button" onClick={handleDeliveryClickView}>
+        <button id="button" onClick={handleDeliveryClickView}>
           View all delivery
         </button>
       </div>

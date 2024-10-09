@@ -1,5 +1,5 @@
 import React from 'react';
-import '../../App.css';
+import './header.css';
 import Logo from '../../images/logo.jpeg';
 
 
@@ -16,7 +16,8 @@ const Header = () => {
                 <a href="/employee-dashboard">Employee Team</a>
                 <a href="/deliveryHome">Delivery</a>
                 <a href="/investors">FinanceInvestor</a>
-                <a href="/login">Login</a>
+                <a href="/productDashboard">Inventory & Supplier</a>
+                <a href="/">Login</a>
                 <a href="/register">Register</a>
             </nav>
         </header>

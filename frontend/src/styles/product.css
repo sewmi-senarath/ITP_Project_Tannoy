@@ -1,145 +1,135 @@
+/* Apply background color to the entire page */
+body {
+  background-color: #f0f4f8 !important; /* Light background color for the whole page */
+  margin: 0 !important; /* Ensure no default margin on the body */
+  font-family: Arial, sans-serif !important; /* Set a global font family */
+}
+
 /* Main container for the Add Product page */
 .product-dashboard {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-    background-color: #f7f8fa;
-    min-height: 100vh;
-  }
-  
-  .Add-main-content {
-    width: 100%;
-    max-width: 800px;
-    background-color: white;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    padding: 30px;
-    border-radius: 10px;
-    margin-top: 20px;
-  }
-  
-  h1 {
-    font-size: 24px;
-    color: black;
-    margin-bottom: 20px;
-    text-align: center;
-  }
- 
-  
-  /* Form styling */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+  background-color: #f0f4f8 !important; /* Matches the background color of the body */
+  min-height: 100vh !important;
+}
 
-  .title{
-    color: #007bff;
-    font-size: 30px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-weight: bold;
+.Add-main-content {
+  width: 100% !important;
+  max-width: 600px !important;
+  background-color: #ffffff !important; /* Form background */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1) !important;
+  padding: 20px !important;
+  border-radius: 10px !important;
+  margin-top: 10px !important;
+}
+
+h1 {
+  font-size: 22px !important;
+  color: black !important;
+  margin-bottom: 15px !important;
+  text-align: center !important;
+}
+
+/* Form styling */
+.title {
+  color: #007bff !important;
+  font-size: 26px !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  font-weight: bold !important;
+}
+
+.product-form {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 15px !important;
+  background-color: #e9f1f8 !important; /* Form's light background */
+  padding: 15px !important;
+}
+
+.form-group {
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+label {
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  color: #555 !important;
+  margin-bottom: 3px !important;
+}
+
+input[type="text"],
+input[type="number"],
+select {
+  padding: 8px !important;
+  font-size: 14px !important;
+  border: 1px solid #ccc !important;
+  border-radius: 5px !important;
+  transition: border-color 0.3s ease !important;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus,
+select:focus {
+  border-color: #007bff !important;
+  outline: none !important;
+}
+
+/* Button styles */
+button.submit-btn,
+button.delete-btn {
+  background-color: #007bff !important;
+  color: white !important;
+  padding: 8px 10px !important;
+  border: none !important;
+  border-radius: 5px !important;
+  font-size: 14px !important;
+  cursor: pointer !important;
+  transition: background-color 0.3s ease !important;
+  width: 100% !important;
+  margin-top: 10px !important;
+}
+
+button.submit-btn:hover,
+button.delete-btn:hover {
+  background-color: #0056b3 !important;
+}
+
+button.delete-btn {
+  background-color: #dc3545 !important;
+}
+
+button.delete-btn:hover {
+  background-color: #c82333 !important;
+}
+
+button:disabled {
+  background-color: #ccc !important;
+  cursor: not-allowed !important;
+}
+
+p {
+  color: #007bff !important;
+  font-weight: 600 !important;
+  text-align: center !important;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+  .Add-main-content {
+    padding: 10px !important;
   }
-  .product-form {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    background-color: #c1dbef; /* Change this color to your desired background color */
-    padding: 20px; /* Optional: add some padding to make the background more visible */
-  }
-  
-  
-  .form-group {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  label {
-    font-size: 16px;
-    font-weight: 600;
-    color: #555;
-    margin-bottom: 5px;
-  }
-  
-  input[type="text"],
-  input[type="number"],
-  select {
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    transition: border-color 0.3s ease;
-  }
-  
-  input[type="text"]:focus,
-  input[type="number"]:focus,
-  select:focus {
-    border-color: #007bff;
-    outline: none;
-  }
-  
-  /* Button styles */
+
   button.submit-btn,
   button.delete-btn {
-    background-color: #007bff;
-    color: white;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    width: 100%;
-    margin-top: 10px;
+    font-size: 12px !important;
   }
-  
-  button.submit-btn:hover,
-  button.delete-btn:hover {
-    background-color: #0056b3;
+
+  h1 {
+    font-size: 18px !important;
   }
-  
-  button.delete-btn {
-    background-color: #dc3545;
-  }
-  
-  button.delete-btn:hover {
-    background-color: #c82333;
-  }
-  
-  /* Disabled button style */
-  button:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
-  }
-  
-  /* Message style for success/error */
-  p {
-    color: #007bff;
-    font-weight: 600;
-    text-align: center;
-  }
-  
-  /* Styling for the product image 
-  .product-img {
-    margin-top: 20px;
-    max-width: 100%;
-    height: auto;
-    display: block;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }*/
-  
-  
-  /* Adding some responsive design */
-  @media (max-width: 600px) {
-    .Add-main-content {
-      padding: 15px;
-    }
-  
-    button.submit-btn,
-    button.delete-btn {
-      width: 100%;
-      font-size: 14px;
-    }
-  
-    h1 {
-      font-size: 20px;
-    }
-  }
-  
+}

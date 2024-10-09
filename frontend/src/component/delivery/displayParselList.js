@@ -3,7 +3,8 @@ import { Link, useNavigate, useLocation } from "react-router-dom"
 import axios from "axios"
 import Sidebar from "./deliveryHeader" // Import the Sidebar component
 import "../../component/delivery/dispalyList.css"
-import { useReactToPrint } from "react-to-print" // Import react-to-print for generating PDF
+import "jspdf-autotable"
+import jsPDF from "jspdf"
 
 const URL = "http://localhost:5000/deliverParsel"
 
@@ -22,35 +23,22 @@ function DisplayParselList() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(false)
   const [searchQuery, setSearchQuery] = useState("")
-  const [noResults, setNoResults] = useState(false)
 
   const location = useLocation()
   const navigate = useNavigate()
   const tableRef = useRef()
 
   useEffect(() => {
-    const params = new URLSearchParams(location.search);
-    const searchParam = params.get("search") || ""
-    setSearchQuery(searchParam)
-
     fetchHandler().then((data) => {
       if (data && data.parcels) {
-        const filteredParsels = data.parcels.filter((parsel) =>
-          Object.values(parsel).some((field) =>
-            field.toString().toLowerCase().includes(searchParam.toLowerCase())
-          )
-        )
-        setParselData(filteredParsels)
-        setNoResults(filteredParsels.length === 0)
+        setParselData(data.parcels)
         setLoading(false)
       } else {
         setLoading(false)
         setError(true)
       }
     })
-  }, [location.search])
-
-  const history = useNavigate()
+  }, [])
 
   const deleteHandler = async (id) => {
     try {
@@ -61,11 +49,42 @@ function DisplayParselList() {
     }
   }
 
-  const handlePrint = useReactToPrint({
-    content: () => tableRef.current,
-    documentTitle: "Parsel Report",
-    onAfterPrint: () => alert("Parsel Report Successfully Downloaded!"),
-  })
+  const handlePrint = () => {
+    const doc = new jsPDF()
+
+    // Get the table rows and headers
+    const tableHeaders = [
+      [
+        "Tracking ID",
+        "Customer Name",
+        "Address",
+        "Product QTY",
+        "Email",
+        "Status",
+      ],
+    ]
+    const tableRows = filteredParselData.map((parsel) => [
+      parsel._id,
+      parsel.fullName,
+      parsel.address,
+      parsel.productQty,
+      parsel.email,
+      parsel.status,
+    ])
+
+    // Add the title to the PDF
+    doc.text("Parsel Report", 14, 16)
+
+    // Add table to the PDF
+    doc.autoTable({
+      head: tableHeaders,
+      body: tableRows,
+      startY: 22,
+    })
+
+    // Save the PDF
+    doc.save("Parsel_Report.pdf")
+  }
 
   const handleSendReport = () => {
     const phoneNumber = "+94715331167"
@@ -77,11 +96,23 @@ function DisplayParselList() {
     window.open(whatsAppUrl, "_blank")
   }
 
+  // Filter parcels based on search query
+  const filteredParselData = parselData.filter((parsel) =>
+    Object.values(parsel).some((field) =>
+      field.toString().toLowerCase().includes(searchQuery.toLowerCase())
+    )
+  )
+
   return (
     <div id="container">
       <Sidebar />
 
       <div id="main-content">
+        {/* Total Order Requests Count Section */}
+        <div id="order-count">
+          <h2>Total Order Requests: {parselData.length}</h2>
+        </div>
+        <br></br>
         <button id="btn-back" onClick={() => navigate("/deliveryHome")}>
           <span id="back-arrow">←</span> Back
         </button>
@@ -102,34 +133,34 @@ function DisplayParselList() {
           placeholder="Search Parcel Details"
         />
         <br />
-        <button
-          id="btn-back"
-          onClick={() => navigate(`/parsel-list?search=${searchQuery}`)}
-        >
-          Search
-        </button>
 
-        {noResults ? (
+        {filteredParselData.length === 0 ? (
           <p>No parcels found</p>
         ) : loading ? (
           <p>Loading parcels...</p>
         ) : error ? (
           <p>Failed to load parcel data. Please try again.</p>
-        ) : parselData.length > 0 ? (
+        ) : filteredParselData.length > 0 ? (
           <table id="table" ref={tableRef}>
             <thead>
               <tr>
                 <th>Tracking ID</th>
                 <th>Customer Name</th>
+                <th>Address</th>
+                <th>Product QTY</th>
+                <th>Email</th>
                 <th>Status</th>
                 <th>Actions</th>
               </tr>
             </thead>
             <tbody>
-              {parselData.map((parsel) => (
+              {filteredParselData.map((parsel) => (
                 <tr key={parsel._id}>
                   <td>{parsel._id}</td>
                   <td>{parsel.fullName}</td>
+                  <td>{parsel.address}</td>
+                  <td>{parsel.productQty}</td>
+                  <td>{parsel.email}</td>
                   <td>
                     <span id={`status ${parsel.status}`}>{parsel.status}</span>
                   </td>

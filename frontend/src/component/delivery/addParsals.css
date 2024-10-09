@@ -1,14 +1,30 @@
+/* Wrapper for the entire content and footer */
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
 .container {
   display: flex;
   justify-content: center; /* Center horizontally */
   align-items: center; /* Center vertically */
-  min-height: 100vh; /* Full viewport height */
+  height: 100vh; /* Full viewport height */
+  padding: 40px 20px; /* Adds space around the form */
+  width: 100%; /* Make the container take up full width */
 }
 
 .form-container {
   flex: 1;
-  padding: 20px;
-  max-width: 400px; /* Optional: limit form width */
+  padding: 40px; 
+  max-width: 800px; 
+  background-color: #fff; 
+  border-radius: 10px; 
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); 
+  
+  /* Scrollable view */
+  max-height: 85vh; 
+  overflow-y: auto; 
 }
 
 form {
@@ -21,32 +37,38 @@ label {
 }
 
 input, select {
-  padding: 8px;
+  padding: 12px;
   margin-top: 5px;
-  width: calc(100% - 16px); /* Adjust input width */
+  width: calc(100% - 24px); /* Adjust input width */
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
 
-.submit-button, .back-button, .update-button {
+.submit-button, .back-button {
   margin-top: 20px;
-  padding: 10px 15px;
+  padding: 12px 15px;
   cursor: pointer;
   border: none;
   color: white;
   border-radius: 5px;
+  width: 100%; /* Full width buttons */
 }
 
 .submit-button {
-  background-color: #007bff; /* Blue */
-}
-
-.update-button {
-  background-color: #007bff; /* Blue */
+  background-color: #007bff;
 }
 
 .back-button {
-  background-color: #ccc; /* Gray */
+  background-color: #ccc;
 }
 
 .back-button:hover {
-  background-color: #bbb; /* Darker gray */
+  background-color: #bbb;
+}
+
+@media (max-width: 768px) {
+  .form-container {
+    max-width: 100%; 
+    padding: 30px;
+  }
 }
