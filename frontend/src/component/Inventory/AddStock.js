@@ -60,7 +60,7 @@ const AddStock = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-
+  
     try {
       if (isEditMode) {
         await axios.put(`http://localhost:5000/api/items/${itemId}`, formData);
@@ -69,11 +69,16 @@ const AddStock = () => {
         await axios.post('http://localhost:5000/api/items', formData);
         setMessage('Stock added successfully!');
       }
-
+  
       navigate('/stockDashboard');
     } catch (error) {
-      console.error('Error saving stock:', error);
-      setMessage('Error saving stock. Please try again.');
+      if (error.response && error.response.status === 400) {
+        // Display a message for duplicate items
+        setMessage(error.response.data.message);
+      } else {
+        console.error('Error saving stock:', error);
+        setMessage('Error saving stock. Please try again.');
+      }
     } finally {
       setIsSubmitting(false);
     }
@@ -114,21 +119,16 @@ const AddStock = () => {
 
                 <div className="form-group">
                   <label htmlFor="itemName" className="block text-gray-700">Item Name</label>
-                  <select
+                  <input
+                    type="text"
                     id="itemName"
                     name="itemName"
                     value={formData.itemName}
                     onChange={handleChange}
+                    placeholder="Enter Item Name"
                     required
                     className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-indigo-500"
-                  >
-                    <option value="">Select Item Name</option>
-                    <option value="Plastic1">Plastic 1</option>
-                    <option value="Plastic2">Plastic 2</option>
-                    <option value="Plastic3">Plastic 3</option>
-                    <option value="Plastic4">Plastic 4</option>
-                    <option value="Plastic5">Plastic 5</option>
-                  </select>
+                  />
                 </div>
 
                 <div className="form-group">
