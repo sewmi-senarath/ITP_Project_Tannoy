@@ -107,7 +107,7 @@ const UpdateProductForm = ({ product, onSave, onCancel }) => {
               />
             </div>
             <div className='lebel-div'>
-              <label htmlFor="machineCondition">Machine Condition</label>
+              <label htmlFor="machineCondition">Machine Status</label>
               <select
                 id="machineCondition"
                 name="machineCondition"
