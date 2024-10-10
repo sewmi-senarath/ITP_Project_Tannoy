@@ -58,8 +58,8 @@ function DisplayParselList() {
         "Tracking ID",
         "Customer Name",
         "Address",
+        "Product Type",
         "Product QTY",
-        "Email",
         "Status",
       ],
     ]
@@ -68,7 +68,7 @@ function DisplayParselList() {
       parsel.fullName,
       parsel.address,
       parsel.productQty,
-      parsel.email,
+      parsel.productQty,
       parsel.status,
     ])
 
@@ -148,7 +148,7 @@ function DisplayParselList() {
                 <th>Customer Name</th>
                 <th>Address</th>
                 <th>Product QTY</th>
-                <th>Email</th>
+                <th>Product Type</th>
                 <th>Status</th>
                 <th>Actions</th>
               </tr>
@@ -160,7 +160,7 @@ function DisplayParselList() {
                   <td>{parsel.fullName}</td>
                   <td>{parsel.address}</td>
                   <td>{parsel.productQty}</td>
-                  <td>{parsel.email}</td>
+                  <td>{parsel.productType}</td>
                   <td>
                     <span id={`status ${parsel.status}`}>{parsel.status}</span>
                   </td>
