@@ -22,6 +22,7 @@ const getAllParsel = async (req, res, next) => {
 //data insert
 const addParsel = async (req, res, next) => {
   const {
+    orderId,
     fullName,
     phoneNo,
     email,
@@ -36,6 +37,7 @@ const addParsel = async (req, res, next) => {
 
   try {
     newParsel = new Parsel({
+      orderId,
       fullName,
       phoneNo,
       email,
@@ -77,12 +79,12 @@ const getById = async (req, res, next) => {
 //Update User details
 const updateParsel = async (req, res, next) => {
   const id = req.params.id;
-  const {fullName, phoneNo, email, address, postalCode, productType, productQty, status} = req.body;
+  const {orderId, fullName, phoneNo, email, address, postalCode, productType, productQty, status} = req.body;
 
   let parsel;
 
   try {
-    parsel = await Parsel.findByIdAndUpdate(id, {fullName: fullName, phoneNo: phoneNo, email: email, address: address, postalCode: postalCode, productType: productType, productQty: productQty,status: status});
+    parsel = await Parsel.findByIdAndUpdate(id, {orderId: orderId, fullName: fullName, phoneNo: phoneNo, email: email, address: address, postalCode: postalCode, productType: productType, productQty: productQty,status: status});
       // Make sure it returns the updated document
     parsel = await parsel.save();
 

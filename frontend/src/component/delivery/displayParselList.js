@@ -31,6 +31,7 @@ function DisplayParselList() {
   useEffect(() => {
     fetchHandler().then((data) => {
       if (data && data.parcels) {
+        console.log(data.parcels)
         setParselData(data.parcels)
         setLoading(false)
       } else {
