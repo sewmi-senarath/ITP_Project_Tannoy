@@ -90,10 +90,10 @@ const SupplierDashboard = () => {
   return (
     <div className="flex min-h-screen"> {/* Flexbox with full screen height */}
       <div className="w-1/6 bg-gray-800 text-white p-4"> {/* Sidebar with reduced width */}
-        <div className="logo mb-4">
+        {/* <div className="logo mb-4">
           <img src={Logo} alt="Tannoy Electricals Logo" className="w-24" /><br />
           <h2 className="text-lg">Tannoy Electricals</h2>
-        </div>
+        </div> */}
         <ul className="nav-links space-y-2">
           <li><a href="/productDashboard" className="hover:text-gray-300">Product Details</a></li>
           <li><a href="/Addproduct" className="hover:text-gray-300">Add Product</a></li>
