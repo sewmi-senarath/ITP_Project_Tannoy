@@ -108,10 +108,10 @@ const StockDashboard = () => {
   return (
     <div className="flex">
       <div className="w-64 bg-gray-800 h-screen text-white flex flex-col">
-        <div className="p-4">
+        {/* <div className="p-4">
           <img src={Logo} alt="Tannoy Electricals Logo" className="h-16 mx-auto" />
           <h2 className="text-center mt-2">Tannoy Electricals</h2>
-        </div>
+        </div> */}
         <ul className="mt-6 space-y-2">
           <li><a href="/productDashboard" className="block py-2 px-4 hover:bg-gray-700">Product Details</a></li>
           <li><a href="/Addproduct" className="block py-2 px-4 hover:bg-gray-700">Add Product</a></li>
@@ -174,6 +174,7 @@ const StockDashboard = () => {
               <th className="border px-4 py-2">Stock Size</th>
               <th className="border px-4 py-2">Availability</th>
               <th className="border px-4 py-2">Actions</th>
+              <th className="border px-4 py-2">Re-Stock</th>
             </tr>
           </thead>
           <tbody>
@@ -189,6 +190,10 @@ const StockDashboard = () => {
                   <td className="border px-4 py-2">
                     <button className="bg-blue-500 text-white rounded px-4 py-1 mr-2" onClick={() => handleEdit(item._id)}>Edit</button>
                     <button className="bg-red-500 text-white rounded px-4 py-1" onClick={() => handleDelete(item._id)}>Delete</button>
+                  </td>
+                  <td className="border px-4 py-2">
+                    <button className="bg-blue-500 text-white rounded px-4 py-1 mr-2" onClick={() => handleEdit(item._id)}>Re-Stock</button>
+                    
                   </td>
                 </tr>
               ))

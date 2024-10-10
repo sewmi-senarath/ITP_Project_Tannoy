@@ -6,7 +6,7 @@ const ProductSchema = new mongoose.Schema({
     required: true,
     trim: true
   },
-  ProductDescription: {
+  Quality: {
     type: String, 
     trim: true
   },
