@@ -31,10 +31,10 @@ const Footer = () => {
           </h2>
           <ul className="nav-links box-middle"> {/* Changed id to className */}
             <li>
-              <a href="#">Home</a>
+              <a href="home">Home</a>
             </li>
             <li>
-              <a href="#">About Us</a>
+              <a href="home">About Us</a>
             </li>
             <li>
               <a href="#">Contact Us</a>
