@@ -109,7 +109,7 @@ const ProductDashboard = () => {
     <div className="flex">
       <div className="w-64 bg-gray-800 h-screen text-white">
         <div className="p-4">
-          <img src={Logo} alt="Tannoy Electricals Logo" className="h-16 mx-auto" />
+          {/* <img src={Logo} alt="Tannoy Electricals Logo" className="h-16 mx-auto" /> */}
           <h2 className="text-center mt-2">Tannoy Electricals</h2>
         </div>
         <ul className="mt-6 space-y-2">
