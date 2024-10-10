@@ -153,7 +153,7 @@ const RecycleProductForm = () => {
           />
         </div>
         <div>
-          <label htmlFor="machineCondition">Machine Condition</label>
+          <label htmlFor="machineCondition">Machine Status</label>
           <select
             id="machineCondition"
             name="machineCondition"
@@ -161,7 +161,7 @@ const RecycleProductForm = () => {
             onChange={handleChange}
             required
           >
-            <option>Select Condition</option>
+            <option>Select Status</option>
               <option value="BROKEN">BROKEN</option>
               <option value="GOOD">GOOD</option>
           </select>

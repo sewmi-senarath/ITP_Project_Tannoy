@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState ,useEffect } from "react";
 import "boxicons";
 import { default as api } from "../store/apiSlice";
 import EditMachine from "./EditMachineForm";
@@ -9,12 +9,39 @@ import jsPDF from "jspdf";
 import "jspdf-autotable";
 import { MdAddCard } from "react-icons/md";
 import { Link } from "react-router-dom";
+import axios from 'axios';
+
 
 export default function MachineList() {
   const { data, isFetching, isSuccess, isError } =
     api.useGetMachineLabelsQuery();
   const [deleteMachine] = api.useDeleteMachineMutation(); // Ensure this matches your API slice
+  const [products, setProducts] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [searchQuery, setSearchQuery] = useState('');  // State for search query
+
+
+  useEffect(() => {
+    const getData = () => {
+      axios
+        .get("http://localhost:5000/recyclingProducts")
+        .then(response => {
+          setProducts(response.data.RecyclingProducts);
+          console.log(products)
+        })
+        .catch(error => console.log(error));
+    };
+    
+
+    getData();
+  }, []);
+
+  const filteredProducts = products.filter(
+    (product) =>
+      product.recyclingProductName
+        .toLowerCase()
+        .includes(searchQuery.toLowerCase()) && product.status === "COMPLETE"
+  );
 
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value); // Update search input value
@@ -45,6 +72,7 @@ export default function MachineList() {
           key={machine._id}
           machine={machine}
           handler={handleDeleteClick}
+          filteredProducts={filteredProducts}
         />
       ))
     ) : (
@@ -160,11 +188,28 @@ export default function MachineList() {
       </div>
 
       <div>{MachineList}</div>
+      <table className='recycled-table'>
+            <thead>
+              <tr>
+                <th className= "w-80">Machine Name</th>
+                <th>Machine Status</th>
+                
+              </tr>
+            </thead>
+            <tbody>
+          {filteredProducts.map((product) => (
+            <tr key={product._id}>
+              <td>{product.machineName}</td>
+              <td>{product.machineCondition}</td>
+            </tr>
+          ))}
+        </tbody>
+          </table>
     </div>
   );
 }
 
-function Machine({ machine, handler }) {
+function Machine({ machine, handler, filteredProducts }) {
   const [openDialog, setOpenDialog] = useState(false);
   const [isEditOpen, setIsEditOpen] = useState(false);
 
@@ -185,14 +230,15 @@ function Machine({ machine, handler }) {
   if (!machine) return null;
 
   return (
+    <div>
     <div
       className="item flex justify-center bg-gray-50 rounded-md mt-2"
       style={{ borderRight: `8px solid ${machine.color ?? "#e5e5e5"}` }}
     >
-      <button className="px-8" onClick={() => handler(machine._id)}>
+      <button className="w-80" onClick={() => handler(machine.id)}>
         <box-icon color={machine.color ?? "#e5e5e5"} size="20px" name="trash" />
       </button>
-      <button className="px-3" onClick={handleOpen}>
+      <button className="w-80" onClick={handleOpen}>
         <box-icon
           color={machine.color ?? "#e5e5e5"}
           size="20px"
@@ -219,6 +265,8 @@ function Machine({ machine, handler }) {
       <span className="block w-full mt-4 text-sm">
         {machine.description ?? ""}
       </span>
+    </div>
+    
     </div>
   );
 }
