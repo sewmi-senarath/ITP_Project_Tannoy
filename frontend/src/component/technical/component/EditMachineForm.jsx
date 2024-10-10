@@ -21,34 +21,33 @@ import {
 } from "@mui/material";
 
 const titleSx = {
-  fontSize: "25px",
+  fontSize: "20px",
   color: "white",
   fontFamily: "Arvo",
   fontWeight: "bold",
-  marginTop: "4px",
+  marginTop: "25px",
 };
 
 const formSX = {
   width: "100%",
-  padding: "25px 20px",
-  marginTop: "10px",
+  padding: "25px 25px",
+  marginTop: "15px",
 };
 
 const label = {
   color: "#26bb3a",
-  fontSize: "20px",
+  fontSize: "25px",
   fontFamily: "Arvo",
 };
 
 const boxSX = {
   bgcolor: "#FFFFFF",
-  width: "550px",
-  boxShadow: "#",
+  width: "460px",
   boxSizing: "border-box",
-  borderRadius: "25px",
+  borderRadius: "30px",
   textAlign: "center",
-  px: "10px",
-  padding: "5px 18px",
+  px: "70px",
+  padding: "50px 25px",
 };
 
 const inputSx = {
@@ -160,7 +159,7 @@ export default function EditMachine({ open, setOpen, matirialData }) {
         open={open}
       >
         <form id="form" onSubmit={handleSubmit}>
-          <h1 className="text-3xl justify-center items-center text-center font-semibold mt-5">
+          <h1 className="text-2xl justify-center items-center text-center font-semibold mt-2">
             Update Machine
           </h1>
           <Box sx={boxSX}>

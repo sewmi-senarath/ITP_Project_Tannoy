@@ -22,10 +22,10 @@ export default function MachineLabels() {
 function LabelComponent({ data }) {
   if (!data) return <></>;
   return (
-     <div className="labels flex justify-between bg-gray-200 rounded-md ">
-     <div className="flex gap-2">
+     <div className="labels flex justify-between bg-gray-200 rounded-md h-10">
+     <div className="flex gap-3">
        <div
-         className="w-2 h-3 rounded-md py-3 "
+         className="h-0 w-4 rounded-md mt-0 py-5"
          style={{ background: data.color ?? "#f9c74f" }}
        ></div>
        <h3 className="text-md">{data.materialtype ?? ""}</h3>

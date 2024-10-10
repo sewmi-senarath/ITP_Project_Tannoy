@@ -61,12 +61,12 @@ const Addmachine = () => {
           <div className="w-[600px] ">
           <Link to={"/technicalHome"}>
           <RiArrowGoBackLine className="mt-5 ml-5 w-8 h-8" /></Link>
-            <h2 className="font-bold text-dark text-xl font-custom mt-2 mb-6 ml-8">Add new Machine</h2>
+            <h2 className="font-bold text-dark text-4xl font-custom mt-2 mb-6 ml-8">Add new Machine</h2>
             <img src={tecnicalimage} alt="Machine" className="w-full h-auto rounded-xl mt-12 mr-44" />
            <h1 className="ml-30 text-center text-black font-semibold"> Resposible <span className="text-green-500">Machine repair</span> service.</h1>
           </div>
           {/* Form container */}
-          <div className="w-[900px] max-w-2xl bg-white shadow-xl rounded-3xl p-6 pl-7 mt-20">
+          <div className="w-[500px] max-w-3xl  shadow-m rounded-5xl p-1 pl-15 mt-3">
             <form onSubmit={addmachine}>
               <div className="flex flex-col mt-6">
                 <label htmlFor="machineName" className="text-gray-700 font-bold mb-2">Machine name</label>
