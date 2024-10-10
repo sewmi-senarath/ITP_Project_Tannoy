@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import jsPDF from 'jspdf';
-import '../../styles/employeeGenerateReport.css';
+import '../employee/employeeGenerateReport.css';
 
 const EmployeeSalaryReport = () => {
   const [employees, setEmployees] = useState([]); // Hold employee data
@@ -58,7 +58,7 @@ const EmployeeSalaryReport = () => {
     doc.text(`Present Days: ${reportData.presentCount}`, 10, 20);
     doc.text(`Absent Days: ${reportData.absentCount}`, 10, 30);
     doc.text(`OT Hours: ${reportData.otHours}`, 10, 40);
-    doc.text(`Salary: ₹${reportData.totalSalary}`, 10, 50);
+    doc.text(`Salary: Rs.${reportData.totalSalary}`, 10, 50);
 
     // Save the PDF
     doc.save(`Salary_Report_${selectedEmployee}_${selectedMonth}.pdf`);
@@ -66,11 +66,7 @@ const EmployeeSalaryReport = () => {
 
   // Function to generate a shareable message
   const generateShareableMessage = () => {
-    return `Attendance Report for ${selectedEmployee} (${selectedMonth}):
-    - Present Days: ${reportData.presentCount}
-    - Absent Days: ${reportData.absentCount}
-    - OT Hours: ${reportData.otHours}
-    - Salary: RS.${reportData.totalSalary.toFixed(2)}`;
+    return generatePdf();
   };
 
   // Function to share via WhatsApp
@@ -80,30 +76,23 @@ const EmployeeSalaryReport = () => {
     window.open(url, '_blank');
   };
 
-  // Function to share on Facebook
-  const shareOnFacebook = () => {
-    const message = generateShareableMessage();
-    const url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(message)}`;
-    window.open(url, '_blank');
-  };
+  
 
-  // Function to share on Twitter
-  const shareOnTwitter = () => {
-    const message = generateShareableMessage();
-    const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(message)}`;
-    window.open(url, '_blank');
-  };
+  // Function to share via Gmail
+  const shareOnGmail = () => {
+    const subject = encodeURIComponent("Attendance Report"); // Email subject
+    const body = encodeURIComponent(generatePdf()); // Email body
 
-  // Function to share on LinkedIn
-  const shareOnLinkedIn = () => {
-    const message = generateShareableMessage();
-    const url = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(message)}`;
-    window.open(url, '_blank');
+    // Construct the mailto link
+    const mailtoUrl = `mailto:?subject=${subject}&body=${body}`;
+    
+    // Open the default email client (like Gmail) in a new window
+    window.open(mailtoUrl, '_blank');
   };
 
   return (
     <div className="report-container">
-      <h1>Generate Salary Report</h1>
+      <h1 style={{ fontFamily: 'Arial, sans-serif', fontSize: '36px', fontWeight: 'bold' }}>Salary Report</h1>
 
       {/* Error Message */}
       {errorMessage && <p className="error-message">{errorMessage}</p>}
@@ -176,14 +165,9 @@ const EmployeeSalaryReport = () => {
             <button onClick={shareOnWhatsApp} className="whatsapp-button">
               Share on WhatsApp
             </button>
-            <button onClick={shareOnFacebook} className="facebook-button">
-              Share on Facebook
-            </button>
-            <button onClick={shareOnTwitter} className="twitter-button">
-              Share on Twitter
-            </button>
-            <button onClick={shareOnLinkedIn} className="linkedin-button">
-              Share on LinkedIn
+            
+            <button onClick={shareOnGmail} className="gmail-button">
+              Share via Gmail
             </button>
           </div>
         </div>
@@ -193,3 +177,6 @@ const EmployeeSalaryReport = () => {
 };
 
 export default EmployeeSalaryReport;
+
+
+

@@ -1,36 +1,50 @@
 const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
-// Define the schema for your Technical model
-const technicalSchema = new mongoose.Schema({
-  machineId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Machine", // Assuming you have a Machine model
-    required: true,
-  },
-  maintenanceType: {
+//expence category model
+const machineCategoriesModel = new Schema({
+  materialtype: { type: String, default: "Anonymous" },
+  color: { type: String, default: "#FCBE44" },
+});
+
+// Define the schema for the Technical model
+const technicalSchema = new Schema({
+  name: {
     type: String,
     required: true,
-    enum: ["Preventive", "Corrective"], // Example maintenance types
   },
+  materialtype: { type: String, default: "Anonymous" },
+  servicedate: {
+    type: Date,
+    required: true,
+  },
+  nextservicedate: {
+    type: Date,
+    required: true,
+  },
+
   description: {
     type: String,
     required: true,
   },
-  maintenanceDate: {
-    type: Date,
+  Cost: {
+    type: Number,
     required: true,
   },
-  technician: {
-    type: String,
-    required: true,
-  },
-  partsUsed: {
-    type: [String], // Array of strings to store multiple parts
-    required: true,
-  },
-}, { collection: 'technicals' }); // Name of the collection in MongoDB
+});
 
-// Create the model from the schema
+// Create and export the model
 const Technical = mongoose.model("Technical", technicalSchema);
+const MachineCategories = mongoose.model(
+  "machineCategoriesModel",
+  machineCategoriesModel,
+  "machineCategoriesModel" // This will force the collection to use the exact name
+);
 
-module.exports = Technical;
+exports.default = Technical;
+exports.default = MachineCategories;
+
+module.exports = {
+  Technical,
+  MachineCategories,
+};

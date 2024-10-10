@@ -1,0 +1,266 @@
+/* Global Styles */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: white; /* Ensure all headings are white */
+}
+
+/* Styles for Home Component */
+
+/* Styles for INTERIOR DESIGN section */
+#interior-design {
+  background-image: url('../../images/hBack.png');
+  background-size: cover; /* Adjust as needed */
+  background-position: center;
+  background-repeat: no-repeat; /* Prevent image repetition */
+  height: 80vh; /* Adjust height to show more content */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  position: relative;
+}
+
+#interior-design::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5); /* Background overlay */
+  z-index: 0;
+}
+
+.content {
+  text-align: center;
+  z-index: 1;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 20px;
+  border-radius: 10px;
+  color: white;
+}
+
+.company-name {
+  font-size: 1.2rem;
+  letter-spacing: 2px;
+  color: white;
+}
+
+.headline {
+  font-size: 3rem;
+  font-weight: bold;
+  margin: 10px 0;
+  color: white;
+}
+
+.description {
+  font-size: 1rem;
+  max-width: 600px;
+  margin: 0 auto;
+  color: white;
+}
+
+/* Styles for WELCOME TO OUR COMPANY section */
+#welcome-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 50px;
+  color: white;
+  background-color: #2e2e2e; /* Dark background */
+
+}
+
+.welcome-image {
+  background-image: url('../../images/treeRe.png'); /* Replace with correct path */
+  background-size: cover;
+  background-position: center;
+  width: 50%;
+  height: 100vh;
+  
+}
+
+.welcome-text {
+  width: 45%;
+  padding: 20px;
+  color: white;
+}
+
+.welcome-title {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  color: white;
+}
+
+.welcome-description {
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 20px;
+  color: white;
+}
+
+
+/* Styles for OUR SERVICE section */
+#service-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 50px;
+  background-color: #1c1c1c;
+  color: white;
+  height: 60vh; /* Adjust height */
+}
+
+.service-content {
+  width: 30%;
+  color: white;
+}
+
+.service-title {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  color: white;
+}
+
+.service-description {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: white;
+}
+
+.service-images {
+  display: flex;
+  width: 50%;
+  justify-content: space-between;
+}
+
+.service-image-left, .service-image-right {
+  background-size: contain; /* Ensure the full image is visible */
+  background-position: center;
+  background-repeat: no-repeat; /* Prevent image repetition */
+  width: 48%;
+  height: 200px; /* Reduced height */
+}
+
+.service-image-left {
+  background-image: url('../../images/world.png');
+}
+
+.service-image-right {
+  background-image: url('../../images/process.png');
+}
+
+.service-statistics {
+  width: 15%;
+  text-align: center;
+  color: white;
+}
+
+.service-statistics h3 {
+  font-size: 3rem;
+  margin: 0;
+  color: white;
+}
+
+.service-statistics p {
+  font-size: 1rem;
+  margin-top: 10px;
+  color: white;
+}
+
+/* Styles for OUR MISSION section */
+#mission-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 50px;
+  color: white;
+  background-color: #2e2e2e; /* Dark background */
+
+}
+
+.mission-image {
+  background-image: url('../../images/symbol.png');
+  background-size: cover;
+  background-position: center;
+  width: 50%;
+  height: 100vh;
+}
+
+.mission-text {
+  width: 45%;
+  color: white;
+}
+
+.mission-title {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  color: white;
+}
+
+.mission-item {
+  margin-bottom: 20px;
+  color: white;
+}
+
+.mission-item h3 {
+  font-size: 1.5rem;
+  color: white; /* Ensuring title is white */
+}
+
+.mission-item p {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: white; /* Ensuring paragraph is white */
+}
+
+/* Styles for OUR CONTACT section */
+#contact-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 50px;
+  background-color: #2e2e2e; /* Dark background */
+  height: 50vh; /* Reduced height */
+}
+
+.contact-image {
+  background-image: url('../../images/robot.png');
+  background-size: contain; /* Ensure the full image is visible */
+  background-position: center;
+  background-repeat: no-repeat; /* Prevent image repetition */
+  width: 45%;
+  height: 100%; /* Make it take full height of the section */
+  border-radius: 10px;
+}
+
+.contact-text {
+  width: 45%;
+}
+
+.contact-title {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  color: white;
+}
+
+.contact-details {
+  list-style: none;
+  padding: 0;
+}
+
+.contact-details li {
+  font-size: 1.2rem;
+  line-height: 2;
+  margin-bottom: 10px;
+  color: white; /* Ensure contact details are white */
+}
+
+.contact-details i {
+  margin-right: 10px;
+}

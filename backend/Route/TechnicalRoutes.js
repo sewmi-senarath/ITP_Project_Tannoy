@@ -1,20 +1,27 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const technicalController = require("../Controllers/TechnicalController");
 
-// Route to get all technical records
-router.get('/', technicalController.getAllTechnicalRecords);
+const technicalController = require("../Controlers/TechnicalController");
 
-// Route to add a new technical record
-router.post('/', technicalController.addTechnicalRecord);
+// Route to add employees
+router.post("/api/addmachine", technicalController.addmachine);
+router.post(
+  "/api/createMachineCategory",
+  technicalController.createMachineCategory
+);
+router.get("/api/getMachineCategory", technicalController.getMachineCategory);
+router.get("/api/machineLabels", technicalController.getMachineLabels);
 
-// Route to get a single technical record by ID
-router.get('/:id', technicalController.getTechnicalRecordById);
+//Route get all machine
+router.get("/api/getallmachine", technicalController.getallmachine);
 
-// Route to update a technical record by ID
-router.put('/:id', technicalController.updateTechnicalRecord);
+//Route machine by machine
+router.get("/api/getmachineById/:id", technicalController.getmachineById);
 
-// Route to delete a technical record by ID
-router.delete('/:id', technicalController.deleteTechnicalRecord);
+//Route update machine
+router.put("/api/updatemachine/:_id", technicalController.updatemachine);
+
+//Route update machine
+router.delete("/api/deletemachine", technicalController.deletemachine);
 
 module.exports = router;

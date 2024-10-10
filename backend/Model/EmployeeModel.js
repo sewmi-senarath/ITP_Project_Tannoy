@@ -1,10 +1,12 @@
 const mongoose = require("mongoose");
+const { v4: uuidv4 } = require('uuid');
 
 const employeeSchema = new mongoose.Schema({
   empId: {
     type: String,
-    required: [true, 'Employee ID is required'],  // Ensure empId is required
-    unique: true,  // Ensure uniqueness if necessary
+    //default: uuidv4, // Generate UUID by default
+    unique: true,
+    required: true
   },
   name: {
     type: String,

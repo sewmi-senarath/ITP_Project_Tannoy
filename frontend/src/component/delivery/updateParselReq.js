@@ -2,34 +2,56 @@ import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import Sidebar from './deliveryHeader';
+import '../delivery/addParsals.css';
 
 
-function updateParselReq() {
+
+function UpdateParselReq() {
 
   const [inputs, setInputs] = useState({});
   const history = useNavigate();
   const id = useParams().id;
 
+  const [orders, setOrders] = useState([]);
+
+  useEffect(()=> {
+    getOrders();
+  }, [])
+
+  const getOrders = async () => {
+    await axios.get("http://localhost:5000/order").then((res) => setOrders(res.data.order))
+  }
+
+  useEffect(()=>{
+    console.log(orders)
+  },[orders])
+
   useEffect(()=>{
     const fetchHandler = async ()=>{
       await axios
       .get(`http://localhost:5000/deliverParsel/${id}`)
+      .then((res) => res.data)
+      .then((data) => setInputs(data.parsel))
     };
     fetchHandler();
   },[id]);
 
+  useEffect(()=>{
+    console.log(inputs)
+  }, [inputs])
+
   const sendRequest = async ()=>{
     await axios
     .put(`http://localhost:5000/deliverParsel/${id}`,{
-        fullName: String(inputs.fullName),
-        phoneNo: Number(inputs.phoneNo),
-        email: String(inputs.email),
-        address: String(inputs.address),
-        postalCode: String(inputs.postalCode),
-        productType: String(inputs.productType),
-        productQty: Number(inputs.productQty),
-        status: String(inputs.status),
+      orderId: String(inputs.orderId),
+      fullName: String(inputs.fullName),
+      phoneNo: Number(inputs.phoneNo),
+      email: String(inputs.email),
+      address: String(inputs.address),
+      postalCode: String(inputs.postalCode),
+      productType: String(inputs.productType),
+      productQty: Number(inputs.productQty),
+      status: String(inputs.status), 
     })
     .then((res)=> res.data);
   };
@@ -49,10 +71,20 @@ function updateParselReq() {
 
   return (
     <div className="container">
-      <Sidebar />
       <div className="form-container">
         <h1>Update Delivery Request</h1>
         <form onSubmit={handleSubmit}>
+
+        <label htmlFor="order">Order</label>
+          {orders && (
+            <select id="orderId" name="orderId" onChange={handleChange} value={inputs.orderId}>
+              {orders.map((order, index) => {
+                return <option key={index} value={order._id}>{`${order.reciptNo} - ${order.productName} - ${order.deliveryType}`}</option>
+                })
+              }
+           </select>
+          )}
+
           <label>
             Full Name
             <input
@@ -162,4 +194,4 @@ function updateParselReq() {
   )
 }
 
-export default updateParselReq;
+export default UpdateParselReq;

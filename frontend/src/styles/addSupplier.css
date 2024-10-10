@@ -1,0 +1,291 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+/*Main container for the form*/
+.add-supplier-container {
+    margin-left: 320px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    min-height: calc(100vh - 100px); /* Adjust this based on the height of the header and footer */
+    background-color: rgb(244, 246, 249);
+    padding: 20px; /* Optional: add some padding */
+  }
+  
+  .image-container {
+    position: absolute;
+    top: 0;  /* Adjust based on your needs */
+    left: 0; /* Sticks the image to the left corner */
+    width: 300px; /* Adjust width based on your needs */
+}
+  
+  .form-container {
+    margin-left: 500px;
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    width: 100%;
+    
+   
+  }
+
+
+  /* Image styles for right alignment */
+.supplier-img {
+  width: 300px; /* Adjust width as needed */
+  height: auto;
+  margin-left: 150px; /* Add spacing between the form and the image */
+  margin-top: 250px;
+  border-radius: 200px;
+  align-self: flex-start; /* Align the image to the top of the container */
+  background-color: #ffffff; /* Solid white background */
+}
+
+  h1 {
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    color: #1344e4;
+    margin-bottom: 20px;
+  }
+  
+
+  .supplier-form  {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    background-color: #c7ddf8; /* Change this color to your desired background color */
+    padding: 10px;  /*Optional: add some padding to make the background more visible */
+    width: 500px;
+    max-width:100%;
+    height:auto;
+  }
+  
+
+  
+  .form-group {
+    margin-bottom: 70px;
+  }
+  
+  label {
+    display: block;
+    font-size: 16px;
+    font-weight: 600;
+    color: #555;
+    margin-bottom: 8px;
+  }
+  
+  input[type="text"],
+  input[type="number"],
+  textarea,
+  select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    color: #555;
+    box-sizing: border-box;
+    transition: border 0.3s ease;
+  }
+  
+  input[type="text"]:focus,
+  input[type="number"]:focus,
+  textarea:focus,
+  select:focus {
+    border-color: #007bff;
+    outline: none;
+  }
+  
+  textarea {
+    height: 80px;
+    resize: vertical;
+  }
+  
+  .submit-btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 12px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .submit-btn:hover {
+    background-color: #0056b3;
+  }
+  
+  .submit-btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  
+  .form-message {
+    text-align: center;
+    font-size: 16px;
+    color: green;
+    margin-top: 15px;
+  }
+  
+  .form-message.error {
+    color: red;
+  }
+  
+  /* Back button styles */
+  .back-btn {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 12px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    margin-top: 10px;
+    display: block;
+    width: 100%;
+  }
+  
+  .back-btn:hover {
+    background-color: #d32f2f;
+  }
+/* Base button styles for all buttons */
+button {
+    display: block; /* Make buttons block elements */
+    width: 100%; /* Full width for each button */
+    padding: 10px 20px; /* Padding for better spacing inside the buttons */
+    border: none; /* Remove borders */
+    font-size: 16px; /* Font size for consistency */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor */
+    text-align: center; /* Center the text */
+    transition: background-color 0.3s ease; /* Smooth background color change on hover */
+  }
+  
+  /* Style for Generate Report button */
+  .report-btn {
+    background-color: #28a745; /* Green background */
+    color: white; /* White text */
+    margin-bottom: 20px; /* Add space below the button */
+  }
+  
+  .report-btn:hover {
+    background-color: #218838; /* Darker green on hover */
+  }
+  
+  /* Style for Edit button */
+  .edit-btn {
+    background-color: #007bff; /* Blue background for edit */
+    color: white; /* White text */
+    margin-bottom: 20px; /* Add space below the button */
+  }
+  
+  .edit-btn:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+  }
+  
+  /* Style for Delete button */
+  .delete-btn {
+    background-color: #dc3545; /* Red background */
+    color: white; /* White text */
+  }
+  
+  .delete-btn:hover {
+    background-color: #c82333; /* Darker red on hover */
+  }
+/* Base button styles for all buttons */
+button {
+    display: block; /* Make buttons block elements */
+    width: 100%; /* Full width for each button */
+    padding: 10px 20px; /* Padding for better spacing inside the buttons */
+    border: none; /* Remove borders */
+    font-size: 16px; /* Font size for consistency */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor */
+    text-align: center; /* Center the text */
+    transition: background-color 0.3s ease; /* Smooth background color change on hover */
+  }
+  
+  /* Style for Generate Report button */
+  .report-btn {
+    background-color: #28a745; /* Green background */
+    color: white; /* White text */
+    margin-bottom: 20px; /* Add space below the button */
+  }
+  
+  .report-btn:hover {
+    background-color: #218838; /* Darker green on hover */
+  }
+  
+  /* Style for Edit button */
+  .edit-btn {
+    background-color: #007bff; /* Blue background for edit */
+    color: white; /* White text */
+    margin-bottom: 20px; /* Add space below the button */
+  }
+  
+  .edit-btn:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+  }
+  
+  /* Style for Delete button */
+  .delete-btn {
+    background-color: #dc3545; /* Red background */
+    color: white; /* White text */
+  }
+  
+  .delete-btn:hover {
+    background-color: #c82333; /* Darker red on hover */
+  }
+
+/* Base button styles for all buttons */
+button {
+    display: block; 
+    width: 100%; 
+    padding: 10px 20px; 
+    border: none; 
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer; 
+    text-align: center; 
+    transition: background-color 0.3s ease; 
+  }
+
+  /* Style for Generate Report button */
+  .report-btn {
+    background-color: #007bff; /* Green background */
+    color: white; /* White text */
+    margin-bottom: 20px; /* Space below the button */
+  }
+  
+  .report-btn:hover {
+    background-color: #218838; /* Darker green on hover */
+  }
+  
+  /* Style for Edit button */
+  .edit-btn {
+    background-color: #007bff; /* Blue background for edit */
+    color: white; /* White text */
+    margin-bottom: 2px; /* Minimal space below the Edit button */
+  }
+  
+  .edit-btn:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+  }
+  
+  /* Style for Delete button */
+  .delete-btn {
+    background-color: #dc3545; /* Red background */
+    color: white; /* White text */
+    margin-bottom: 0px; /* No extra margin at the bottom of Delete */
+  }
+  
+  .delete-btn:hover {
+    background-color: #c82333; /* Darker red on hover */
+  }

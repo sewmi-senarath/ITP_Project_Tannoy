@@ -1,0 +1,88 @@
+.component-div {
+  display: inline-block;
+  vertical-align: top;
+  width: 100%; 
+  margin-left: 200px;
+}
+#recycle-product-dashbord{
+  margin: 0px;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  box-sizing: border-box;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+
+#RecycleProductsDashBoard{
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: space-between;
+  padding: 0px 100px;
+}
+
+#RecycleProductsLeftDiv{
+  display: inline-flex;
+  width: 65%;
+  justify-content: center;
+  padding: 20px;
+}
+
+#RecycleProductsRightDiv{
+  display: inline-flex !important;
+  justify-content: center;
+  background-image: linear-gradient(to right, rgb(40, 55, 139, 0.8) , rgb(95, 0, 107,0.8));
+  width:35%;
+  justify-content: space-between;
+  padding: 20px 40px;
+  border-radius: 5px;
+}
+
+ul {
+  list-style-type: none; 
+  padding: 0;
+  display: grid;
+  gap: 10px; 
+}
+
+ul a{
+  color: white;
+  text-decoration: none;
+}
+
+.RecycleProductsLeftDashboardTitle{
+  font-size: 24px;
+  text-align: center;
+  color: black;
+}
+
+#RecycledProductsButton{
+  display: inline;
+  margin: 0px 10px;
+  background-image: linear-gradient(to right, rgb(40, 55, 139, 0.8) , rgb(95, 0, 107, 0.8));
+  padding: 10px;
+  color: white;
+  border-radius: 5px;
+  width: 200px !important;
+}
+ 
+#RecyclingProductsButton {
+  display: inline;
+  background-image: linear-gradient(to right, rgb(40, 55, 139,0.8) , rgb(95, 0, 107, 0.8));
+  color: white;
+  border-radius: 5px;
+  width: 200px !important;
+  padding: 10px;
+}
+
+#image-div{
+  height: 300px;
+  background-image: url('../../images/recyclingProductsBg01.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  margin: 20px 0px;
+  border-radius: 10px;
+}

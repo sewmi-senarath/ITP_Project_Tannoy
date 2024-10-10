@@ -1,0 +1,154 @@
+/* Container for the attendance table
+.attendance-table-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .attendance-table-container h1 {
+    text-align: center;
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  /* Style for the table */
+  .attendance-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  }
+  
+  /* Table header styling */
+  .attendance-table th {
+    background-color: #3498db;
+    color:black;
+    padding: 12px;
+    text-align: left;
+    font-size: 16px;
+  }
+  
+  .attendance-table th:first-child {
+    border-top-left-radius: 8px;
+  }
+  
+  .attendance-table th:last-child {
+    border-top-right-radius: 8px;
+  }
+  
+  /* Table body row styling */
+  .attendance-table td {
+    padding: 12px;
+    font-size: 14px;
+    color: #555;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .attendance-table td:first-child {
+    width: 20%;
+  }
+  
+  .attendance-table td:last-child {
+    text-align: center;
+  }
+  
+  /* Highlight alternating rows */
+  .attendance-table tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
+  /* Center content inside table cells */
+  .attendance-table td {
+    text-align: left;
+  }
+  
+  .attendance-table td:nth-child(4),
+  .attendance-table td:nth-child(3) {
+    text-align: center;
+  }
+  
+  /* No records message styling */
+  .attendance-table tbody tr td[colspan="4"] {
+    text-align: center;
+    font-size: 16px;
+    color: #888;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .attendance-table-container {
+      padding: 10px;
+    }
+  
+    .attendance-table th, .attendance-table td {
+      font-size: 14px;
+      padding: 10px;
+    }
+  
+    .attendance-table th, .attendance-table td {
+      text-align: center;
+    }
+  }
+  
+ */
+
+
+ .attendance-table-container {
+  padding: 20px;
+}
+
+.filter-container {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.date-select,
+.employee-select,
+.status-select {
+  padding: 10px;
+  font-size: 16px;
+}
+
+.attendance-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.attendance-table th, .attendance-table td {
+  padding: 10px;
+  border: 1px solid #ccc;
+  text-align: left;
+}
+
+.attendance-table th {
+  background-color: #f4f4f4;
+  font-weight: bold;
+}
+
+.error-message {
+  color: red;
+  margin-bottom: 15px;
+}
+
+.generate-report-btn {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.generate-report-btn:hover {
+  background-color: #0056b3;
+}

@@ -1,8 +1,6 @@
-// controllers/ItemController.js
 const Item = require("../Model/InventoryModel");
 
-
-// Get all items
+// Get all items in database
 exports.getAllItems = async (req, res) => {
   try {
     const items = await Item.find();
@@ -28,7 +26,15 @@ exports.getItemById = async (req, res) => {
 // Add a new item
 exports.addItem = async (req, res) => {
   const { itemName, itemDescription, itemCategory, stockSize, itemCode, availability } = req.body;
+  
   try {
+    // Check if there is an item with the same itemName but a different itemCode
+    const existingItem = await Item.findOne({ itemName, itemCode: { $ne: itemCode } });
+    if (existingItem) {
+      return res.status(400).json({ message: 'An item with the same name but a different code already exists in the stock.' });
+    }
+
+    // If no conflicting items, create the new item
     const newItem = new Item({ itemName, itemDescription, itemCategory, stockSize, itemCode, availability });
     await newItem.save();
     res.status(201).json(newItem);
@@ -37,6 +43,7 @@ exports.addItem = async (req, res) => {
     res.status(500).json({ message: 'Error adding item', error: err.message });
   }
 };
+
 
 // Update an item by ID
 exports.updateItem = async (req, res) => {
@@ -63,4 +70,3 @@ exports.deleteItem = async (req, res) => {
     res.status(500).json({ message: 'Error deleting item', error: err.message });
   }
 };
-
