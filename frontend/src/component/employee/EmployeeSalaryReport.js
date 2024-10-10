@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import jsPDF from 'jspdf';
-import '../../styles/employeeGenerateReport.css';
+import '../employee/employeeGenerateReport.css';
 
 const EmployeeSalaryReport = () => {
   const [employees, setEmployees] = useState([]); // Hold employee data
