@@ -34,7 +34,7 @@ function LoginForm() {
     setLoading(true);
 
     try {
-      const response = await axios.post("http://localhost:5000/api/user/login", {
+      const response = await axios.post("http://localhost:3065/api/user/login", {
         email,
         password,
       });
@@ -59,7 +59,7 @@ function LoginForm() {
         else if (email === "inquirymanager@gmail.com") {
           navigate("/");
         } 
-        else if (email === "technicalmanagr@gmail.com") {
+        else if (email === "technicalmanager@gmail.com") {
           navigate("/technicalHome");
         } 
         else if (email === "deliverymanager@gmal.com") {

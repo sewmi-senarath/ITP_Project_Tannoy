@@ -11,8 +11,7 @@ const Sidebar = () => (
         <li><a href="/deliveryHome">Home</a></li>
         <li><a href="/parsel-list">Tracking</a></li>
         <li><a href="/Add-parsel">Add Delivery Request</a></li>
-        <li><a href="/login">Log Out</a></li>
-        <li><a href="/register">Register</a></li>
+        <li><a href="/">Log Out</a></li>
       </ul>
     </nav>
   </div>

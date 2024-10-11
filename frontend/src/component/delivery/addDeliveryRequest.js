@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Sidebar from "./deliveryHeader";
@@ -6,6 +6,7 @@ import Sidebar from "./deliveryHeader";
 function AddDeliveryRequest() {
   const history = useNavigate();
   const [inputs, setInputs] = useState({
+    orderId: "",
     fullName: "",
     phoneNo: "",
     email: "",
@@ -15,6 +16,8 @@ function AddDeliveryRequest() {
     productQty: "",
     status: "",
   });
+
+  const [orders, setOrders] = useState([]);
 
   const handleChange = (e) => {
     setInputs((prevState) => ({
@@ -32,6 +35,7 @@ function AddDeliveryRequest() {
   const sendRequest = async () => {
     await axios
       .post("http://localhost:5000/deliverParsel", {
+        orderId: String(inputs.orderId),
         fullName: String(inputs.fullName),
         phoneNo: Number(inputs.phoneNo),
         email: String(inputs.email),
@@ -44,6 +48,18 @@ function AddDeliveryRequest() {
       .then((res) => res.data);
   };
 
+  useEffect(()=> {
+    getOrders();
+  }, [])
+
+  const getOrders = async () => {
+    await axios.get("http://localhost:5000/order").then((res) => setOrders(res.data.order))
+  }
+
+  useEffect(()=>{
+    console.log(orders);
+  }, [orders])
+
   return (
     
     <div className="container">
@@ -52,7 +68,19 @@ function AddDeliveryRequest() {
         
         <h1>Create New Delivery Request</h1>
         <form onSubmit={handleSubmit}>
-          <label htmlFor="fullName">Full Name</label>
+
+          <label htmlFor="order">Order</label>
+          {orders && (
+            <select id="orderId" name="orderId" onChange={handleChange} value={inputs.orderId}>
+              {orders.map((order, index) => {
+                return <option key={index} value={order._id}>{`${order.reciptNo} - ${order.productName} - ${order.deliveryType} - ${order.quantity} - ${order.location}`}</option>
+                })
+              }
+           </select>
+          )}
+          
+
+          <label htmlFor="fullName">Driver Name</label>
           <input
             type="text"
             id="fullName"
@@ -96,14 +124,14 @@ function AddDeliveryRequest() {
             required
           />
 
-          <label htmlFor="postalCode">Postal Code</label>
+          <label htmlFor="postalCode">Vehicle</label>
           <input
             type="text"
             id="postalCode"
             name="postalCode"
             value={inputs.postalCode}
             onChange={handleChange}
-            placeholder="Enter Your Postal Code"
+            placeholder="Enter Vehicle No."
             required
           />
 

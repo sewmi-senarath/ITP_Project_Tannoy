@@ -3,6 +3,10 @@ const Schema = mongoose.Schema;
 
 const parselSchema = new Schema({
   //forms wala create krna data tika dann
+  orderId:{
+    type:String,
+    required:true,
+  },
   fullName:{
     type:String,//Data Type
     required:true,//validate

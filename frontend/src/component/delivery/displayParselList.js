@@ -1,68 +1,62 @@
-import React, { useEffect, useState, useRef } from "react"
-import { Link, useNavigate, useLocation } from "react-router-dom"
-import axios from "axios"
-import Sidebar from "./deliveryHeader" // Import the Sidebar component
-import "../../component/delivery/dispalyList.css"
-import "jspdf-autotable"
-import jsPDF from "jspdf"
+import React, { useEffect, useState, useRef } from "react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import axios from "axios";
+import Sidebar from "./deliveryHeader"; // Import the Sidebar component
+import "../../component/delivery/dispalyList.css";
+import "jspdf-autotable";
+import jsPDF from "jspdf";
 
-const URL = "http://localhost:5000/deliverParsel"
+const URL = "http://localhost:5000/deliverParsel";
 
 const fetchHandler = async () => {
   try {
-    const response = await axios.get(URL) // Axios request to fetch data
-    return response.data
+    const response = await axios.get(URL); // Axios request to fetch data
+    return response.data;
   } catch (error) {
-    console.error("Error fetching data:", error)
-    return null
+    console.error("Error fetching data:", error);
+    return null;
   }
-}
+};
 
 function DisplayParselList() {
-  const [parselData, setParselData] = useState([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(false)
-  const [searchQuery, setSearchQuery] = useState("")
+  const [parselData, setParselData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
 
-  const location = useLocation()
-  const navigate = useNavigate()
-  const tableRef = useRef()
+  const location = useLocation();
+  const navigate = useNavigate();
+  const tableRef = useRef();
 
   useEffect(() => {
     fetchHandler().then((data) => {
       if (data && data.parcels) {
-        setParselData(data.parcels)
-        setLoading(false)
+        console.log(data.parcels);
+        setParselData(data.parcels);
+        setLoading(false);
       } else {
-        setLoading(false)
-        setError(true)
+        setLoading(false);
+        setError(true);
       }
-    })
-  }, [])
+    });
+  }, []);
 
   const deleteHandler = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/deliverParsel/${id}`)
-      setParselData(parselData.filter((parsel) => parsel._id !== id)) // Remove the deleted parcel from the state
+      await axios.delete(`http://localhost:5000/deliverParsel/${id}`);
+      setParselData(parselData.filter((parsel) => parsel._id !== id)); // Remove the deleted parcel from the state
     } catch (error) {
-      console.error("Error deleting parcel:", error)
+      console.error("Error deleting parcel:", error);
     }
-  }
+  };
 
   const handlePrint = () => {
-    const doc = new jsPDF()
+    const doc = new jsPDF();
 
     // Get the table rows and headers
     const tableHeaders = [
-      [
-        "Tracking ID",
-        "Customer Name",
-        "Address",
-        "Product Type",
-        "Product QTY",
-        "Status",
-      ],
-    ]
+      ["Tracking ID", "Customer Name", "Address", "Product Type", "Product QTY", "Status"],
+    ];
     const tableRows = filteredParselData.map((parsel) => [
       parsel._id,
       parsel.fullName,
@@ -70,38 +64,53 @@ function DisplayParselList() {
       parsel.productQty,
       parsel.productQty,
       parsel.status,
-    ])
+    ]);
 
     // Add the title to the PDF
-    doc.text("Parsel Report", 14, 16)
+    doc.text("Parsel Report", 14, 16);
 
     // Add table to the PDF
     doc.autoTable({
       head: tableHeaders,
       body: tableRows,
       startY: 22,
-    })
+    });
 
     // Save the PDF
-    doc.save("Parsel_Report.pdf")
-  }
+    doc.save("Parsel_Report.pdf");
+  };
 
   const handleSendReport = () => {
-    const phoneNumber = "+94715331167"
-    const message = `Your Order Request details are updated`
+    if (filteredParselData.length === 0) {
+      alert("No parcel data to send in the report.");
+      return;
+    }
+
+    const phoneNumber = "+94715331167"; // Update with the relevant phone number
+
+    // Loop through filtered parcels to include their details
+    let message = "Order Updates:\n";
+    filteredParselData.forEach((parsel, index) => {
+      message += `\nParcel ${index + 1}:\n`;
+      message += `Tracking ID: ${parsel._id}\n`;
+      message += `Customer: ${parsel.fullName}\n`;
+      message += `Status: ${parsel.status}\n`;
+      message += `Product Quantity: ${parsel.productQty}\n\n`;
+    });
+
     const whatsAppUrl = `https://web.whatsapp.com/send?phone=${phoneNumber}&text=${encodeURIComponent(
       message
-    )}`
+    )}`;
 
-    window.open(whatsAppUrl, "_blank")
-  }
+    window.open(whatsAppUrl, "_blank");
+  };
 
   // Filter parcels based on search query
   const filteredParselData = parselData.filter((parsel) =>
     Object.values(parsel).some((field) =>
       field.toString().toLowerCase().includes(searchQuery.toLowerCase())
     )
-  )
+  );
 
   return (
     <div id="container">
@@ -145,7 +154,8 @@ function DisplayParselList() {
             <thead>
               <tr>
                 <th>Tracking ID</th>
-                <th>Customer Name</th>
+                <th>Order ID</th>
+                <th>Driver Name</th>
                 <th>Address</th>
                 <th>Product QTY</th>
                 <th>Product Type</th>
@@ -157,6 +167,7 @@ function DisplayParselList() {
               {filteredParselData.map((parsel) => (
                 <tr key={parsel._id}>
                   <td>{parsel._id}</td>
+                  <td>{parsel.orderId}</td>
                   <td>{parsel.fullName}</td>
                   <td>{parsel.address}</td>
                   <td>{parsel.productQty}</td>
@@ -184,7 +195,7 @@ function DisplayParselList() {
         )}
       </div>
     </div>
-  )
+  );
 }
 
-export default DisplayParselList
+export default DisplayParselList;
