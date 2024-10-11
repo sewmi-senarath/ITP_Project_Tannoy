@@ -73,14 +73,14 @@ function AddDeliveryRequest() {
           {orders && (
             <select id="orderId" name="orderId" onChange={handleChange} value={inputs.orderId}>
               {orders.map((order, index) => {
-                return <option key={index} value={order._id}>{`${order.reciptNo} - ${order.productName} - ${order.deliveryType}`}</option>
+                return <option key={index} value={order._id}>{`${order.reciptNo} - ${order.productName} - ${order.deliveryType} - ${order.quantity} - ${order.location}`}</option>
                 })
               }
            </select>
           )}
           
 
-          <label htmlFor="fullName">Full Name</label>
+          <label htmlFor="fullName">Driver Name</label>
           <input
             type="text"
             id="fullName"
@@ -124,14 +124,14 @@ function AddDeliveryRequest() {
             required
           />
 
-          <label htmlFor="postalCode">Postal Code</label>
+          <label htmlFor="postalCode">Vehicle</label>
           <input
             type="text"
             id="postalCode"
             name="postalCode"
             value={inputs.postalCode}
             onChange={handleChange}
-            placeholder="Enter Your Postal Code"
+            placeholder="Enter Vehicle No."
             required
           />
 
