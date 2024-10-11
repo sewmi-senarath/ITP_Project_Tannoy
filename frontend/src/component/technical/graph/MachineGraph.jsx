@@ -28,7 +28,7 @@ export default function MachineGraph() {
   return (
     <div className="">
         <div className="item">
-            <div className="ml-8">
+            <div className="md-0">
                 {graphData}
                 
             </div>   

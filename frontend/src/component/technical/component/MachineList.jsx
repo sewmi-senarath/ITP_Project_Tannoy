@@ -148,10 +148,10 @@ export default function MachineList() {
 
   return (
     <div className="">
-      <div className="flex justify-between items-center h-12 p-4 bg-white rounded-[11px] mb-[15px] px-[15px] ">
-        <h1 className="text-2xl font-semibold font-Poppins px-4">
-          All machines
-        </h1>
+      <div className="flex justify-between items-center h-12 p-4 bg-white rounded-[15px] mb-[15px] px-[15px] ">
+        <h2 className="text-2xl font-semibold font-Poppins px-4">
+          All Machines
+        </h2>
         <Input
           placeholder="Search by machine Name"
           prefix={<IoSearch className="text-gray-500 text-xl" />}
@@ -173,7 +173,7 @@ export default function MachineList() {
             onClick={generateReport}
             className=" text-sm font-normal font-['Lexend'] px-4 py-2 flex items-center rounded"
           >
-            <FiPrinter className="mr-2 w-8 h-8 fill-green-700" />
+            <FiPrinter className="mr-2 w-9 h-9 fill-green-700" />
           </button>
         </div>
       </div>
