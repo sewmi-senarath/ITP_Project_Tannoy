@@ -30,8 +30,8 @@ const titleSx = {
 
 const formSX = {
   width: "100%",
-  padding: "25px 25px",
-  marginTop: "15px",
+  padding: "30px 30px",
+  marginTop: "1px",
 };
 
 const label = {
@@ -42,20 +42,20 @@ const label = {
 
 const boxSX = {
   bgcolor: "#FFFFFF",
-  width: "460px",
-  boxSizing: "border-box",
-  borderRadius: "30px",
+  width: "450px",
+  // boxSizing: "border-box",
+  // borderRadius: "px",
   textAlign: "center",
-  px: "70px",
-  padding: "50px 25px",
+  // px: "6px",
+  padding: "40px 30px",
 };
 
 const inputSx = {
   color: "#000000",
   fontSize: "16px",
   fontFamily: "Arvo",
-  height:"40px",
-  marginTop:"10px"
+  height:"45px",
+  marginTop:"15px"
 };
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
