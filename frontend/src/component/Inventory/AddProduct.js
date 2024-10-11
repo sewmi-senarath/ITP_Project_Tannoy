@@ -23,6 +23,7 @@ const AddProduct = () => {
   const [message, setMessage] = useState('');
 
   useEffect(() => {
+    // Fetch product details if editing
     const fetchProduct = async () => {
       if (productId) {
         try {
@@ -43,7 +44,7 @@ const AddProduct = () => {
           setIsLoading(false);
         }
       } else {
-        setIsLoading(false);
+        setIsLoading(false);  // Not editing, so just stop loading
       }
     };
     fetchProduct();
@@ -52,18 +53,18 @@ const AddProduct = () => {
   const handleInputChange = (event) => {
     const { name, value } = event.target;
 
-    if (name === "ProductCode") {
+    if (name === 'ProductCode') {
       const regex = /^[a-zA-Z0-9]{0,6}$/;
       if (!regex.test(value)) {
         setFormErrors({
           ...formErrors,
-          ProductCode: "Product Code must be up to 6 alphanumeric characters.",
+          ProductCode: 'Product Code must be up to 6 alphanumeric characters.',
         });
         return;
       } else {
         setFormErrors({
           ...formErrors,
-          ProductCode: "",
+          ProductCode: '',
         });
       }
     }
@@ -80,9 +81,11 @@ const AddProduct = () => {
 
     try {
       if (productId) {
+        // Update existing product
         await axios.put(`http://localhost:5000/api/products/${productId}`, formData);
         setMessage('Product updated successfully!');
       } else {
+        // Add new product
         await axios.post('http://localhost:5000/api/products', formData);
         setMessage('Product added successfully!');
       }
@@ -105,17 +108,17 @@ const AddProduct = () => {
         {/* Left Side - Image */}
         <div className="w-full lg:w-1/2 flex justify-center items-center mb-6 lg:mb-0">
           <img
-            className="w-full h-auto object-cover rounded-lg" // Adjust width to full
+            className="w-full h-auto object-cover rounded-lg"
             src={ProductImage}
             alt="Product"
-            style={{ width: '1200px', height: '750px' }}  // Increased height
+            style={{ width: '100%', height: 'auto' }}  // Dynamic sizing
           />
         </div>
 
         {/* Right Side - Form */}
         <div className="w-full lg:w-1/2">
           <div className="p-4">
-            <h2 className="text-2xl font-bold mb-4 text-center">{productId ? 'Edit Product' : 'Add Product'}</h2> {/* Centered Title */}
+            <h2 className="text-2xl font-bold mb-4 text-center">{productId ? 'Edit Product' : 'Add Product'}</h2>
             <form className="space-y-4" onSubmit={handleSubmit}>
               {/* Product Code Input */}
               <div className="form-group">
@@ -129,8 +132,8 @@ const AddProduct = () => {
                   onChange={handleInputChange}
                   maxLength="6"
                   required
-                  disabled={!!productId}
                   className="w-full p-2 border border-gray-300 rounded-lg"
+                  disabled={!!productId}  // Disable if editing
                 />
                 {formErrors.ProductCode && (
                   <p className="text-red-500 text-sm">{formErrors.ProductCode}</p>
@@ -200,12 +203,7 @@ const AddProduct = () => {
                   name="stockSize"
                   placeholder="Enter Stock Size"
                   value={formData.stockSize}
-                  onChange={(e) => {
-                    const value = e.target.value;
-                    if (value >= 0 || value === "") {
-                      handleInputChange(e);
-                    }
-                  }}
+                  onChange={handleInputChange}
                   required
                   className="w-full p-2 border border-gray-300 rounded-lg"
                 />
@@ -237,12 +235,7 @@ const AddProduct = () => {
                   name="price"
                   placeholder="Enter price"
                   value={formData.price}
-                  onChange={(e) => {
-                    const value = e.target.value;
-                    if (value >= 0 || value === "") {
-                      handleInputChange(e);
-                    }
-                  }}
+                  onChange={handleInputChange}
                   required
                   className="w-full p-2 border border-gray-300 rounded-lg"
                 />
@@ -252,14 +245,15 @@ const AddProduct = () => {
               <div className="form-group">
                 <button
                   type="submit"
-                  className="w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600"
                   disabled={isSubmitting}
+                  className="w-full p-2 bg-blue-500 text-white rounded-lg hover:bg-blue-700"
                 >
-                  {isSubmitting ? 'Submitting...' : (productId ? 'Update Product' : 'Add Product')}
+                  {isSubmitting ? 'Saving...' : productId ? 'Update Product' : 'Add Product'}
                 </button>
               </div>
             </form>
-            {message && <p className="text-green-500 text-center mt-4">{message}</p>}
+
+            {message && <p className="mt-4 text-center text-green-500">{message}</p>}
           </div>
         </div>
       </div>
