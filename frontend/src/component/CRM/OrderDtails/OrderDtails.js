@@ -62,18 +62,17 @@ function OrderDtails() {
               Place New Order
             </button>
           </Link>
-          <form className="   rounded-lg flex items-center h-12 mr-1  mt-2">
-            <input
-              onChange={(e) => setSearchQuery(e.target.value)}
-              type="text"
-              placeholder="Search..."
-              //Responsivness od the components
-              //w-24 --> make the size according to the mobile
-              //sm:w-64 --> above the size of the mobile
-              className="bg-green-100  w-44 sm:w-64 border-none h-10 "
-            />
-            
-          </form>
+          <div className="rounded-lg flex items-center h-12 mr-1  mt-2 w-96 ">
+           <input
+            onChange={(e) => setSearchQuery(e.target.value)}
+            type="text"
+            placeholder="Search..."
+            //Responsivness of the components
+            //w-24 --> make the size according to the mobile
+            //sm:w-64 --> above the size of the mobile
+          className="bg-green-100  w-32 sm:w-64 border-none h-10"
+           />
+          </div>
           <button
             className="h-10 font-bold bg-green-500 px-5 rounded-lg w-32 mt-3"
             onClick={handleSearch}
@@ -99,12 +98,12 @@ function OrderDtails() {
       </div>
       <div className="mt-10">
         <table className=" mx-auto">
-          <tr className="bg-green-300 ">
+          <tr className="bg-green-300 h-14">
             <td className=" p-2 border-hidden font-bold text-center w-48 border-green-500">
               Product Name
             </td>
             <td className=" p-2 border-hidden font-bold text-center w-48  border-green-500">
-              Category
+              Date
             </td>
             <td className="p-2 border-hidden font-bold text-center w-48 border-green-500">
               Location

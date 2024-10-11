@@ -1,21 +1,17 @@
-import React from "react";
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../CrmHeader/crmHeader";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
+// Function to generate a random unit price between a given range
+const generateRandomUnitPrice = () => {
+  return (Math.random() * (100 - 10) + 10).toFixed(2); // Random price between $10 and $100
+};
+
 function AddNewOrder() {
   const history = useNavigate();
-  
-  const productPrices = {
-    "Holders": 150,
-    "Junction Boxes": 450,
-    "Sunk Boxes": 850,
-    "Double Holder": 250,
-    "Round Block": 540,
-    "Ceiling rose": 250,
-  };
 
+  const [products, setProducts] = useState([]); // Store products
   const [input, setInput] = useState({
     productName: "",
     productCategory: "",
@@ -23,12 +19,14 @@ function AddNewOrder() {
     deliveryType: "",
     reciptNo: "",
     orderDescription: "",
-    unitPrice: "",
+    unitPrice: "", // Ensure this is initialized as an empty string
     quantity: "",
     orderTotal: "",
     paymentType: "",
+    
   });
 
+  const [availableQuantity, setAvailableQuantity] = useState(0); // Track available quantity
   const [errors, setErrors] = useState({
     unitPrice: "",
     quantity: "",
@@ -37,6 +35,24 @@ function AddNewOrder() {
     reciptNo: "",
     orderDescription: "",
   });
+
+  // Fetch products when the component mounts
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const { data } = await axios.get("http://localhost:5000/Products");
+        const productsWithPrices = data.Products.map((product) => ({
+          ...product,
+          unitPrice: generateRandomUnitPrice(), // Assign a random unit price
+        }));
+        setProducts(productsWithPrices); // Store products with random prices
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      }
+    };
+
+    fetchProducts();
+  }, []);
 
   const validateStringField = (name, value) => {
     const regex = /^[a-zA-Z0-9\s]*$/; // Allows only letters, numbers, and spaces
@@ -75,6 +91,7 @@ function AddNewOrder() {
   const handleChange = (e) => {
     const { name, value } = e.target;
 
+    // Validation for string fields
     if (
       name === "productCategory" ||
       name === "location" ||
@@ -84,32 +101,51 @@ function AddNewOrder() {
       if (!validateStringField(name, value)) return;
     }
 
-    if (name === "quantity") {
-      if (!validateNumberField(name, value)) return;
-    }
-
     // Update input state
     setInput((prevState) => ({
       ...prevState,
       [name]: value,
     }));
 
-    // Set unit price automatically based on product name
+    // Handle product selection and update unit price and available quantity
     if (name === "productName") {
-      const unitPrice = productPrices[value] || "";
-      setInput((prevState) => ({
-        ...prevState,
-        unitPrice: unitPrice.toString(),
-      }));
+      const selectedProduct = products.find((product) => product.productName === value);
+      if (selectedProduct) {
+        setInput((prevState) => ({
+          ...prevState,
+          unitPrice: selectedProduct.unitPrice, // Set the unit price
+        }));
+        setAvailableQuantity(selectedProduct.quantity); // Update available quantity
+      } else {
+        // If product not found, reset unitPrice and available quantity
+        setInput((prevState) => ({
+          ...prevState,
+          unitPrice: "",
+        }));
+        setAvailableQuantity(0); // Reset to 0 if product not found
+      }
     }
 
-    // Auto-calculate orderTotal when quantity and unitPrice are provided
-    if (name === "quantity" || name === "unitPrice") {
-      const unitPrice =
-        name === "unitPrice" ? parseFloat(value) : parseFloat(input.unitPrice);
-      const quantity =
-        name === "quantity" ? parseFloat(value) : parseFloat(input.quantity);
+    // Validate quantity in real-time
+    if (name === "quantity") {
+      if (!validateNumberField(name, value)) return;
 
+      // Check if entered quantity exceeds available quantity
+      const quantity = parseInt(value, 10);
+      if (quantity > availableQuantity) {
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          quantity: `Cannot order more than ${availableQuantity} units of this product.`,
+        }));
+      } else {
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          quantity: "", // Clear error if valid
+        }));
+      }
+
+      // Auto-calculate orderTotal
+      const unitPrice = parseFloat(input.unitPrice);
       if (!isNaN(unitPrice) && !isNaN(quantity)) {
         const total = (unitPrice * quantity).toFixed(2);
         setInput((prevState) => ({
@@ -125,10 +161,12 @@ function AddNewOrder() {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(input);
-    sendRequest().then(() => history("/orderDetails"));
+
+    // If validation is successful, send the request
+    await sendRequest();
+    history("/orderDetails");
   };
 
   const sendRequest = async () => {
@@ -151,12 +189,11 @@ function AddNewOrder() {
   return (
     <div>
       <Header />
-      <div className="my-5 ">
+      <div className="my-5">
         <h1 className="text-4xl font-semibold text-gray-800 text-center">Add New Order</h1>
         <hr className="border-gray-300 my-6" />
       </div>
-      <div className="max-w-5xl mx-auto p-6 bg-sky-100 shadow-lg rounded-lg mb-10">
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form onSubmit={handleSubmit} className="w-2/5 bg-sky-100">
           {/* First Column */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Product Name */}
@@ -166,15 +203,14 @@ function AddNewOrder() {
                 name="productName"
                 onChange={handleChange}
                 value={input.productName}
-                className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
               >
                 <option value="" disabled>Select the Product</option>
-                <option>Holders</option>
-                <option>Junction Boxes</option>
-                <option>Sunk Boxes</option>
-                <option>Double Holder</option>
-                <option>Round Block</option>
-                <option>Ceiling rose</option>
+                {products.map((product) => (
+                  <option key={product._id} value={product.productName}>
+                    {product.productName}
+                  </option>
+                ))}
               </select>
             </div>
 
@@ -187,7 +223,8 @@ function AddNewOrder() {
                 value={input.productCategory}
                 name="productCategory"
                 placeholder="Product Category"
-                className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                required
+                className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
               />
               {errors.productCategory && <p className="text-red-600 text-sm mt-1">{errors.productCategory}</p>}
             </div>
@@ -201,7 +238,8 @@ function AddNewOrder() {
                 value={input.location}
                 name="location"
                 placeholder="Enter Location"
-                className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                required
+                className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
               />
               {errors.location && <p className="text-red-600 text-sm mt-1">{errors.location}</p>}
             </div>
@@ -213,14 +251,11 @@ function AddNewOrder() {
                 name="deliveryType"
                 onChange={handleChange}
                 value={input.deliveryType}
-                className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
               >
                 <option value="" disabled>Select the delivery type</option>
                 <option>Standard Delivery</option>
                 <option>Express Delivery</option>
-                <option>Scheduled Delivery</option>
-                <option>Same-Day Delivery</option>
-                <option>Next-Day Delivery</option>
               </select>
             </div>
 
@@ -232,8 +267,9 @@ function AddNewOrder() {
                 onChange={handleChange}
                 value={input.reciptNo}
                 name="reciptNo"
-                placeholder="Receipt No"
-                className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                placeholder="Enter Receipt No."
+                required
+                className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
               />
               {errors.reciptNo && <p className="text-red-600 text-sm mt-1">{errors.reciptNo}</p>}
             </div>
@@ -245,45 +281,14 @@ function AddNewOrder() {
                 name="paymentType"
                 onChange={handleChange}
                 value={input.paymentType}
-                className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
               >
                 <option value="" disabled>Select the payment type</option>
-                <option>Credit/Debit Card</option>
-                <option>Bank Transfer</option>
-                <option>Cash on Delivery (COD)</option>
-                <option>Mobile Payment</option>
-                <option>Purchase Order</option>
+                <option>Credit Card</option>
+                <option>Debit Card</option>
+                <option>PayPal</option>
+                <option>Cash on Delivery</option>
               </select>
-            </div>
-          </div>
-
-          {/* Second Column */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* Order Description */}
-            <div>
-              <label className="block text-lg font-medium text-gray-700">Order Description</label>
-              <textarea
-                name="orderDescription"
-                onChange={handleChange}
-                value={input.orderDescription}
-                placeholder="Description"
-                className="mt-1 block w-full h-32 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-              />
-              {errors.orderDescription && <p className="text-red-600 text-sm mt-1">{errors.orderDescription}</p>}
-            </div>
-
-            {/* Unit Price */}
-            <div>
-              <label className="block text-lg font-medium text-gray-700">Unit Price</label>
-              <input
-                type="text"
-                onChange={handleChange}
-                value={input.unitPrice}
-                name="unitPrice"
-                placeholder="Unit Price"
-                readOnly
-                className="mt-1 block w-full bg-gray-100 border-gray-300 rounded-md shadow-sm sm:text-sm"
-              />
             </div>
 
             {/* Quantity */}
@@ -294,38 +299,65 @@ function AddNewOrder() {
                 onChange={handleChange}
                 value={input.quantity}
                 name="quantity"
-                placeholder="Quantity"
-                className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                placeholder="Enter Quantity"
+                required
+                className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
               />
               {errors.quantity && <p className="text-red-600 text-sm mt-1">{errors.quantity}</p>}
             </div>
 
-            {/* Order Total */}
+            {/* Unit Price */}
+            <div>
+              <label className="block text-lg font-medium text-gray-700">Unit Price</label>
+              <input
+                type="text"
+                readOnly
+                value={input.unitPrice}
+                required
+                name="unitPrice"
+                className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm bg-gray-100"
+              />
+            </div>
+
+            {/* Total */}
             <div>
               <label className="block text-lg font-medium text-gray-700">Order Total</label>
               <input
                 type="text"
-                value={input.orderTotal}
                 readOnly
+                value={input.orderTotal}
                 name="orderTotal"
-                className="mt-1 block w-full bg-gray-100 border-gray-300 rounded-md shadow-sm sm:text-sm"
-                placeholder="Order Total"
+                
+                className="mt-1 block w-max border border-gray-300 rounded-md shadow-sm bg-gray-100"
               />
+            </div>
+
+            {/* Order Description */}
+            <div className="md:col-span-2">
+              <label className="block text-lg font-medium text-gray-700">Order Description</label>
+              <textarea
+                onChange={handleChange}
+                value={input.orderDescription}
+                name="orderDescription"
+                placeholder="Order Description"
+                rows="4"
+                className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+              />
+              {errors.orderDescription && <p className="text-red-600 text-sm mt-1">{errors.orderDescription}</p>}
             </div>
           </div>
 
           {/* Submit Button */}
-          <div className="flex justify-center">
+          <div className="flex justify-end">
             <button
               type="submit"
-              className="bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-2 px-6 rounded-lg transition-colors duration-300"
+              className="bg-blue-700 hover:bg-blue-500 h-12 py-auto text-white font-bold text-1xl"
             >
-              Place Order
+              Add Order
             </button>
           </div>
         </form>
       </div>
-    </div>
   );
 }
 
