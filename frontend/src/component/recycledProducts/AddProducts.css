@@ -1,0 +1,67 @@
+.window {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000 !important;
+    width: 100%; 
+    background-color: #ffffff;
+  }
+    
+  .window-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 100%; 
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  .window-title{
+    text-align: center;
+  }
+  
+  .lebel-div {
+    display: flex;
+    justify-content: space-between;
+    margin: 0px;
+    padding: 10px;
+  }
+  
+  .input-fields{
+    min-width: 300px !important;
+    min-height: 30px;
+    margin: 0px;
+    padding: 0px 20px;
+    background-color: #d5ceff;
+    border: none;
+  }
+  
+  .window-lebel{
+    margin: 10px 0px;
+  }
+  
+  .button-div{
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 0px 0px 0px;
+    padding: 10px;
+  }
+  
+  .window-save-button{
+    min-width: 150px;
+    background-image: linear-gradient(to right, rgb(40, 55, 139, 0.8) , rgb(95, 0, 107,0.8));
+    color:  rgb(255, 255, 255);
+    
+    border-radius: 5px;
+  }
+  
+  .window-cancel-button{
+    min-width: 150px;
+    background-color: #adadad;
+    color:  rgb(255, 255, 255);
+    border-radius: 5px;
+  }

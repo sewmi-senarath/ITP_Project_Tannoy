@@ -12,6 +12,20 @@ function UpdateParselReq() {
   const history = useNavigate();
   const id = useParams().id;
 
+  const [orders, setOrders] = useState([]);
+
+  useEffect(()=> {
+    getOrders();
+  }, [])
+
+  const getOrders = async () => {
+    await axios.get("http://localhost:5000/order").then((res) => setOrders(res.data.order))
+  }
+
+  useEffect(()=>{
+    console.log(orders)
+  },[orders])
+
   useEffect(()=>{
     const fetchHandler = async ()=>{
       await axios
@@ -22,9 +36,14 @@ function UpdateParselReq() {
     fetchHandler();
   },[id]);
 
+  useEffect(()=>{
+    console.log(inputs)
+  }, [inputs])
+
   const sendRequest = async ()=>{
     await axios
     .put(`http://localhost:5000/deliverParsel/${id}`,{
+      orderId: String(inputs.orderId),
       fullName: String(inputs.fullName),
       phoneNo: Number(inputs.phoneNo),
       email: String(inputs.email),
@@ -55,6 +74,17 @@ function UpdateParselReq() {
       <div className="form-container">
         <h1>Update Delivery Request</h1>
         <form onSubmit={handleSubmit}>
+
+        <label htmlFor="order">Order</label>
+          {orders && (
+            <select id="orderId" name="orderId" onChange={handleChange} value={inputs.orderId}>
+              {orders.map((order, index) => {
+                return <option key={index} value={order._id}>{`${order.reciptNo} - ${order.productName} - ${order.deliveryType}`}</option>
+                })
+              }
+           </select>
+          )}
+
           <label>
             Full Name
             <input

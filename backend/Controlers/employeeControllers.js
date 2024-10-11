@@ -4,7 +4,7 @@ const Employee = require("../Model/EmployeeModel"); // Assuming your model is in
 exports.createEmployee = async (req, res) => {
   try {
     const {
-      empId,
+      //empId,
       name,
       dob,
       gender,
@@ -17,8 +17,15 @@ exports.createEmployee = async (req, res) => {
       photo,
     } = req.body;
 
+    //edit 2
+    // Count the number of existing employees to generate a new ID
+    const count = await Employee.countDocuments(); // Count existing employees
+    const newEmployeeId = `E${String(count + 1).padStart(5, '0')}`; // Generate the new employee ID (e.g., E00001)
+
+
     const employee = new Employee({
-      empId,
+      //edit 2
+      empId: newEmployeeId, // Assign the generated employee ID
       name,
       dob,
       gender,

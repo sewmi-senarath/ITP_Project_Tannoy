@@ -36,7 +36,7 @@
   }
   
   .employee-dashboard .sidebar .nav-links li {
-    height: 35px;
+    height: 40px;
     background-color: rgb(103, 180, 67);
     border-radius: 5px;
     padding-left: 25px;
@@ -79,7 +79,7 @@
   }
   
   .employee-dashboard .sidebar .settings li {
-    height: 35px;
+    height: 40px;
     background-color: rgb(103, 180, 67);
     border-radius: 5px;
     padding-left: 25px;

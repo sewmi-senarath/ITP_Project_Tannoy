@@ -1,37 +1,38 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import jsPDF from 'jspdf';  // Import jsPDF for PDF generation
-import 'jspdf-autotable';  // Import jsPDF-AutoTable for table generation
-import '../../styles/DisplayAttendance.css'; // Add your styles here
+import jsPDF from 'jspdf';  //generating PDFs in the browser
+import 'jspdf-autotable';  //create tables in the PDF
+import '../employee/DisplayAttendance.css';
 
 const DisplayAttendance = () => {
-  const [attendanceRecords, setAttendanceRecords] = useState([]); // Hold all attendance records
-  const [uniqueDates, setUniqueDates] = useState([]); // Hold unique dates for the dropdown
-  const [uniqueEmployees, setUniqueEmployees] = useState([]); // Hold unique employees for dropdown
-  const [filteredRecords, setFilteredRecords] = useState([]); // Hold filtered records by selected filters
-  const [selectedDate, setSelectedDate] = useState(''); // Track selected date
-  const [selectedEmployee, setSelectedEmployee] = useState(''); // Track selected employee
-  const [selectedStatus, setSelectedStatus] = useState(''); // Track selected status (Present/Absent)
-  const [errorMessage, setErrorMessage] = useState(''); // For error handling
+  const [attendanceRecords, setAttendanceRecords] = useState([]); 
+  const [uniqueMonths, setUniqueMonths] = useState([]); 
+  const [uniqueEmployees, setUniqueEmployees] = useState([]); 
+  const [filteredRecords, setFilteredRecords] = useState([]); 
+  const [selectedMonth, setSelectedMonth] = useState(''); 
+  const [selectedEmployee, setSelectedEmployee] = useState(''); 
+  const [selectedStatus, setSelectedStatus] = useState(''); 
+  const [errorMessage, setErrorMessage] = useState(''); 
 
-  // Fetch all attendance records on component mount
   useEffect(() => {
     const fetchAttendanceRecords = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/attendance'); // Adjust the URL to your API
+        const response = await axios.get('http://localhost:5000/api/attendance');
         const records = response.data;
         setAttendanceRecords(records);
 
-        // Extract unique dates and employees from attendance records
-        const uniqueDatesSet = new Set(records.map((record) => new Date(record.date).toLocaleDateString('en-CA')));
+        // Extract unique months (format: YYYY-MM)
+        const uniqueMonthsSet = new Set(records.map((record) => {
+          const date = new Date(record.date);
+          return `${date.getFullYear()}-${('0' + (date.getMonth() + 1)).slice(-2)}`; // Format to YYYY-MM
+        }));
+
         const uniqueEmployeeSet = new Set(records.map((record) => record.empId));
 
-        // Sort dates in ascending order
-        const sortedUniqueDates = [...uniqueDatesSet].sort((a, b) => new Date(a) - new Date(b));
-        setUniqueDates(sortedUniqueDates); // Set sorted unique dates
-        setUniqueEmployees([...uniqueEmployeeSet]); // Set unique employees
-
-        setFilteredRecords(records); // Initially show all records
+        const sortedUniqueMonths = [...uniqueMonthsSet].sort(); // Sort by month-year
+        setUniqueMonths(sortedUniqueMonths);
+        setUniqueEmployees([...uniqueEmployeeSet]);
+        setFilteredRecords(records); 
       } catch (error) {
         console.error('Error fetching attendance records:', error);
         setErrorMessage('Failed to load attendance records.');
@@ -40,35 +41,32 @@ const DisplayAttendance = () => {
     fetchAttendanceRecords();
   }, []);
 
-  // Handle date filter
-  const handleDateChange = (e) => {
+  const handleMonthChange = (e) => {
     const selected = e.target.value;
-    setSelectedDate(selected);
-    filterRecords(selected, selectedEmployee, selectedStatus); // Filter based on new selection
+    setSelectedMonth(selected);
+    filterRecords(selected, selectedEmployee, selectedStatus); 
   };
 
-  // Handle employee filter
   const handleEmployeeChange = (e) => {
     const selected = e.target.value;
     setSelectedEmployee(selected);
-    filterRecords(selectedDate, selected, selectedStatus); // Filter based on new selection
+    filterRecords(selectedMonth, selected, selectedStatus); 
   };
 
-  // Handle status filter (Present/Absent)
   const handleStatusChange = (e) => {
     const selected = e.target.value;
     setSelectedStatus(selected);
-    filterRecords(selectedDate, selectedEmployee, selected); // Filter based on new selection
+    filterRecords(selectedMonth, selectedEmployee, selected); 
   };
 
-  // Filter records based on selected date, employee, and status
-  const filterRecords = (date, employee, status) => {
+  const filterRecords = (month, employee, status) => {
     let filtered = attendanceRecords;
 
-    if (date) {
+    if (month) {
       filtered = filtered.filter((record) => {
-        const recordDate = new Date(record.date).toLocaleDateString('en-CA');
-        return recordDate === date;
+        const recordDate = new Date(record.date);
+        const recordMonth = `${recordDate.getFullYear()}-${('0' + (recordDate.getMonth() + 1)).slice(-2)}`; // Format to YYYY-MM
+        return recordMonth === month;
       });
     }
 
@@ -80,20 +78,17 @@ const DisplayAttendance = () => {
       filtered = filtered.filter((record) => record.status === status);
     }
 
-    setFilteredRecords(filtered); // Set the filtered records
+    setFilteredRecords(filtered);
   };
 
-  // Function to generate the report PDF using jsPDF and jsPDF AutoTable
+  // Generate report function
   const generateReport = () => {
     const doc = new jsPDF();
-
-    // Set Title
     doc.text('Employee Attendance Report', 14, 10);
 
-    // If any filter is applied, include that info in the report
     let yPosition = 20;
-    if (selectedDate) {
-      doc.text(`Date: ${selectedDate}`, 14, yPosition);
+    if (selectedMonth) {
+      doc.text(`Month: ${selectedMonth}`, 14, yPosition);
       yPosition += 10;
     }
     if (selectedEmployee) {
@@ -105,23 +100,20 @@ const DisplayAttendance = () => {
       yPosition += 10;
     }
 
-    // Prepare data for autoTable
     const tableColumn = ["Employee ID", "Date", "Status", "OT Hours"];
     const tableRows = filteredRecords.map((record) => [
       record.empId,
       new Date(record.date).toLocaleDateString(),
       record.status,
-      record.otHours
+      record.otHours,
     ]);
 
-    // Add table to the PDF
     doc.autoTable({
       startY: yPosition + 10,
       head: [tableColumn],
       body: tableRows,
     });
 
-    // Save the generated PDF
     doc.save('AttendanceReport.pdf');
   };
 
@@ -129,22 +121,18 @@ const DisplayAttendance = () => {
     <div className="attendance-table-container">
       <h1>Employee Attendance Records</h1>
 
-      {/* Error Message */}
       {errorMessage && <p className="error-message">{errorMessage}</p>}
 
-      {/* Filter Dropdowns */}
       <div className="filter-container">
-        {/* Date Dropdown */}
-        <select className="date-select" value={selectedDate} onChange={handleDateChange}>
-          <option value="">-- Select Date --</option>
-          {uniqueDates.map((date, index) => (
-            <option key={index} value={date}>
-              {date}
+        <select className="month-select" value={selectedMonth} onChange={handleMonthChange}>
+          <option value="">-- Select Month --</option>
+          {uniqueMonths.map((month, index) => (
+            <option key={index} value={month}>
+              {month}
             </option>
           ))}
         </select>
 
-        {/* Employee Dropdown */}
         <select className="employee-select" value={selectedEmployee} onChange={handleEmployeeChange}>
           <option value="">-- Select Employee --</option>
           {uniqueEmployees.map((empId, index) => (
@@ -154,15 +142,14 @@ const DisplayAttendance = () => {
           ))}
         </select>
 
-        {/* Status Dropdown */}
         <select className="status-select" value={selectedStatus} onChange={handleStatusChange}>
           <option value="">-- Select Status --</option>
           <option value="Present">Present</option>
           <option value="Absent">Absent</option>
         </select>
+
       </div>
 
-      {/* Attendance Table */}
       <table className="attendance-table">
         <thead>
           <tr>
@@ -192,7 +179,6 @@ const DisplayAttendance = () => {
         </tbody>
       </table>
 
-      {/* Generate Report Button */}
       <button className="generate-report-btn" onClick={generateReport}>
         Generate PDF Report
       </button>
@@ -201,3 +187,4 @@ const DisplayAttendance = () => {
 };
 
 export default DisplayAttendance;
+

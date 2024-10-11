@@ -1,0 +1,95 @@
+.add-form-body{
+    display: flex;
+}
+
+.form-div{
+    margin-left: 260px ;
+}
+form {
+    width: 500px;
+    margin: 50px auto;
+    padding: 20px;
+    background-image: linear-gradient(to right, rgb(40, 55, 139, 0.1) , rgb(95, 0, 107,0.1));
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    font-family: Arial, sans-serif;
+}
+  
+div {
+    margin-bottom: 20px;
+}
+  
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+}
+  
+input[type="text"],
+input[type="number"],
+input[type="date"],
+select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    background-color: #fff;
+    color: #333;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+}
+  
+  input[type="text"]:focus,
+  input[type="number"]:focus,
+  input[type="date"]:focus,
+  select:focus {
+    outline: none;
+}
+  
+.submit-button {
+    width: 100%;
+    padding: 12px;
+    background-image: linear-gradient(to right, rgb(40, 55, 139, 0.8) , rgb(95, 0, 107,0.8));
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+  
+  button:disabled {
+    background-color: #ccc;
+}
+  
+button:hover:not(:disabled) {
+    background-color: #0056b3;
+}
+  
+p {
+    text-align: center;
+    font-size: 14px;
+    margin-top: 10px;
+}
+  
+p[style="color: red"] {
+    color: #d9534f;
+}
+  
+p[style="color: green"] {
+    color: #5cb85c;
+}
+  
+@media (max-width: 600px) {
+    form {
+      padding: 15px;
+    }
+  
+    label, input, select, button {
+      font-size: 14px;
+    }
+}
+  

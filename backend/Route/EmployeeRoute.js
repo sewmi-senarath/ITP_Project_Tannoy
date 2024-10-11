@@ -9,6 +9,7 @@ const employeeController = require("../Controlers/employeeControllers");
 router.get('/', employeeController.getAllEmployees);
 
 // Route to add a new employee
+// Note: Do not include empId in the request body, it will be generated automatically
 router.post('/', employeeController.createEmployee);
 
 // Route to get a single employee by ID

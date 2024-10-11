@@ -1,38 +1,36 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios'; // For making HTTP requests
-import { useNavigate, useParams } from 'react-router-dom'; // For navigation and getting supplierId from the URL
-import '../../styles/addSupplier.css'; // Custom CSS file for styling
-import SupplierImage from '../../images/suppiler-management.png'
+import axios from 'axios';
+import { useNavigate, useParams } from 'react-router-dom';
+import SupplierImage from '../../images/suppiler-management.png';
 
 const AddSupplier = () => {
   const [formData, setFormData] = useState({
     supCode: '',
     SupplierName: '',
-    ContactInfo: '', // Corrected spelling here
+    ContactInfo: '',
     DeliveryItem: '',
-    ItemPrice: '', // Ensure this is treated as a string for form input
-    Discount: '' // Ensure this is treated as a string for form input
+    ItemPrice: '',
+    Discount: ''
   });
+
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [message, setMessage] = useState('');
-  const [isEditMode, setIsEditMode] = useState(false); // Track if editing
-  const { supplierId } = useParams(); // Get supplierId from the URL
+  const [isEditMode, setIsEditMode] = useState(false);
+  const { supplierId } = useParams();
   const navigate = useNavigate();
 
-  // Fetch supplier data if in edit mode
   useEffect(() => {
     if (supplierId) {
-      setIsEditMode(true); 
+      setIsEditMode(true);
       const fetchSupplier = async () => {
         try {
           const response = await axios.get(`http://localhost:5000/api/suppliers/${supplierId}`);
           const supplierData = response.data;
 
-          // Ensure ItemPrice and Discount are handled as strings for input compatibility
           setFormData({
             ...supplierData,
-            ItemPrice: supplierData.ItemPrice.toString(), // Convert number to string for input
-            Discount: supplierData.Discount.toString(),  // Convert number to string for input
+            ItemPrice: supplierData.ItemPrice.toString(),
+            Discount: supplierData.Discount.toString(),
           });
         } catch (error) {
           console.error('Error fetching supplier:', error);
@@ -43,30 +41,78 @@ const AddSupplier = () => {
     }
   }, [supplierId]);
 
-  // Handle form input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
+
+    // Validate Supplier Code
+    if (name === 'supCode') {
+      const isValid = /^[a-zA-Z0-9]{0,6}$/.test(value);
+      if (!isValid) {
+        setMessage('Supplier Code must be alphanumeric and up to 6 characters.');
+        return;
+      }
+    }
+
+    if (name === 'ContactInfo') {
+      if (value.length > 10) {
+        setMessage('Phone number must be exactly 10 digits.');
+        return;
+      }
+      if (!/^[0-9]*$/.test(value)) {
+        setMessage('Phone number must contain only digits.');
+        return;
+      } else {
+        setMessage('');
+      }
+    }
+
+    if (name === 'ItemPrice') {
+      if (value && (isNaN(value) || parseFloat(value) < 0)) {
+        setMessage('Item Price must be a positive number.');
+        return;
+      }
+    }
+
+    if (name === 'Discount') {
+      if (value < 0) {
+        setMessage('Discount cannot be negative.');
+        return;
+      }
+      setMessage('');
+    }
+
     setFormData({
       ...formData,
       [name]: value,
     });
   };
 
-  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
 
+    if (formData.ContactInfo.length !== 10) {
+      setMessage('Phone number must be exactly 10 digits.');
+      setIsSubmitting(false);
+      return;
+    }
+
+    if (formData.ItemPrice && parseFloat(formData.ItemPrice) < 0) {
+      setMessage('Item Price must be a positive number.');
+      setIsSubmitting(false);
+      return;
+    }
+
     try {
       if (isEditMode) {
-        await axios.put(`http://localhost:5000/api/suppliers/${supplierId}`, formData); // Update supplier
+        await axios.put(`http://localhost:5000/api/suppliers/${supplierId}`, formData);
         setMessage('Supplier updated successfully!');
       } else {
-        await axios.post('http://localhost:5000/api/suppliers', formData); // Add new supplier
+        await axios.post('http://localhost:5000/api/suppliers', formData);
         setMessage('Supplier added successfully!');
       }
 
-      navigate('/supplierdashboard'); // Navigate to supplier dashboard after success
+      navigate('/supplierdashboard');
     } catch (error) {
       console.error('Error saving supplier:', error);
       setMessage('Error saving supplier. Please try again.');
@@ -76,62 +122,66 @@ const AddSupplier = () => {
   };
 
   return (
-    <div className="add-supplier-container">
-      <div className="form-container">
-        <h1>{isEditMode ? 'Edit Supplier' : 'Add New Supplier'}</h1>
-        <img src={SupplierImage}></img>
+    <div className="flex flex-col md:flex-row justify-center items-center p-6 bg-gray-100">
+      <div className="md:w-1/2 p-4">
+        <img className="w-full h-auto" src={SupplierImage} alt="Supplier Management" />
+      </div>
+      <div className="md:w-1/2 p-4">
+        <h1 className="text-2xl font-bold mb-4 text-center">{isEditMode ? 'Edit Supplier' : 'Add New Supplier'}</h1>
 
-        <form onSubmit={handleSubmit} className="supplier-form">
-          <div className="form-group">
-            <label htmlFor="supCode">Supplier Code</label>
+        <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-md">
+          {message && <p className="text-red-500 mb-4">{message}</p>}
+          
+          <div className="mb-4">
+            <label className="block text-gray-700">Supplier Code</label>
             <input
               type="text"
-              id="supCode"
               name="supCode"
               value={formData.supCode}
               onChange={handleChange}
               placeholder="Enter Supplier Code"
               required
-              disabled={isEditMode} // Disable editing supplier code in edit mode
+              disabled={isEditMode}
+              className="mt-1 block w-full border rounded-md p-2"
             />
           </div>
 
-          <div className="form-group">
-            <label htmlFor="SupplierName">Supplier Name</label>
+          <div className="mb-4">
+            <label className="block text-gray-700">Supplier Name</label>
             <input
               type="text"
-              id="SupplierName"
               name="SupplierName"
               value={formData.SupplierName}
               onChange={handleChange}
               placeholder="Enter Supplier Name"
               required
+              className="mt-1 block w-full border rounded-md p-2"
             />
           </div>
 
-          <div className="form-group">
-            <label htmlFor="ContactInfo">Contact Number</label>
+          <div className="mb-4">
+            <label className="block text-gray-700">Contact Number</label>
             <input
               type="text"
-              id="ContactInfo"
               name="ContactInfo"
               value={formData.ContactInfo}
               onChange={handleChange}
               placeholder="Enter Contact Number"
               required
+              className="mt-1 block w-full border rounded-md p-2"
             />
           </div>
 
-          <div className="form-group">
-            <label htmlFor="DeliveryItem">Delivery Item</label>
+          <div className="mb-4">
+            <label className="block text-gray-700">Delivery Item</label>
             <select
-              id="DeliveryItem"
               name="DeliveryItem"
               value={formData.DeliveryItem}
               onChange={handleChange}
               required
+              className="mt-1 block w-full border rounded-md p-2"
             >
-            <option value="">Select the category</option>
+              <option value="">Select the category</option>
               <option value="Plastic 1">Plastic 1</option>
               <option value="Plastic 2">Plastic 2</option>
               <option value="Plastic 3">Plastic 3</option>
@@ -140,42 +190,40 @@ const AddSupplier = () => {
             </select>
           </div>
 
-          <div className="form-group">
-            <label htmlFor="ItemPrice">Item Price</label>
+          <div className="mb-4">
+            <label className="block text-gray-700">Item Price</label>
             <input
               type="number"
-              id="ItemPrice"
               name="ItemPrice"
               value={formData.ItemPrice}
               onChange={handleChange}
               placeholder="Enter Item Price"
               required
+              className="mt-1 block w-full border rounded-md p-2"
             />
           </div>
 
-          <div className="form-group">
-            <label htmlFor="Discount">Discount (%)</label>
+          <div className="mb-4">
+            <label className="block text-gray-700">Discount (%)</label>
             <input
               type="number"
-              id="Discount"
               name="Discount"
               value={formData.Discount}
               onChange={handleChange}
               placeholder="Enter Discount"
               required
+              className="mt-1 block w-full border rounded-md p-2"
             />
           </div>
 
-          <button type="submit" className="submit-btn" disabled={isSubmitting}>
+          <button type="submit" className="bg-blue-500 text-white p-2 rounded-md w-full" disabled={isSubmitting}>
             {isSubmitting ? 'Saving...' : isEditMode ? 'Update Supplier' : 'Add Supplier'}
           </button>
-
-          {message && <p className="form-message">{message}</p>}
         </form>
       </div>
-      <img src="suppiler-management.png" alt="Supplier Image" class="supplier-img" />
     </div>
   );
 };
 
 export default AddSupplier;
+
