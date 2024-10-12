@@ -159,26 +159,14 @@ const StockDashboard = () => {
       {/* Sidebar */}
       <div className="w-64 bg-gray-800 h-screen text-white flex flex-col">
         <ul className="mt-6 space-y-2">
-          <li>
-            <a href="/stockDashboard" className="block py-2 px-4 hover:bg-gray-700">
-              Stock Details
-            </a>
-          </li>
-          <li>
-            <a href="/addStock" className="block py-2 px-4 hover:bg-gray-700">
-              Add Stock
-            </a>
-          </li>
-          <li>
-            <a href="/productDashboard" className="block py-2 px-4 hover:bg-gray-700">
-              Product Details
-            </a>
-          </li>
-          <li>
-            <a href="/supplierDashboard" className="block py-2 px-4 hover:bg-gray-700">
-              Supplier details
-            </a>
-          </li>
+          
+        <li><a href="/stockDashboard" className="block py-2 px-4 hover:bg-gray-700">Stock Details</a></li>   
+        <li><a href="/addStock" className="block py-2 px-4 hover:bg-gray-700">Add Stock</a></li>  
+        <li><a href="/productDashboard" className="block py-2 px-4 hover:bg-gray-700">Product Details</a></li>   
+        {/* <li><a href="/Addproduct" className="block py-2 px-4 hover:bg-gray-700">Add Product</a></li> */}
+        <li><a href="/supplierDashboard" className="block py-2 px-4 hover:bg-gray-700">Supplier details</a></li>
+        <li><a href="/Addsupplier" className="block py-2 px-4 hover:bg-gray-700">Add Supplier</a></li>
+        <li><a href="/stock-add" className="block py-2 px-4 hover:bg-gray-700">Help Desk</a></li>
         </ul>
 
         <div className="mt-auto p-4">
