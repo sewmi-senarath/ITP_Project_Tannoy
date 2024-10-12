@@ -121,7 +121,7 @@ const SupplierDashboard = () => {
         </div>
         <ul className="settings mt-8 space-y-2">
           <li><a href="#" className="hover:text-gray-300">Settings</a></li>
-          <li><a href="#" className="hover:text-gray-300">Log out</a></li>
+          <li><a href="/home" className="hover:text-gray-300">Log out</a></li>
         </ul>
       </div>
 
