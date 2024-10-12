@@ -90,18 +90,29 @@ const SupplierDashboard = () => {
   return (
     <div className="flex min-h-screen"> {/* Flexbox with full screen height */}
       <div className="w-1/6 bg-gray-800 text-white p-4"> {/* Sidebar with reduced width */}
-        <div className="logo mb-4">
+        {/* <div className="logo mb-4">
           <img src={Logo} alt="Tannoy Electricals Logo" className="w-24" /><br />
           <h2 className="text-lg">Tannoy Electricals</h2>
-        </div>
+        </div> */}
         <ul className="nav-links space-y-2">
-          <li><a href="/productDashboard" className="hover:text-gray-300">Product Details</a></li>
+        
+        <li><a href="/stockDashboard" className="block py-2 px-4 hover:bg-gray-700">Stock Details</a></li>   
+        <li><a href="/addStock" className="block py-2 px-4 hover:bg-gray-700">Add Stock</a></li>  
+        <li><a href="/productDashboard" className="block py-2 px-4 hover:bg-gray-700">Product Details</a></li>   
+        {/* <li><a href="/Addproduct" className="block py-2 px-4 hover:bg-gray-700">Add Product</a></li> */}
+        <li><a href="/supplierDashboard" className="block py-2 px-4 hover:bg-gray-700">Supplier details</a></li>
+        <li><a href="/Addsupplier" className="block py-2 px-4 hover:bg-gray-700">Add Supplier</a></li>
+        <li><a href="/stock-add" className="block py-2 px-4 hover:bg-gray-700">Help Desk</a></li>
+
+
+
+          {/* <li><a href="/productDashboard" className="hover:text-gray-300">Product Details</a></li>
           <li><a href="/Addproduct" className="hover:text-gray-300">Add Product</a></li>
           <li><a href="/supplierdashboard" className="hover:text-gray-300">Supplier details</a></li>
           <li><a href="/Addsupplier" className="hover:text-gray-300">Add Supplier</a></li>
           <li><a href="/stockDashboard" className="hover:text-gray-300">Stock Details</a></li>
           <li><a href="/addStock" className="hover:text-gray-300">Add Stock</a></li>
-          <li><a href="/stock-add" className="hover:text-gray-300">Add Inquiry</a></li>
+          <li><a href="/stock-add" className="hover:text-gray-300">Add Inquiry</a></li> */}
         </ul>
         <div className="profile mt-8">
           <img src={manager} alt="Manager Photo" className="w-16 rounded-full" />

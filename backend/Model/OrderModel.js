@@ -43,9 +43,9 @@ const orderSchema = new Schema({
     type: String,
     required: true,
   },
-  date: {
+  Date: {
     type: Date,
-    default: Date.now,
+    default: Date,
   },
 });
 

@@ -62,9 +62,11 @@ const RecycledProductsTable = () => {
   );
 
   return (
-    <div style={{ display: "flex" }}>
-      <RecycleProductSidebar />
-      <div className='component-div'>
+    <div id='body-div'>
+        <div id='sidebar-section'>
+        < RecycleProductSidebar /></div>
+        <div id='component-div'>
+        <div>
         <div className='page-title-div'>
           <h2 className='re-page-title'>Recycled Products List</h2>
           <input
@@ -89,7 +91,7 @@ const RecycledProductsTable = () => {
                 <th>Stage</th>
                 <th>Status</th>
                 <th>Machine Name</th>
-                <th>Machine Condition</th>
+                <th>Machine Status</th>
                 <th>Update</th>
                 <th>Delete</th>
               </tr>
@@ -123,6 +125,7 @@ const RecycledProductsTable = () => {
               onCancel={() => setIsEditing(false)} 
             />
           )}
+        </div>
         </div>
       </div>
     </div>
