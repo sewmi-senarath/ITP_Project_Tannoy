@@ -18,6 +18,11 @@
     background-image: linear-gradient(to right, rgba(86, 40, 139, 0.8) , rgb(95, 0, 107, 0.8));
     color: white;
     border-radius: 5px;
+    text-decoration: none;
+}
+
+#AddRecycleProductsButton-a{
+  text-decoration: none;
 }
 .re-page-title{
   font-size: 24px;

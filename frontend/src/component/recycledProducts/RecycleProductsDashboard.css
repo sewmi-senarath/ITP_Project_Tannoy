@@ -79,7 +79,7 @@ ul a{
  
 #RecyclingProductsButton {
   display: inline;
-  background-image: linear-gradient(to right, rgb(40, 55, 139,0.8) , rgb(95, 0, 107, 0.8));
+ background-image: linear-gradient(to right, rgb(40, 55, 139,0.8) , rgb(95, 0, 107, 0.8));
   color: white;
   border-radius: 5px;
   width: 200px !important;
@@ -94,4 +94,12 @@ ul a{
   background-position: center;
   margin: 20px 0px;
   border-radius: 10px;
+}
+
+#RecycledProductsButton-a{
+  text-decoration: none;
+}
+
+#RecyclingProductsButton-a{
+  text-decoration: none;
 }
