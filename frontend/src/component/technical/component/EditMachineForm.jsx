@@ -30,8 +30,8 @@ const titleSx = {
 
 const formSX = {
   width: "100%",
-  padding: "30px 30px",
-  marginTop: "1px",
+  padding: "34px 30px",
+  marginTop: "10px",
 };
 
 const label = {
@@ -43,11 +43,11 @@ const label = {
 const boxSX = {
   bgcolor: "#FFFFFF",
   width: "450px",
-  // boxSizing: "border-box",
-  // borderRadius: "px",
+  boxSizing: "border-box",
+  borderRadius: "20px",
   textAlign: "center",
-  // px: "6px",
-  padding: "40px 30px",
+  px: "6px",
+  padding: "10px 30px",
 };
 
 const inputSx = {
@@ -159,7 +159,7 @@ export default function EditMachine({ open, setOpen, matirialData }) {
         open={open}
       >
         <form id="form" onSubmit={handleSubmit}>
-          <h1 className="text-2xl justify-center items-center text-center font-semibold mt-2">
+          <h1 className="text-2xl justify-full items-ful text-full font-semibold mt-4">
             Update Machine
           </h1>
           <Box sx={boxSX}>

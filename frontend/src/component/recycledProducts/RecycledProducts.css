@@ -25,6 +25,10 @@
   padding: 10px;
 }
 
+#AddRecycleProductsButton-a {
+  text-decoration: none;
+}
+
 #AddProductButton{
   margin: 0px 20px; /* Add some space between the button and the search input */
   background-image: linear-gradient(to right, rgba(86, 40, 139, 0.8) , rgb(95, 0, 107, 0.8));

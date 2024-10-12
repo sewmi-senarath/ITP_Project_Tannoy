@@ -1,26 +1,18 @@
 const express = require("express");
 const router = express.Router();
 
-// Insert Model
-const FinanceInvestor = require("../Model/FinanceInvestorModel");
-
-// Insert FinanceInvestorModel Controller
+//Insert Model
+const Investor = require("../Model/FinanceInvestorModel");
+//Insert User Controller
 const FinanceInvestorController = require("../Controlers/FinanceInvestorController");
 
-// Get All investors
-router.get("/", FinanceInvestorController.getAllInvestors); // Corrected function name
+router.get("/", FinanceInvestorController.getAllInvestors);
+router.post("/", FinanceInvestorController.addInvestors);
+//" /:id - meka user control eke id ekata dunn ekath ekka match wenn oni"
+router.get("/:id", FinanceInvestorController.getByInvId);
+router.put("/:id", FinanceInvestorController.updateInv);
+router.delete("/:id", FinanceInvestorController.deleteInvestor);
 
-// Add new investor
-router.post("/", FinanceInvestorController.addFinanceInvestor); // Corrected function name
 
-// Get Investor By ID
-router.get("/:id", FinanceInvestorController.getInvestorById);
-
-// Delete Investor By ID
-router.delete("/:id", FinanceInvestorController.deleteFinanceInvestor);
-
-// Update Investor by ID
-router.put("/:id", FinanceInvestorController.updateFinanceInvestor); 
-
-// Export
+//export
 module.exports = router;

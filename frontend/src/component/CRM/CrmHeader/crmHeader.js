@@ -17,7 +17,7 @@ function crmHeader() {
               <Link to="/crmReport">
                 <li className="hover:underline text-2xl text-black">Report</li>
               </Link>
-              <Link to="/inventoryReport">
+              <Link to="/inquiries">
                 <li className="hover:underline text-2xl text-black">Support Desk</li>
               </Link>
             </ul>

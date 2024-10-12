@@ -251,18 +251,18 @@ function Machine({ machine, handler, filteredProducts }) {
         matirialData={machine}
       />
 
-      <span className="block w-full mt-4 text-sm">{machine.name ?? ""}</span>
-      <span className="block w-full mt-4 text-sm">
+      <span className="block w-full mt-3 text-sm">{machine.name ?? ""}</span>
+      <span className="block w-full mt-3 text-sm">
         {machine.materialtype ?? ""}
       </span>
-      <span className="block w-full mt-4 text-sm">
+      <span className="block w-full mt-3 text-sm">
         {formatDate(machine.servicedate)}
       </span>
-      <span className="block w-full mt-4 text-sm">
+      <span className="block w-full mt-3 text-sm">
         {formatDate(machine.nextservicedate)}
       </span>
-      <span className="block w-full mt-4 text-sm">{machine.Cost ?? ""}</span>
-      <span className="block w-full mt-4 text-sm">
+      <span className="block w-full mt-3 text-sm">{machine.Cost ?? ""}</span>
+      <span className="block w-full mt-3 text-sm">
         {machine.description ?? ""}
       </span>
     </div>
