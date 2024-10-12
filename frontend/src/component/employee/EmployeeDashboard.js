@@ -88,12 +88,12 @@ const EmployeeDashboard = () => {
       {/* Sidebar Section */}
       <div className="w-64 min-w-64 bg-gray-800 text-white  flex-col">
         <div className="p-6">
-          <img src={Logo} alt="Tannoy Electricals Logo" className="h-16 mx-auto" />
+          {/* <img src={Logo} alt="Tannoy Electricals Logo" className="h-16 mx-auto" /> */}
+          <br /><br /><br />
         </div>
         <ul className="mt-6 space-y-10 flex-grow">
           <li><a href="/add-employee" className="block py-2 px-8 bg-green-600 text-white rounded-lg shadow hover:bg-blue-700 hover:shadow-lg transition duration-300">Add Employee</a></li>
           <li><a href="/mark-attendance" className="block py-2 px-8 bg-green-600 text-white rounded-lg shadow hover:bg-blue-700 hover:shadow-lg transition duration-300">Mark Attendance</a></li>
-          {/* <li><a href="/AddSalaryDetails" className="block py-2 px-8 bg-green-600 text-white rounded-lg shadow hover:bg-blue-700 hover:shadow-lg transition duration-300">Add Salary Details</a></li> New button */}
           <li><a href="/employeesalaryReport" className="block py-2 px-8 bg-green-600 text-white rounded-lg shadow hover:bg-blue-700 hover:shadow-lg transition duration-300">Salary Report</a></li>
         </ul>
         <br />  <br />
@@ -107,7 +107,7 @@ const EmployeeDashboard = () => {
   
         <ul className="settings mt-auto space-y-10">
           <li><a href="#" className="block py-2 px-6 bg-gray-600 text-white rounded-lg shadow hover:bg-gray-700 hover:shadow-lg transition duration-300">Make Inquiry</a></li>
-          <li><a href="#" className="block py-2 px-6 bg-gray-600 text-white rounded-lg shadow hover:bg-gray-700 hover:shadow-lg transition duration-300">Log out</a></li>
+          <li><a href="/home" className="block py-2 px-6 bg-gray-600 text-white rounded-lg shadow hover:bg-gray-700 hover:shadow-lg transition duration-300">Log out</a></li>
         </ul>
       </div>
   
@@ -184,14 +184,16 @@ const EmployeeDashboard = () => {
                     <td>{employee.department}</td>
                     <td>{employee.employmentType}</td>
                     <td>
-                      <button className="edit-btn" onClick={() => handleEdit(employee._id)}>Edit</button> 
-                      <button
-                        className="delete-btn"
-                        onClick={() => deleteEmployee(employee._id)} // Call deleteEmployee on click
-                      >
-                        Delete
-                      </button>
+                      <div className="flex flex-col space-x-2">
+                        <button className="edit-btn bg-blue-500 text-white px-4 py-2 rounded" onClick={() => handleEdit(employee._id)}>
+                          Edit
+                        </button>
+                        <button className="delete-btn bg-red-500 text-white px-4 py-2 rounded" onClick={() => deleteEmployee(employee._id)}>
+                          Delete
+                        </button>
+                      </div>
                     </td>
+
                   </tr>
                 ))
               ) : (
