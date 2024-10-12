@@ -8,6 +8,7 @@ const DeliveryHome = () => {
 
   // Function to handle redirection to the Parcel List page with search query
   const handleDeliveryClickView = () => {
+    console.log("View Delivery Clicked"); // Debugging log
     if (trackingNumber) {
       navigate(`/parsel-list?search=${trackingNumber}`); 
     } else {
@@ -16,12 +17,14 @@ const DeliveryHome = () => {
   };
 
   const handleDeliveryClickAdd = () => {
+    console.log("Add Delivery Clicked"); // Debugging log
     navigate("/Add-parsel"); 
   };
 
   // Function to handle pressing the Enter key in the input field
   const handleKeyPress = (e) => {
     if (e.key === "Enter") {
+      console.log("Enter Key Pressed"); // Debugging log
       handleDeliveryClickView();
     }
   };
@@ -36,7 +39,7 @@ const DeliveryHome = () => {
         id="input-box"
         value={trackingNumber}
         onChange={(e) => setTrackingNumber(e.target.value)} 
-        onKeyPress={handleKeyPress} 
+        onKeyDown={handleKeyPress}  // Changed from onKe yPress to onKeyDown
       />
       <div id="button-wrapper">
         <button id="button-primary" onClick={handleDeliveryClickAdd}>
