@@ -80,7 +80,7 @@ const Addmachine = () => {
                 type="text"
                 value={name}
                 onChange={(e) => setname(e.target.value)}
-                placeholder="Machine name"
+                placeholder="MI-121XX"
                 required
                 className="p-2 block w-full rounded-xl bg-gray-100 text-black border-none placeholder-gray-400 placeholder-opacity-50 font-custom text-md"
               />
