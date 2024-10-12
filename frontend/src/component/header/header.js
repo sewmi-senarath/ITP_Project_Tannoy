@@ -8,7 +8,7 @@ const Header = () => {
         <header className="tannoy-header">
             <div className="tannoy-logo">
                 <img src={Logo} alt="Tannoy Logo" /> 
-                <h1>Tannoy Electricals</h1>
+                <h1 style={{ color: 'white', fontWeight: 'bold', fontSize: '2.5rem' }}>Tannoy Electricals</h1>
             </div>
             <nav className="tannoy-nav">
                 <a href="/home">Home</a>
