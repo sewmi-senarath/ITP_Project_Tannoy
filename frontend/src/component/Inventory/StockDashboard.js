@@ -3,22 +3,22 @@ import axios from 'axios';
 import { jsPDF } from 'jspdf'; // Import jsPDF for PDF generation
 import 'jspdf-autotable'; // Plugin for creating table in PDF
 import '../../styles/stockDashboard.css'; // CSS file
-import Logo from '../../images/logo.jpeg';
 import manager from '../../images/manager.jpeg';
 import { useNavigate } from 'react-router-dom';
 
 const StockDashboard = () => {
   const [items, setItems] = useState([]);
-  const [recyclingProducts, setRecyclingProducts] = useState([]); // State to hold recycling products
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
   const [filteredItems, setFilteredItems] = useState([]);
   const [availabilityFilter, setAvailabilityFilter] = useState('All');
+  const [restockQuantities, setRestockQuantities] = useState({}); // State for restock quantities
   const navigate = useNavigate();
 
   const lowStockThreshold = 10;
 
+  // Fetch items when the component loads
   useEffect(() => {
     const fetchItems = async () => {
       try {
@@ -31,56 +31,91 @@ const StockDashboard = () => {
         setLoading(false);
       }
     };
-
     fetchItems();
   }, []);
 
-  useEffect(() => {
-    const fetchRecyclingProducts = async () => {
-      try {
-        const response = await axios.get('http://localhost:5000/recyclingProducts');
-        setRecyclingProducts(response.data.RecyclingProducts); // Assuming your API returns { RecyclingProducts: [...] }
-      } catch (err) {
-        console.error('Error fetching recycling products:', err);
-      }
-    };
-
-    fetchRecyclingProducts();
-  }, []);
-
+  // Handle search query and availability filter
   useEffect(() => {
     const lowerCaseQuery = searchQuery.toLowerCase();
 
-    let filtered = items.filter(item =>
-      item.itemCode.toLowerCase().includes(lowerCaseQuery) ||
-      item.itemCategory.toLowerCase().includes(lowerCaseQuery)
+    let filtered = items.filter(
+      (item) =>
+        item.itemCode.toLowerCase().includes(lowerCaseQuery) ||
+        item.itemCategory.toLowerCase().includes(lowerCaseQuery)
     );
 
     if (availabilityFilter !== 'All') {
-      filtered = filtered.filter(item => item.availability === availabilityFilter);
+      filtered = filtered.filter((item) => item.availability === availabilityFilter);
     }
 
     setFilteredItems(filtered);
   }, [searchQuery, items, availabilityFilter]);
 
+  // Handle item deletion
   const handleDelete = async (itemId) => {
     const confirmed = window.confirm('Are you sure you want to delete this item?');
     if (!confirmed) return;
 
     try {
       await axios.delete(`http://localhost:5000/api/items/${itemId}`);
-      setItems(prevItems => prevItems.filter(item => item._id !== itemId));
-      setFilteredItems(prevItems => prevItems.filter(item => item._id !== itemId));
+      setItems((prevItems) => prevItems.filter((item) => item._id !== itemId));
+      setFilteredItems((prevItems) => prevItems.filter((item) => item._id !== itemId));
       alert('Item deleted successfully');
     } catch (err) {
       alert('Failed to delete item');
     }
   };
 
+  // Handle item edit (redirect to edit page)
   const handleEdit = (itemId) => {
     navigate(`/addStock/${itemId}`);
   };
 
+  // Handle restock action (update item quantity)
+  const handleRestock = async (itemId) => {
+    const restockQuantity = restockQuantities[itemId] || 0; // Get the restock quantity
+    if (restockQuantity <= 0) {
+      alert('Please enter a valid restock quantity.');
+      return;
+    }
+
+    try {
+      const itemToUpdate = items.find((item) => item._id === itemId);
+      const newStockSize = itemToUpdate.stockSize + restockQuantity;
+
+      // Update the stock size in the backend
+      await axios.put(`http://localhost:5000/api/items/${itemId}`, {
+        ...itemToUpdate,
+        stockSize: newStockSize,
+      });
+
+      // Update the stock size in the frontend
+      setItems((prevItems) =>
+        prevItems.map((item) =>
+          item._id === itemId ? { ...item, stockSize: newStockSize } : item
+        )
+      );
+      setFilteredItems((prevItems) =>
+        prevItems.map((item) =>
+          item._id === itemId ? { ...item, stockSize: newStockSize } : item
+        )
+      );
+      alert('Stock updated successfully!');
+    } catch (err) {
+      console.error('Error updating stock:', err);
+      alert('Failed to update stock.');
+    }
+  };
+
+  // Handle restock input change
+  const handleRestockInputChange = (itemId, value) => {
+    setRestockQuantities((prevQuantities) => ({
+      ...prevQuantities,
+      [itemId]: parseInt(value, 10), // Ensure value is an integer
+    }));
+  };
+
+  // Generate PDF report for stock items
   const generatePDFReport = () => {
     const doc = new jsPDF();
     doc.text('Stock Inventory Report', 14, 16);
@@ -88,7 +123,7 @@ const StockDashboard = () => {
     const tableColumn = ['Item Code', 'Item Name', 'Item Category', 'Description', 'Stock Size', 'Availability'];
     const tableRows = [];
 
-    filteredItems.forEach(item => {
+    filteredItems.forEach((item) => {
       const itemData = [
         item.itemCode,
         item.itemName,
@@ -103,46 +138,13 @@ const StockDashboard = () => {
     doc.autoTable({
       head: [tableColumn],
       body: tableRows,
-      startY: 20
+      startY: 20,
     });
 
     doc.save('Stock_Inventory_Report.pdf');
   };
 
-  // Function to reduce stock size based on recycling products
-  const updateStockFromRecycling = () => {
-    recyclingProducts.forEach(async (recyclingProduct) => {
-      const itemInStock = items.find(item => item.itemName === recyclingProduct.recyclingProductName);
-      if (itemInStock) {
-        const newStockSize = itemInStock.stockSize - recyclingProduct.quantity;
-
-        // Update the stock size if the new value is not negative
-        if (newStockSize >= 0) {
-          try {
-            await axios.put(`http://localhost:5000/api/items/${itemInStock._id}`, {
-              ...itemInStock,
-              stockSize: newStockSize
-            });
-            setItems(prevItems => prevItems.map(item => 
-              item._id === itemInStock._id ? { ...item, stockSize: newStockSize } : item
-            ));
-            setFilteredItems(prevItems => prevItems.map(item => 
-              item._id === itemInStock._id ? { ...item, stockSize: newStockSize } : item
-            ));
-          } catch (err) {
-            console.error('Error updating stock size:', err);
-          }
-        }
-      }
-    });
-  };
-
-  const lowStockItems = filteredItems.filter(item => item.stockSize < lowStockThreshold);
-
-  // Call the updateStockFromRecycling function when the component mounts
-  useEffect(() => {
-    updateStockFromRecycling();
-  }, [recyclingProducts]);
+  const lowStockItems = filteredItems.filter((item) => item.stockSize < lowStockThreshold);
 
   if (loading) {
     return <p className="text-center">Loading items...</p>;
@@ -154,10 +156,10 @@ const StockDashboard = () => {
 
   return (
     <div className="flex">
+      {/* Sidebar */}
       <div className="w-64 bg-gray-800 h-screen text-white flex flex-col">
         <ul className="mt-6 space-y-2">
-
-        
+          
         <li><a href="/stockDashboard" className="block py-2 px-4 hover:bg-gray-700">Stock Details</a></li>   
         <li><a href="/addStock" className="block py-2 px-4 hover:bg-gray-700">Add Stock</a></li>  
         <li><a href="/productDashboard" className="block py-2 px-4 hover:bg-gray-700">Product Details</a></li>   
@@ -165,31 +167,33 @@ const StockDashboard = () => {
         <li><a href="/supplierDashboard" className="block py-2 px-4 hover:bg-gray-700">Supplier details</a></li>
         <li><a href="/Addsupplier" className="block py-2 px-4 hover:bg-gray-700">Add Supplier</a></li>
         <li><a href="/stock-add" className="block py-2 px-4 hover:bg-gray-700">Help Desk</a></li>
-
-
-          {/* <li><a href="/productDashboard" className="block py-2 px-4 hover:bg-gray-700">Product Details</a></li>
-          <li><a href="/Addproduct" className="block py-2 px-4 hover:bg-gray-700">Add Product</a></li>
-          <li><a href="/supplierDashboard" className="block py-2 px-4 hover:bg-gray-700">Supplier Details</a></li>
-          <li><a href="/Addsupplier" className="block py-2 px-4 hover:bg-gray-700">Add Supplier</a></li>
-          <li><a href="/stockDashboard" className="block py-2 px-4 hover:bg-gray-700">Stock Details</a></li>
-          <li><a href="/addStock" className="block py-2 px-4 hover:bg-gray-700">Add Stock</a></li>
-          <li><a href="/stock-add" className="block py-2 px-4 hover:bg-gray-700">Add Inquiry</a></li> */}
         </ul>
+
         <div className="mt-auto p-4">
           <img src={manager} alt="Manager Photo" className="h-16 w-16 rounded-full mx-auto" />
           <p className="text-center mt-2">Stock Manager</p>
           <p className="text-center text-gray-400">stockmanager@tannoy.com</p>
           <ul className="mt-4 space-y-2">
-            <li><a href="/settings" className="block py-2 px-4 hover:bg-gray-700">Settings</a></li>
-            <li><a href="/logout" className="block py-2 px-4 hover:bg-gray-700">Log out</a></li>
+            <li>
+              <a href="/settings" className="block py-2 px-4 hover:bg-gray-700">
+                Settings
+              </a>
+            </li>
+            <li>
+              <a href="/home" className="block py-2 px-4 hover:bg-gray-700">
+                Log out
+              </a>
+            </li>
           </ul>
         </div>
       </div>
 
+      {/* Main content */}
       <div className="flex-1 p-6 bg-gray-100">
         <h1 className="text-2xl font-bold">Dashboard</h1>
         <h2 className="text-xl mt-2">Inventory Details</h2>
 
+        {/* Filters */}
         <div className="filter-bar flex mt-4 mb-6">
           <select
             value={availabilityFilter}
@@ -210,14 +214,16 @@ const StockDashboard = () => {
           />
         </div>
 
+        {/* Low stock notification */}
         {lowStockItems.length > 0 && (
           <div className="low-stock-notification mb-4">
             <p className="text-red-600">
-              ⚠️ Warning: The following items are running low on stock! IDs: {lowStockItems.map(item => item.itemCode).join(', ')}
+              ⚠️ Warning: The following items are running low on stock! IDs: {lowStockItems.map((item) => item.itemCode).join(', ')}
             </p>
           </div>
         )}
 
+        {/* Inventory Table */}
         <table className="min-w-full bg-white border border-gray-200 mt-4">
           <thead>
             <tr className="bg-gray-200">
@@ -227,12 +233,12 @@ const StockDashboard = () => {
               <th className="border px-4 py-2">Description</th>
               <th className="border px-4 py-2">Stock Size</th>
               <th className="border px-4 py-2">Availability</th>
+              <th className="border px-4 py-2">Restock Quantity</th> {/* Restock quantity column */}
               <th className="border px-4 py-2">Actions</th>
-              <th className="border px-4 py-2">Restock</th>
             </tr>
           </thead>
           <tbody>
-            {filteredItems.map(item => (
+            {filteredItems.map((item) => (
               <tr key={item._id}>
                 <td className="border px-4 py-2">{item.itemCode}</td>
                 <td className="border px-4 py-2">{item.itemName}</td>
@@ -241,22 +247,48 @@ const StockDashboard = () => {
                 <td className="border px-4 py-2">{item.stockSize}</td>
                 <td className="border px-4 py-2">{item.availability === 'Available' ? 'Available' : 'Unavailable'}</td>
                 <td className="border px-4 py-2">
-                  <button onClick={() => handleEdit(item._id)} className="bg-blue-500 text-white px-2 py-1 rounded ml-2">Edit</button>
-                  <button onClick={() => handleDelete(item._id)} className="bg-red-500 text-white px-2 py-1 rounded ml-2">Delete</button>
+                  {/* Restock quantity input field */}
+                  <input
+                    type="number"
+                    min="1"
+                    value={restockQuantities[item._id] || ''}
+                    onChange={(e) => handleRestockInputChange(item._id, e.target.value)}
+                    className="border rounded p-1 mr-2"
+                    placeholder="Restock Qty"
+                  />
                 </td>
                 <td className="border px-4 py-2">
-                  <button onClick={() => handleEdit(item._id)} className="bg-yellow-600 text-white px-2 py-1 rounded ml-2 hover:bg-yellow-700 transition duration-200">Re-Stock</button>
-                  
+                  <button
+                    onClick={() => handleRestock(item._id)}
+                    className="bg-yellow-600 text-white px-2 py-1 rounded ml-2 hover:bg-yellow-700 transition duration-200"
+                  >
+                    Restock
+                  </button>
+                  <button
+                    onClick={() => handleEdit(item._id)}
+                    className="bg-blue-500 text-white px-2 py-1 rounded ml-2"
+                  >
+                    Edit
+                  </button>
+                  <button
+                    onClick={() => handleDelete(item._id)}
+                    className="bg-red-500 text-white px-2 py-1 rounded ml-2"
+                  >
+                    Delete
+                  </button>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
 
-        <button onClick={generatePDFReport} className="bg-green-500 text-white px-4 py-2 rounded mt-4">Download Report</button>
+        <button onClick={generatePDFReport} className="bg-green-500 text-white px-4 py-2 rounded mt-4">
+          Download Report
+        </button>
       </div>
     </div>
   );
 };
 
 export default StockDashboard;
+//
