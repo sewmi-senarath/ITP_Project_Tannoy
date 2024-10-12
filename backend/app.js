@@ -88,6 +88,13 @@ app.post("/register", async(req, res) => {
   }
 });
 
+
+const inquireRouter= require("./Route/inquireRoutes");
+app.use("/inquiries",inquireRouter);
+
+const responseInquireRouter= require("./Route/responseInquireRoutes");
+app.use("/response-inquiries",responseInquireRouter);
+
 //Login
 app.post("/login", async (req, res) => {
   const {email, password} = req.body;

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import jsPDF from 'jspdf';
+import Logo from '../../images/logo.jpeg';
 import '../employee/employeeGenerateReport.css';
 
 const EmployeeSalaryReport = () => {
@@ -54,11 +55,46 @@ const EmployeeSalaryReport = () => {
   // Function to generate PDF
   const generatePdf = () => {
     const doc = new jsPDF();
-    doc.text(`Attendance Report for ${selectedEmployee}`, 10, 10);
-    doc.text(`Present Days: ${reportData.presentCount}`, 10, 20);
-    doc.text(`Absent Days: ${reportData.absentCount}`, 10, 30);
-    doc.text(`OT Hours: ${reportData.otHours}`, 10, 40);
-    doc.text(`Salary: Rs.${reportData.totalSalary}`, 10, 50);
+
+    doc.addImage(Logo, 'jpeg', 20, 20, 50, 30); // Adjust logo dimensions as needed
+
+    // Add title and header
+    doc.setFontSize(20);
+    doc.text(`TANNOY ELECTRICAL INDUSTRIES`, 80, 25);  // Title
+    doc.text(`Salary Report for ${selectedEmployee}`, 80, 35);  // Title
+    doc.setFontSize(18);
+    doc.text(`Month: ${selectedMonth}`, 80, 45); // Month
+    doc.text(`Employee ID: ${selectedEmployee}`, 80, 55); // Employee ID
+
+    // Add horizontal line
+    doc.setLineWidth(0.5);
+    doc.line(10, 65, 200, 65); // X1, Y1, X2, Y2 for the line
+
+    // Add Attendance Data
+    doc.setFontSize(16);
+    doc.text(`Present Days: ${reportData.presentCount}`, 30, 75);
+    doc.text(`Absent Days: ${reportData.absentCount}`, 30, 85);
+    doc.text(`OT Hours: ${reportData.otHours}`, 30, 95);
+    doc.text(`EPF: ${reportData.epfAmount}`, 30, 105);
+    doc.text(`ETF: ${reportData.etfAmount}`, 30, 115);
+    doc.text(`Gross Salary: Rs.${reportData.totalSalary}`, 30, 125);
+
+    // Add horizontal line
+    doc.setLineWidth(0.2);
+    doc.line(5, 128, 150, 128); // X1, Y1, X2, Y2 for the line
+
+    doc.setFontSize(17);
+    doc.text(`NET SALARY: Rs.${reportData.finalSalary}`, 30, 138);
+
+    // Add horizontal line
+    doc.setLineWidth(0.5);
+    doc.line(10, 270, 200, 270); // X1, Y1, X2, Y2 for the line
+
+    // Add footer text
+    doc.setFontSize(17);
+    const currentDate = new Date().toLocaleDateString();
+    doc.text('Sent by the employee manager', 10, 280); // Footer text
+    doc.text(`Date: ${currentDate}`, 10, 290); // Current date
 
     // Save the PDF
     doc.save(`Salary_Report_${selectedEmployee}_${selectedMonth}.pdf`);
@@ -75,8 +111,6 @@ const EmployeeSalaryReport = () => {
     const url = `https://api.whatsapp.com/send?text=${encodeURIComponent(message)}`;
     window.open(url, '_blank');
   };
-
-  
 
   // Function to share via Gmail
   const shareOnGmail = () => {
@@ -153,7 +187,10 @@ const EmployeeSalaryReport = () => {
             <p className="report-data"><strong>Present Days:</strong> {reportData.presentCount}</p>
             <p className="report-data"><strong>Absent Days:</strong> {reportData.absentCount}</p>
             <p className="report-data"><strong>OT Hours:</strong> {reportData.otHours}</p>
-            <p className="report-data"><strong>Salary:</strong> RS.{reportData.totalSalary.toFixed(2)}</p>
+            <p className="report-data"><strong>Gross Salary:</strong> RS.{reportData.totalSalary.toFixed(2)}</p>
+            <p className="report-data"><strong>Salary after EPF reduction:</strong> RS.{reportData.epfAmount.toFixed(2)}</p>
+            <p className="report-data"><strong>Salary after ETF reduction:</strong> RS.{reportData.etfAmount.toFixed(2)}</p>
+            <p className="report-data"><strong>FINAL NET SALARY:</strong>RS.{reportData.finalSalary.toFixed(2)}</p>
           <br />
 
           {/* Generate PDF Button */}

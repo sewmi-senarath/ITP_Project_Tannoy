@@ -14,7 +14,7 @@ const PrintOrder = ({ contentRef }) => {
   return (
     <button
       onClick={handlePrint}
-      className="bg-lime-500 w-52 rounded-lg text-center flex flex-row justify-between font-medium"
+      className="bg-lime-500  hover:bg-lime-400 w-52 rounded-lg text-center flex flex-row justify-between font-medium"
     >
       <img src={downlodImage} alt="download logo" className="w-5 h-5 mt-1" />
       Generate Report
