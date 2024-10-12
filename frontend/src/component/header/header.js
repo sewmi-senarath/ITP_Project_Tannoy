@@ -11,8 +11,8 @@ const Header = () => {
                 <h1>Tannoy Electricals</h1>
             </div>
             <nav className="tannoy-nav">
-                <a href="/home">Home</a>
-                <a href="/">Login</a>
+                <a href="/">Home</a>
+                <a href="/login">Login</a>
                 <a href="/register">Register</a>
             </nav>
         </header>
