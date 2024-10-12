@@ -26,6 +26,9 @@ function AddNewOrder() {
     
   });
 
+  // New state to store the formatted order date
+  const [orderDate, setOrderDate] = useState("");
+
   const [availableQuantity, setAvailableQuantity] = useState(0); // Track available quantity
   const [errors, setErrors] = useState({
     unitPrice: "",
@@ -166,7 +169,13 @@ function AddNewOrder() {
 
     // If validation is successful, send the request
     await sendRequest();
-    history("/orderDetails");
+     // Get current date in YYYY-MM-DD format
+     const currentDate = new Date().toISOString().split("T")[0];
+     setOrderDate(currentDate); // Highlighted change: store the formatted date
+ 
+     // If validation is successful, send the request
+     await sendRequest(currentDate); // Pass the date to the sendRequest function
+     history("/orderDetails");
   };
 
   const sendRequest = async () => {
