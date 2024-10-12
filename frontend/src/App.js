@@ -44,6 +44,7 @@ import AddPoduct from "./component/recycledProducts/AddProducts";
 import InvestorsDashboard from "./component/FinanceInvestor/investorsdashboard";
 import Addinvestor from "./component/FinanceInvestor/addInvestor";
 import UpdateInvestorProfile from "./component/FinanceInvestor/updateInvestorprofile";
+import Financedashboard from "./component/FinanceInvestor/FinanceDashboard";
 
 import Mylogin from './UserManagement/login';
 import RegisterForm from './UserManagement/register';
@@ -56,7 +57,7 @@ import InquiriesPage from "./component/inquire/InquiriesPage";
 import FinanceCRM from "./component/CRM/FinanceCRM/financeCRM";
 
 function App() {
-  return (
+  return (  
     
     <BrowserRouter>
       <div>
@@ -118,6 +119,9 @@ function App() {
           <Route path='/inquiries' element={<InquiriesPage />} />
           
           <Route path="/financeCRM" element={<FinanceCRM />} /> 
+          <Route path="/Financedashboard" element={<Financedashboard/>} /> {/* Ruvindi */}
+          <Route path="/add-investor/:id" element={< UpdateInvestorProfile/>} /> {/* Ruvindi */}
+
         </Routes>
         <Footer />
       </div>
