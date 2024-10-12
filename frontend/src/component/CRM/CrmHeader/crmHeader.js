@@ -6,8 +6,8 @@ function crmHeader() {
   return (
     <div className=" flex flex-col">
         <div className="flex bg-slate-300 ">
-          <div className="mx-auto ml-5 mt-3 ">
-            <ul className="flex gap-8 font-bold ">
+          <div className="mx-auto ">
+            <ul className="flex gap-8 font-bold mt-3">
               <Link to="/crmHome">
                 <li className="hover:underline text-2xl gap-6 text-black " >Home</li>
               </Link>
@@ -27,7 +27,7 @@ function crmHeader() {
               <Link to="./sign-in">
                 <li className="hover:underline text-2xl"></li>
               </Link>
-              <Link to="/">
+              <Link to="/login">
                 <li className="hover:underline text-2xl text-black mt-2">Log Out</li>
               </Link>
             </ul>
