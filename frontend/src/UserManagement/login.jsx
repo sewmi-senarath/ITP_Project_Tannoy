@@ -57,12 +57,12 @@ function LoginForm() {
         } 
 
         else if (email === "inquirymanager@gmail.com") {
-          navigate("/");
+          navigate("/inquiries-manager");
         } 
         else if (email === "technicalmanagr@gmail.com") {
           navigate("/technicalHome");
         } 
-        else if (email === "deliverymanager@gmal.com") {
+        else if (email === "deliverymanager@gmail.com") {
           navigate("/deliveryHome");
         } 
         else if (email === "financemanager@gmal.com") {

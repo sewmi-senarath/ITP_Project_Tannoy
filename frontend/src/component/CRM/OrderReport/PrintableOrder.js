@@ -53,7 +53,7 @@ const PrintableOrder = React.forwardRef((props, ref) => {
           </tr>
         </table>
       </div>
-      <div className="mx-auto w-auto m-2">
+      <div className="mx-auto w-auto m-2 ">
         {/* Render order details relevent to the report*/}
         {order &&
           order.map((item, i) => (
@@ -62,7 +62,7 @@ const PrintableOrder = React.forwardRef((props, ref) => {
             </div>
           ))}
       </div>
-      <div className="absolute bottom-0 right-6 ... ">
+      <div className="absolute bottom-0 right-6 mt-10">
         <h1 className="font-medium  text-slate-800 text-2xl">Signature</h1>
         <h1>........................</h1>
       </div>

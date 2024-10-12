@@ -19,7 +19,7 @@ const Employee = require('../Model/EmployeeModel');
 
 // Controller to mark attendance (Create)
 exports.markAttendance = async (req, res) => {
-    const { empId, date, status, otHours, allowances, incentives } = req.body;
+    const { empId, date, status, otHours} = req.body;
   
     try {
       // Check if attendance record already exists for the given employee and date
@@ -329,14 +329,13 @@ exports.generateEmployeeReport = async (req, res) => {
     // const totalSalary = (presentCount * dailySalary) + (otHours * otRate) + totalAllowances + totalIncentives;
 
     // Calculate EPF and ETF (3% deduction)
-    // const epfAmount = totalSalary * 0.03;
-    // const etfAmount = totalSalary * 0.03;
+    const epfAmount = totalSalary * 0.03;
+    const etfAmount = totalSalary * 0.03;
 
     // Calculate final salary after EPF and ETF deductions
-    //const finalSalary = totalSalary - epfAmount - etfAmount;
+    const finalSalary = totalSalary - epfAmount - etfAmount;
 
     //sewmi edited
-
     // Respond with the calculated data
     res.status(200).json({
       presentCount,
@@ -354,6 +353,9 @@ exports.generateEmployeeReport = async (req, res) => {
     res.status(500).json({ message: 'Error generating employee report.', error });
   }
 };
+
+
+
 
 // const EmployeeAttendance = require('../Model/EmployeeAttendance');
 // const Employee = require('../Model/EmployeeModel');
