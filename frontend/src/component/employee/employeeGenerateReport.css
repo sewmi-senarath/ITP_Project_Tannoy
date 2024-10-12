@@ -8,10 +8,16 @@
     font-family: 'Arial', sans-serif;
   }
   
-  h1, h2 {
+  h1 {
     text-align: center;
     color: #2c3e50;
   }
+  
+  /* h2 {
+    text-align: center;
+    color: #2c3e50;
+    font-size: large;
+  } */
   
   .form-group {
     margin-bottom: 20px;
@@ -56,10 +62,10 @@
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
   }
   
-  p {
-    font-size: 16px;
+  /* p {
+    font-size: 25px;
     margin-bottom: 10px;
-  }
+  } */
   
   .error-message {
     color: red;
@@ -67,7 +73,7 @@
     font-weight: bold;
   }
   .social-media-buttons button {
-    margin-right: 10px;
+    margin-right: 20px;
     padding: 10px;
     border-radius: 5px;
     font-size: 14px;
@@ -77,33 +83,45 @@
   .whatsapp-button {
     background-color: #25D366;
     color: white;
+    margin-bottom: 5px;
+    padding: 10px 20px;
   }
+
   
-  .facebook-button {
-    background-color: #3b5998;
+  .gmail-button {
+    background-color: #e33f3f;
     color: white;
+    margin-bottom: 5px;
+    padding: 10px 20px;
   }
-  
-  .twitter-button {
-    background-color: #1DA1F2;
-    color: white;
-  }
-  
-  .linkedin-button {
-    background-color: #0077b5;
-    color: white;
-  }
-  
+
   .pdf-button {
-    background-color: #f44336;
+    background-color: #282ff0;
     color: white;
     padding: 10px 20px;
-    border: none;
-    cursor: pointer;
-    margin-top: 10px;
+    margin-bottom: 5px;
+  }
+
+  .social-media-buttons button:hover {
+    background-color: #b2b2b2; /* Ash color */
   }
   
   .report-output {
     margin-top: 20px;
+  }
+
+  /*new change*/
+  .report-title {
+    font-size: 24px; /* Increase this value as needed */
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: #333;
+  }
+
+  /* Increase the font size for the report data */
+  .report-data {
+      font-size: 18px; /* Increase this value as needed */
+      margin-bottom: 10px;
+      color: #555;
   }
   

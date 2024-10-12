@@ -3,6 +3,7 @@ import '../employee/employee.css'
 import Logo from '../../images/logo.jpeg';
 import manager from '../../images/manager.jpeg'; // Manager's image
 import { useNavigate } from 'react-router-dom';
+//import AddSalaryDetails from '../employee/AddSalaryDetails.js';
 
 const EmployeeDashboard = () => {
   const [employees, setEmployees] = useState([]); // State to hold employee data
@@ -10,6 +11,7 @@ const EmployeeDashboard = () => {
   const [searchQuery, setSearchQuery] = useState(''); // State to hold the search query
   const [filteredEmployees, setFilteredEmployees] = useState([]); // State to hold filtered results
   const navigate = useNavigate();
+  
 
   // Fetch employee data from the backend API when the component mounts
   useEffect(() => {
@@ -84,30 +86,33 @@ const EmployeeDashboard = () => {
   return (
     <div className="flex flex-grow flex-row">
       {/* Sidebar Section */}
-      <div className="w-64 bg-gray-800 text-white flex flex-col">
-        <div className="p-4">
+      <div className="w-64 min-w-64 bg-gray-800 text-white  flex-col">
+        <div className="p-6">
           <img src={Logo} alt="Tannoy Electricals Logo" className="h-16 mx-auto" />
         </div>
-        <ul className="mt-6 space-y-0.01 flex-grow"> {/* Reduced spacing */}
-          <li><a href="/mark-attendance" className="block py-1 px-4 bg-green-500 hover:bg-green-600">Mark Attendance</a></li>
-          <li><a href="/add-employee" className="block py-1 px-4 bg-green-500 hover:bg-green-600">Add Employee</a></li>
-          <li><a href="/employeesalaryReport" className="block py-1 px-4 bg-green-500 hover:bg-green-600">Salary Report</a></li>
+        <ul className="mt-6 space-y-10 flex-grow">
+          <li><a href="/add-employee" className="block py-2 px-8 bg-green-600 text-white rounded-lg shadow hover:bg-blue-700 hover:shadow-lg transition duration-300">Add Employee</a></li>
+          <li><a href="/mark-attendance" className="block py-2 px-8 bg-green-600 text-white rounded-lg shadow hover:bg-blue-700 hover:shadow-lg transition duration-300">Mark Attendance</a></li>
+          {/* <li><a href="/AddSalaryDetails" className="block py-2 px-8 bg-green-600 text-white rounded-lg shadow hover:bg-blue-700 hover:shadow-lg transition duration-300">Add Salary Details</a></li> New button */}
+          <li><a href="/employeesalaryReport" className="block py-2 px-8 bg-green-600 text-white rounded-lg shadow hover:bg-blue-700 hover:shadow-lg transition duration-300">Salary Report</a></li>
         </ul>
+        <br />  <br />
   
-        <div className="p-2">
+        <div className="p-2 space-y-5">
           <img src={manager} alt="Manager Photo" className="h-16 w-16 rounded-full mx-auto" />
-          <p className="mt-2">Employee Manager</p>
-          <p className="text-sm">employeemanager@tannoy.com</p>
+          <p className="mt-2 text-center text-lg font-semibold">Employee Manager</p>
+          <p className="text-sm text-center text-gray-400">employeemanager@tannoy.com</p>
         </div>
+        <br />  <br />
   
-        <ul className="settings mt-auto space-y-80">
-          <li><a href="#" className="block py-1 px-4 bg-green-500 hover:bg-green-600">Settings</a></li>
-          <li><a href="#" className="block py-1 px-4 bg-green-500 hover:bg-green-600">Log out</a></li>
+        <ul className="settings mt-auto space-y-10">
+          <li><a href="#" className="block py-2 px-6 bg-gray-600 text-white rounded-lg shadow hover:bg-gray-700 hover:shadow-lg transition duration-300">Make Inquiry</a></li>
+          <li><a href="#" className="block py-2 px-6 bg-gray-600 text-white rounded-lg shadow hover:bg-gray-700 hover:shadow-lg transition duration-300">Log out</a></li>
         </ul>
       </div>
   
       {/* Main Content Section */}
-      <div className="flex-grow p-4 flex flex-col">
+      <div className="flex-grow p-4 flex flex-col overflow-hidden">
         <header>
           <input
             type="text"
@@ -117,7 +122,7 @@ const EmployeeDashboard = () => {
           />
         </header>
   
-        <div className="flex-grow">
+        <div className="flex-grow overflow-auto">
           <h1 style={{ fontFamily: 'Arial, sans-serif', fontSize: '36px', fontWeight: 'bold' }}>Dashboard</h1>
           <h2 style={{ fontFamily: 'Times New Roman, serif', fontSize: '28px', fontStyle: 'italic' }}><center>Employee Details</center></h2>
   
@@ -130,7 +135,8 @@ const EmployeeDashboard = () => {
           {error && <p className="error-message">{error}</p>}
   
           {/* Employee Table */}
-          <table>
+          <div className="overflow-x-auto">
+          <table className="table-auto min-w-full">
             <thead>
               <tr>
                 <th>Employee ID</th>
@@ -197,6 +203,7 @@ const EmployeeDashboard = () => {
               )}
             </tbody>
           </table>
+          </div>
         </div>
       </div>
     </div>
