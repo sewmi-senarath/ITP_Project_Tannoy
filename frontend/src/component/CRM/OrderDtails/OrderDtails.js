@@ -52,13 +52,13 @@ function OrderDtails() {
       <div>
         <Header />
       <div className="flex flex-row mt-5 mb-2 justify-between">
-        <h1 className="text-center font-semibold m-1 ml-5 text-4xl text-slate-700">
+        <h1 className="text-center font-semibold m-1 ml-6 text-4xl text-slate-700 ">
           Order Details Display
         </h1>
 
         <div className="flex flex-row gap-3">
-          <Link to="/addorder">
-            <button className="h-10 mt-3 font-semibold bg-green-700 mr-28 rounded-lg w-44">
+          <Link to="/addorder" className="no-underline text-black">
+            <button className="h-10 mt-3 font-semibold bg-blue-400 mr-28 rounded-lg w-44 ">
               Place New Order
             </button>
           </Link>
@@ -74,7 +74,7 @@ function OrderDtails() {
            />
           </div>
           <button
-            className="h-10 font-bold bg-green-500 px-5 rounded-lg w-32 mt-3"
+            className="h-10 font-bold bg-blue-400 rounded-lg w-32 mt-3"
             onClick={handleSearch}
           >
             Search
@@ -96,9 +96,9 @@ function OrderDtails() {
           </h4>
         </div>
       </div>
-      <div className="mt-10">
+      <div className="mt-2">
         <table className=" mx-auto">
-          <tr className="bg-green-300 h-14">
+          <tr className="bg-slate-300 h-14">
             <td className=" p-2 border-hidden font-bold text-center w-48 border-green-500">
               Product Name
             </td>

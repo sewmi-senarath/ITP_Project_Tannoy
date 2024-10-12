@@ -134,7 +134,7 @@ doc.save('investor_report.pdf'); // Save the generated PDF
           <h2>Tannoy Electricals</h2>
         </div>
         <ul className="nav-links">
-          <li><a href="/crmReport">Customer Report</a></li>
+          <li><a href="/financeCRM">Customer Report</a></li>
           <li><a href="/add-investor">Add Investor</a></li>
           <li><a href='/Financedashboard'>Finance Report</a></li>
         </ul>

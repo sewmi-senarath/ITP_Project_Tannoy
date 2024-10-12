@@ -70,8 +70,8 @@ function Order(props) {
           <td className="p-1 w-32 font-medium text-center border-hidden ">
             <div className="flex pt-4">
             
-            <Link to={`/updateOrder/${_id}`}>
-              <button className="p-1 bg-green-700 rounded-lg hover:bg-green-600 w-16">Update</button>
+            <Link to={`/updateOrder/${_id}`} className="no-underline text-black">
+              <button className="p-1 bg-green-700 rounded-lg hover:bg-none w-16">Update</button>
             </Link>
             <button
               className="p-1 ml-1 bg-red-600 hover:bg-red-500 rounded-lg w-16"
