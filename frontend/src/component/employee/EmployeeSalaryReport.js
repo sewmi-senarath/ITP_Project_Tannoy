@@ -149,11 +149,12 @@ const EmployeeSalaryReport = () => {
       {/* Display Report Data */}
       {reportData && (
         <div className="report-output">
-          <h2>Attendance Report for {selectedEmployee}</h2>
-          <p><strong>Present Days:</strong> {reportData.presentCount}</p>
-          <p><strong>Absent Days:</strong> {reportData.absentCount}</p>
-          <p><strong>OT Hours:</strong> {reportData.otHours}</p>
-          <p><strong>Salary:</strong> RS.{reportData.totalSalary.toFixed(2)}</p>
+          <h2 className="report-title">Preview of Salary Report for {selectedEmployee}</h2>
+            <p className="report-data"><strong>Present Days:</strong> {reportData.presentCount}</p>
+            <p className="report-data"><strong>Absent Days:</strong> {reportData.absentCount}</p>
+            <p className="report-data"><strong>OT Hours:</strong> {reportData.otHours}</p>
+            <p className="report-data"><strong>Salary:</strong> RS.{reportData.totalSalary.toFixed(2)}</p>
+          <br />
 
           {/* Generate PDF Button */}
           <button onClick={generatePdf} className="pdf-button">
