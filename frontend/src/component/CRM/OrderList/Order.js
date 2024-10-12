@@ -15,8 +15,12 @@ function Order(props) {
     quantity,
     orderTotal,
     paymentType,
-    Date,
+    Date: orderDate, // Renamed 'Date' to 'orderDate' for clarity
   } = props.order;
+
+
+    // Format the date to display only the date part (YYYY-MM-DD)
+    const formattedDate = new Date(orderDate).toLocaleDateString("en-CA");
 
   const deleteHandler = async () => {
     await axios
@@ -36,7 +40,7 @@ function Order(props) {
             {productName}
           </td>
           <td className=" w-48 text-nowrap font-medium text-center text-slate-700 border-hidden">
-            {Date}
+            {formattedDate}
           </td>
           <td className=" w-48 text-nowrap font-medium text-center text-slate-700 border-hidden">
             {location}

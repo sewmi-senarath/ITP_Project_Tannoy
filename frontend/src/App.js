@@ -48,6 +48,8 @@ import UpdateInvestorProfile from "./component/FinanceInvestor/updateInvestorpro
 import Mylogin from './UserManagement/login';
 import RegisterForm from './UserManagement/register';
 
+import FinanceCRM from "./component/CRM/FinanceCRM/financeCRM";
+
 function App() {
   return (
     
@@ -104,6 +106,8 @@ function App() {
           <Route path="/InvestorsDashboard" element={<InvestorsDashboard/>} /> {/* Ruvindi */}
           <Route path="/investor" element={<UpdateInvestorProfile/>} /> {/* Ruvindi */}
           <Route path="/add-investor" element={<Addinvestor/>} /> {/* Ruvindi */}
+
+          <Route path="/financeCRM" element={<FinanceCRM />} /> 
         </Routes>
         <Footer />
       </div>
