@@ -47,6 +47,11 @@ import UpdateInvestorProfile from "./component/FinanceInvestor/updateInvestorpro
 
 import Mylogin from './UserManagement/login';
 import RegisterForm from './UserManagement/register';
+import CreateInquireResponse from "./component/inquire/CreateInquireResponse";
+import CreateNewInquire from "./component/inquire/CreateNewInquire";
+import ManageInquireResponse from "./component/inquire/ManageInquireRsponse";
+import InquiriesManager from "./component/inquire/InquiriesManager";
+import InquiriesPage from "./component/inquire/InquiriesPage";
 
 import FinanceCRM from "./component/CRM/FinanceCRM/financeCRM";
 
@@ -106,7 +111,12 @@ function App() {
           <Route path="/InvestorsDashboard" element={<InvestorsDashboard/>} /> {/* Ruvindi */}
           <Route path="/investor" element={<UpdateInvestorProfile/>} /> {/* Ruvindi */}
           <Route path="/add-investor" element={<Addinvestor/>} /> {/* Ruvindi */}
-
+          <Route path="/create-inquire-response/:inquire_id" element={<CreateInquireResponse />} />
+          <Route path="/inquiries-manager" element={<InquiriesManager />} />
+          <Route path='/create-new-inquire' element={<CreateNewInquire />} />
+          <Route path="/manage-inquire-response/:inquire_id" element={<ManageInquireResponse />} />
+          <Route path='/inquiries' element={<InquiriesPage />} />
+          
           <Route path="/financeCRM" element={<FinanceCRM />} /> 
         </Routes>
         <Footer />
