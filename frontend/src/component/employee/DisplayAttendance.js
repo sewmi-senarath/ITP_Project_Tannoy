@@ -114,6 +114,11 @@ const DisplayAttendance = () => {
       body: tableRows,
     });
 
+    doc.setFontSize(17);
+    const currentDate = new Date().toLocaleDateString();
+    doc.text('Sent by the employee manager', 10, 280);
+    doc.text(`Date: ${currentDate}`, 10, 290); // Current date
+
     doc.save('AttendanceReport.pdf');
   };
 

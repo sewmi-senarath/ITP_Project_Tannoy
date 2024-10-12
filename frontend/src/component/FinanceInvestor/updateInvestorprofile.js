@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 //import Sidebar from './InvestorSidebar'; // Assuming you have a Sidebar component for navigation
-import '../../styles/UpdateInvestorProfile.css';
+import './UpdateInvestorProfile.css';
 
 
 function UpdateInvestorProfile() {
@@ -14,7 +14,7 @@ function UpdateInvestorProfile() {
   useEffect(() => {
     const fetchInvestor = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/investors/${id}`);
+        const response = await axios.get(`http://localhost:5000/FinanceInvestor${id}`);
         setInputs(response.data.investor);
       } catch (error) {
         console.error('Error fetching investor profile:', error);
@@ -26,14 +26,20 @@ function UpdateInvestorProfile() {
   // Send a PUT request to update the investor profile
   const sendRequest = async () => {
     await axios
-      .put(`http://localhost:5000/api/investors/${id}`, {
-        fullName: String(inputs.fullName),
-        phoneNo: String(inputs.phoneNo),
-        email: String(inputs.email),
-        address: String(inputs.address),
-        investmentAmount: Number(inputs.investmentAmount),
-        investmentDate: String(inputs.investmentDate),
-        status: String(inputs.status),
+      .put(`http://localhost:5000/FinanceInvestor/${id}`, {
+        
+        name: String (inputs.name),
+        dob: new Date (inputs.dob),
+        gmail: String (inputs.email),
+        maidenname: String (inputs.maidenname),
+        nic: String (inputs.nic),
+        accountnum: String (inputs.accountnum),
+        bankname: String (inputs.bankname),
+        accname: String (inputs.namaccnamee),
+        invtdate: new Date (inputs.invtdate),
+        amt:  Number (inputs.amt),
+        percentage: Number (inputs.percentage),
+  
       })
       .then((res) => res.data);
   };
@@ -50,7 +56,7 @@ function UpdateInvestorProfile() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     await sendRequest();
-    navigate('/investor-list'); // Navigate to the list of investors
+    navigate('/InvestorsDashboard'); // Navigate to the list of investors
   };
 
   return (
@@ -59,91 +65,131 @@ function UpdateInvestorProfile() {
       <div className="form-container">
         <h1>Update Investor Profile</h1>
         <form onSubmit={handleSubmit}>
-          <label>
-            Full Name
-            <input
-              type="text"
-              name="fullName"
-              value={inputs.fullName || ''}
-              onChange={handleChange}
-              placeholder="Enter Full Name"
-              required
-            />
-          </label>
-          <label>
-            Phone Number
-            <input
-              type="text"
-              name="phoneNo"
-              value={inputs.phoneNo || ''}
-              onChange={handleChange}
-              placeholder="Enter Phone Number"
-              required
-            />
-          </label>
-          <label>
-            Email
-            <input
-              type="email"
-              name="email"
-              value={inputs.email || ''}
-              onChange={handleChange}
-              placeholder="Enter Email"
-              required
-            />
-          </label>
-          <label>
-            Address
-            <input
-              type="text"
-              name="address"
-              value={inputs.address || ''}
-              onChange={handleChange}
-              placeholder="Enter Address"
-              required
-            />
-          </label>
-          <label>
-            Investment Amount
-            <input
-              type="number"
-              name="investmentAmount"
-              value={inputs.investmentAmount || ''}
-              onChange={handleChange}
-              placeholder="Enter Investment Amount"
-              required
-            />
-          </label>
-          <label>
-            Investment Date
-            <input
-              type="date"
-              name="investmentDate"
-              value={inputs.investmentDate || ''}
-              onChange={handleChange}
-              required
-            />
-          </label>
-          <label>
-            Status
-            <select
-              name="status"
-              value={inputs.status || ''}
-              onChange={handleChange}
-              required
-            >
-              <option value="">Select Status</option>
-              <option value="Active">Active</option>
-              <option value="Inactive">Inactive</option>
-              <option value="Pending">Pending</option>
-            </select>
-          </label>
+        <label> Investor ID
+  <input
+    type="text"
+    name="investorId"
+    value={inputs.investorId || ''}
+    onChange={handleChange}
+    placeholder="Enter Investor ID"
+    required
+  />
+</label>
+<label>
+  Name
+  <input
+    type="text"
+    name="name"
+    value={inputs.name || ''}
+    onChange={handleChange}
+    placeholder="Enter Name"
+    required
+  />
+</label>
+<label>
+  Date of Birth
+  <input
+    type="date"
+    name="dob"
+    value={inputs.dob || ''}
+    onChange={handleChange}
+    required
+  />
+</label>
+<label>
+  Maiden Name
+  <input
+    type="text"
+    name="maidenname"
+    value={inputs.maidenname || ''}
+    onChange={handleChange}
+    placeholder="Enter Maiden Name"
+    required
+  />
+</label>
+<label>
+  NIC
+  <input
+    type="text"
+    name="nic"
+    value={inputs.nic || ''}
+    onChange={handleChange}
+    placeholder="Enter NIC"
+    required
+  />
+</label>
+<label>
+  Account Number
+  <input
+    type="text"
+    name="accountnum"
+    value={inputs.accountnum || ''}
+    onChange={handleChange}
+    placeholder="Enter Account Number"
+    required
+  />
+</label>
+<label>
+  Bank Name
+  <input
+    type="text"
+    name="bankname"
+    value={inputs.bankname || ''}
+    onChange={handleChange}
+    placeholder="Enter Bank Name"
+    required
+  />
+</label>
+<label>
+  Investment Date
+  <input
+    type="date"
+    name="invtdate"
+    value={inputs.invtdate || ''}
+    onChange={handleChange}
+    required
+  />
+</label>
+<label>
+  Email
+  <input
+    type="email"
+    name="email"
+    value={inputs.email || ''}
+    onChange={handleChange}
+    placeholder="Enter Email"
+    required
+  />
+</label>
+<label>
+  Amount
+  <input
+    type="number"
+    name="amt"
+    value={inputs.amt || ''}
+    onChange={handleChange}
+    placeholder="Enter Amount"
+    required
+  />
+</label>
+<label>
+  Percentage
+  <input
+    type="number"
+    name="percentage"
+    value={inputs.percentage || ''}
+    onChange={handleChange}
+    placeholder="Enter Percentage"
+    required
+  />
+</label>
+
           <button type="submit" className="submit-button">
             Update
           </button>
           <button
             type="button"
-            onClick={() => navigate('/investor-list')}
+            onClick={() => navigate('/InvestorsDashboard')}
             className="back-button"
           >
             Back

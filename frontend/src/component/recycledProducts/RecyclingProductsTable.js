@@ -102,7 +102,7 @@ const RecyclingProductsTable = () => {
                   <th>Machine Name</th>
                   <th>Machine Status</th>
                   <th>Update</th>
-                  <th>Delete</th>  
+                  <th>Delete</th> 
                 </tr>
               </thead>
               <tbody>
@@ -122,7 +122,7 @@ const RecyclingProductsTable = () => {
                     <td>
                       <button id='delete-button' onClick={() => handleDelete(product._id)}>Delete</button>
                     </td>
-                  </tr>
+                   </tr>
                 ))}
               </tbody>
             </table>

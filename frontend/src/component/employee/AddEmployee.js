@@ -142,25 +142,7 @@ const AddEmployee = () => {
       <div className="w-full max-w-2xl bg-white shadow-md rounded-lg p-8">
         <h1 className="text-2xl font-bold mb-6 text-gray-800">{employeeId ? "Edit Employee" : "Add Employee"}</h1>
         <form onSubmit={handleSubmit} className="space-y-6">
-          {/* Employee ID
-          <div>
-            <label htmlFor="empId" className="block text-sm font-medium text-gray-700">
-              Employee ID:
-            </label>
-            <input
-              type="text"
-              id="empId"
-              name="empId"
-              placeholder="Enter Employee ID"
-              value={formData.empId}
-              onChange={handleInputChange}
-              required
-              maxLength={6}
-              pattern="[a-zA-Z0-9]*"
-              className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-            />
-          </div> */}
-
+          
           {/* Name */}
           <div>
             <label htmlFor="name" className="block text-sm font-medium text-gray-700">
