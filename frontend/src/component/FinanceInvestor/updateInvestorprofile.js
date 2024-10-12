@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 //import Sidebar from './InvestorSidebar'; // Assuming you have a Sidebar component for navigation
-import '../../styles/UpdateInvestorProfile.css';
+import './UpdateInvestorProfile.css';
 
 
 function UpdateInvestorProfile() {
@@ -189,7 +189,7 @@ function UpdateInvestorProfile() {
           </button>
           <button
             type="button"
-            onClick={() => navigate('/investor-list')}
+            onClick={() => navigate('/InvestorsDashboard')}
             className="back-button"
           >
             Back

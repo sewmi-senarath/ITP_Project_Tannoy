@@ -41,6 +41,7 @@
   background-color: #39b54a; /* Green buttons */
   text-align: center;
   border-radius: 4px;
+  transition: background-color 0.3s; /* Smooth transition */
 }
 
 .sidebar .nav-links a:hover {
@@ -107,9 +108,11 @@ h2 {
 table {
   width: 100%;
   border-collapse: collapse;
+  margin-bottom: 20px; /* Add some margin below the table */
 }
 
-table th, table td {
+table th,
+table td {
   padding: 10px;
   border: 1px solid #ddd;
   text-align: left;
@@ -127,10 +130,11 @@ button.edit-btn {
   padding: 5px 10px;
   border-radius: 4px;
   cursor: pointer;
+  transition: background-color 0.3s; /* Smooth transition */
 }
 
 button.edit-btn:hover {
-  background-color: #0056b3;
+  background-color: #0056b3; /* Darker blue on hover */
 }
 
 button.delete-btn {
@@ -141,43 +145,13 @@ button.delete-btn {
   border-radius: 4px;
   cursor: pointer;
   margin-left: 10px;
+  transition: background-color 0.3s; /* Smooth transition */
 }
 
 button.delete-btn:hover {
-  background-color: #c82333;
+  background-color: #c82333; /* Darker red on hover */
 }
 
-@media (max-width: 768px) {
-  .investor-dashboard {
-    flex-direction: column;
-  }
-
-  .sidebar {
-    width: 250px;
-    background-color: #1a1a40;
-    color: white;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 100%;
-  }
-
-  .main-content {
-    margin-left: 0;
-  }
-
-  header {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  header input {
-    width: 100%;
-    margin-bottom: 10px;
-  }
-
-}
 .pdf-btn {
   background-color: #007BFF; /* Blue background */
   color: white; /* White text */
@@ -192,4 +166,30 @@ button.delete-btn:hover {
 
 .pdf-btn:hover {
   background-color: #0056b3; /* Darker blue on hover */
+}
+
+/* Media Queries for Responsive Design */
+@media (max-width: 768px) {
+  .investor-dashboard {
+      flex-direction: column;
+  }
+
+  .sidebar {
+      width: 100%; /* Full width on smaller screens */
+      height: auto; /* Height auto on smaller screens */
+  }
+
+  .main-content {
+      margin-left: 0; /* Remove left margin */
+  }
+
+  header {
+      flex-direction: column;
+      align-items: flex-start;
+  }
+
+  header input {
+      width: 100%; /* Full width for the input field */
+      margin-bottom: 10px; /* Space below the input field */
+  }
 }

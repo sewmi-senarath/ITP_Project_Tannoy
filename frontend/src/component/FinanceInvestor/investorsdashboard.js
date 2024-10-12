@@ -3,7 +3,8 @@ import '../../App.css'; // Assuming your CSS is here
 import Logo from '../../images/logo.jpeg';
 import manager from '../../images/manager.jpeg'; // Manager's image
 import { useNavigate } from 'react-router-dom';
-import '../../styles/InvestorsDashboard.css';
+import './InvestorsDashboard.css';
+import './FinanceDashboard';
 import jsPDF from 'jspdf'; // Import jsPDF
 import 'jspdf-autotable'; // Import jsPDF autoTable plugin
 
@@ -85,7 +86,7 @@ function InvestorsDashboard() {
 
   // Handle the edit button to navigate to AddInvestor with the investor ID
   const handleEdit = (investorId) => {
-    navigate(`/update-investor/${investorId}`); // Navigate to the edit page with the investor ID
+    navigate(`/add-investor/${investorId}`); // Navigate to the edit page with the investor ID
   };
 
   // Helper function to format the date (e.g., Date of Investment)
@@ -133,9 +134,9 @@ doc.save('investor_report.pdf'); // Save the generated PDF
           <h2>Tannoy Electricals</h2>
         </div>
         <ul className="nav-links">
-          <li><a href="/investor-portfolio">Investor Portfolio</a></li>
+          <li><a href="/crmReport">Customer Report</a></li>
           <li><a href="/add-investor">Add Investor</a></li>
-          <li><a href="/investorReport">Investor Report</a></li>
+          <li><a href='/Financedashboard'>Finance Report</a></li>
         </ul>
         <div className="profile">
           <img src={manager} alt="Manager Photo" />
@@ -193,7 +194,7 @@ doc.save('investor_report.pdf'); // Save the generated PDF
                   <td>{investor._id}</td>
                   <td>{investor.name}</td>
                   <td>{formatDate(investor.dob)}</td> {/* Format the date */}
-                  <td>{investor.gmail}</td> {/* Correct this to gmail */}
+                  <td>{investor.email}</td> {/* Correct this to gmail */}
                   <td>{investor.maidenname}</td>
                   <td>{investor.nic}</td>
                   <td>{investor.accountnum}</td>

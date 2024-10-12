@@ -44,12 +44,13 @@ import AddPoduct from "./component/recycledProducts/AddProducts";
 import InvestorsDashboard from "./component/FinanceInvestor/investorsdashboard";
 import Addinvestor from "./component/FinanceInvestor/addInvestor";
 import UpdateInvestorProfile from "./component/FinanceInvestor/updateInvestorprofile";
+import Financedashboard from "./component/FinanceInvestor/FinanceDashboard";
 
 import Mylogin from './UserManagement/login';
 import RegisterForm from './UserManagement/register';
 
 function App() {
-  return (
+  return (  
     
     <BrowserRouter>
       <div>
@@ -104,6 +105,9 @@ function App() {
           <Route path="/InvestorsDashboard" element={<InvestorsDashboard/>} /> {/* Ruvindi */}
           <Route path="/investor" element={<UpdateInvestorProfile/>} /> {/* Ruvindi */}
           <Route path="/add-investor" element={<Addinvestor/>} /> {/* Ruvindi */}
+          <Route path="/Financedashboard" element={<Financedashboard/>} /> {/* Ruvindi */}
+          <Route path="/add-investor/:id" element={< UpdateInvestorProfile/>} /> {/* Ruvindi */}
+
         </Routes>
         <Footer />
       </div>

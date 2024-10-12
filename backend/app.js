@@ -7,6 +7,7 @@ const reProductRouter = require("./Route/ProductRoute");
 const delivermanRoute = require("./Route/delivermanRoute");
 const deliverParselRoute =require("./Route/deliverParselRoutes")
 const financeRoute = require("./Route/FinanceInvestorRoutes");
+const financeRouteNew = require('./Route/FinanceRoute');
 // const ProductRouter = require("./Route/InventoryProductRoutes");
 const SupplierRouter = require("./Route/SupplierRoutes")
 const employeeAttendancerouter=require("./Route/employeeAttendanceRoutes")
@@ -43,6 +44,7 @@ app.use("/Customer",router);
 app.use("/deliverMan", delivermanRoute); 
 app.use("/deliverParsel", deliverParselRoute)
 app.use("/FinanceInvestor", financeRoute);
+app.use("/api/finance", financeRouteNew);
 app.use("/api/items", itemRoutes);
 // app.use("/api/inventoryProduct",ProductRouter)
 app.use("/api/suppliers",SupplierRouter)

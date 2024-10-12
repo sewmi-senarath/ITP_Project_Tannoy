@@ -68,6 +68,12 @@ function AddInvestor() {
     setIsSubmitting(true);
     console.log(inputs);
 
+    if (inputs.accountnum.length !== 12 || isNaN(inputs.accountnum)) {
+      setErrorMessage("Account number must be exactly 12 digits.");
+      setIsSubmitting(false);
+      return;
+    }
+
     try {
       if (investorId) {
         await axios.put(`http://localhost:5000/api/investors/${investorId}`, {
@@ -124,6 +130,7 @@ function AddInvestor() {
           
           <button type="submit" className="submit-btn" disabled={isSubmitting}>
             {isSubmitting ? "Saving..." : investorId ? "Edit Investor" : "Add Investor"}
+            
           </button>
 
           {errorMessage && <p className="error-message">{errorMessage}</p>}
