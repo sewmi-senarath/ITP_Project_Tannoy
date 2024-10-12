@@ -64,9 +64,9 @@ function App() {
         <Header />
         <Routes>
         <Route path="/Register" element={<RegisterForm />} />
-        <Route path="/" element={<Mylogin />} />
+        <Route path="/login" element={<Mylogin />} />
 
-          <Route path="/home" element={<Home />} />
+          <Route path="/" element={<Home />} />
           <Route path="/employee-dashboard" element={<EmployeeDashboard />} />
           <Route path="/add-employee" element={<AddEmployee />} />
           <Route path="/technicalHome" element={<TechnicalHome />} />
