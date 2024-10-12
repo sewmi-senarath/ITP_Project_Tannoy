@@ -20,7 +20,7 @@ exports.createEmployee = async (req, res) => {
     //edit 2
     // Count the number of existing employees to generate a new ID
     const count = await Employee.countDocuments(); // Count existing employees
-    const newEmployeeId = `E${String(count + 50).padStart(5, '0')}`; // Generate the new employee ID
+    const newEmployeeId = `EM${String(count + 1).padStart(5, '0')}`; // Generate the new employee ID
 
 
     const employee = new Employee({
