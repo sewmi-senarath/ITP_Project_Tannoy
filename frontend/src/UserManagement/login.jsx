@@ -52,26 +52,25 @@ function LoginForm() {
         if (email === "inventorymanage@gmail.com") {
           navigate("/productDashboard");
         }
-        if (email === "employeemanager@gmail.com") {
+        else if (email === "employeemanager@gmail.com") {
           navigate("/employee-dashboard");
         } 
 
-        if (email === "inquirymanager@gmail.com") {
+        else if (email === "inquirymanager@gmail.com") {
           navigate("/");
         } 
-        if (email === "technicalmanagr@gmail.com") {
+        else if (email === "technicalmanagr@gmail.com") {
           navigate("/technicalHome");
         } 
-        if (email === "deliverymanager@gmal.com") {
+        else if (email === "deliverymanager@gmal.com") {
           navigate("/deliveryHome");
         } 
-        if (email === "financemanager@gmal.com") {
+        else if (email === "financemanager@gmal.com") {
           navigate("/InvestorsDashboard");
         } 
-        if (email === "productmanager@gmal.com") {
+        else if (email === "productmanager@gmal.com") {
           navigate("/recycle-product-dashbord");
         } 
-
         else {
           navigate("/crmHome");
         }

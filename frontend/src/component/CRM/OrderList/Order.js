@@ -7,7 +7,6 @@ function Order(props) {
   const {
     _id,
     productName,
-    productCategory,
     location,
     deliveryType,
     reciptNo,
@@ -16,6 +15,7 @@ function Order(props) {
     quantity,
     orderTotal,
     paymentType,
+    Date,
   } = props.order;
 
   const deleteHandler = async () => {
@@ -31,12 +31,12 @@ function Order(props) {
   return (
     <div>
       <table className="w-auto mx-auto m-1">
-        <tr className="p-3 bg-blue-100 hover:bg-blue-200">
+        <tr className=" bg-blue-100 hover:bg-blue-200">
           <td className="p-2 w-48 font-medium text-center text-slate-700 border-hidden">
             {productName}
           </td>
           <td className=" w-48 text-nowrap font-medium text-center text-slate-700 border-hidden">
-            {productCategory}
+            {Date}
           </td>
           <td className=" w-48 text-nowrap font-medium text-center text-slate-700 border-hidden">
             {location}
@@ -63,16 +63,19 @@ function Order(props) {
           <td className=" w-48 text-nowrap font-medium text-center text-slate-700 border-hidden">
             {paymentType}
           </td>
-          <td className=" w-56 font-medium text-center border-hidden">
+          <td className="p-1 w-32 font-medium text-center border-hidden ">
+            <div className="flex pt-4">
+            
             <Link to={`/updateOrder/${_id}`}>
-              <button className="p-1 ml-1 bg-green-700 rounded-lg">Update</button>
+              <button className="p-1 bg-green-700 rounded-lg hover:bg-green-600 w-16">Update</button>
             </Link>
             <button
-              className="p-1 bg-red-600 hover:bg-red-70 m-1 rounded-lg"
+              className="p-1 ml-1 bg-red-600 hover:bg-red-500 rounded-lg w-16"
               onClick={deleteHandler}
             >
               Remove
             </button>
+            </div>
           </td>
         </tr>
       </table>

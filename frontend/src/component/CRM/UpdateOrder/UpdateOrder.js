@@ -1,28 +1,59 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import Header from "../CrmHeader/crmHeader";
 
-
 function UpdateOrder() {
-  const [input, setInput] = useState({});
+  const [input, setInput] = useState({
+    productName: "",
+    productCategory: "",
+    location: "",
+    deliveryType: "",
+    reciptNo: "",
+    orderDescription: "",
+    unitPrice: "",
+    quantity: "",
+    orderTotal: "",
+    paymentType: "",
+  });
+  const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(false);
+  const [products, setProducts] = useState([]); // Store product data
   const history = useNavigate();
   const orderId = useParams().Oid;
 
+  // Fetch the product list from the API
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await axios.get("http://localhost:5000/Products");
+        setProducts(response.data.Products); // Store fetched products
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+
+  // Fetch the order details
   useEffect(() => {
     const fetchHandler = async () => {
-      await axios
-        .get(`http://localhost:5000/order/${orderId}`)
-        .then((res) => res.data)
-        .then((data) => setInput(data.order));
+      try {
+        const response = await axios.get(`http://localhost:5000/order/${orderId}`);
+        setInput(response.data.order);
+      } catch (error) {
+        console.error("Error fetching order:", error);
+      }
     };
     fetchHandler();
   }, [orderId]);
 
+  // Send update request to the server
   const sendRequest = async () => {
-    await axios
-      .put(`http://localhost:5000/order/${orderId}`, {
+    setLoading(true);
+    try {
+      await axios.put(`http://localhost:5000/order/${orderId}`, {
         productName: String(input.productName),
         productCategory: String(input.productCategory),
         location: String(input.location),
@@ -33,236 +64,252 @@ function UpdateOrder() {
         quantity: Number(input.quantity),
         orderTotal: Number(input.orderTotal),
         paymentType: String(input.paymentType),
-      })
-      .then((res) => res.data);
+      });
+      history("/orderDetails");
+    } catch (error) {
+      console.error("Error updating order:", error);
+      setErrors({ ...errors, submit: "Failed to update the order." });
+    } finally {
+      setLoading(false);
+    }
   };
 
+  // Handle input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    // Validate numeric fields
-    if (name === "unitPrice" || name === "quantity") {
-      if (isNaN(value)) return;
-    }
-
+    // Update the input state
     setInput((prevState) => {
-      const updatedInput = {
-        ...prevState,
-        [name]: value,
-      };
+      const updatedInput = { ...prevState, [name]: value };
 
-      // Auto-calculate orderTotal if unitPrice and quantity are provided
-      if (name === "unitPrice" || name === "quantity") {
-        const unitPrice = parseFloat(updatedInput.unitPrice) || 0;
-        const quantity = parseFloat(updatedInput.quantity) || 0;
-        updatedInput.orderTotal = (unitPrice * quantity).toFixed(2);
+      // Calculate order total when quantity changes
+      if (name === "quantity") {
+        const quantity = Number(value);
+        if (!isNaN(quantity) && quantity >= 0) {
+          updatedInput.quantity = quantity; // Update quantity
+          updatedInput.orderTotal = (updatedInput.unitPrice * quantity).toFixed(2); // Calculate order total
+        } else {
+          updatedInput.orderTotal = "0.00"; // Reset order total if quantity is invalid
+        }
       }
 
       return updatedInput;
     });
   };
 
+  // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(input);
-    sendRequest().then(() => history("/orderDetails"));
+    // Check for any errors before sending the request
+    if (!errors.quantity) {
+      sendRequest();
+    }
   };
 
   return (
     <div>
-     <Header />
-      <div>
-        <h1 className="text-5xl font-semibold text-slate-700 text-center my-5">
-          Update Order
-        </h1>
-        <hr />
-      </div>
-      <div>
-        <form
-          className=" w-4/5 mx-auto mt-5 p-5 rounded-lg flex flex-row"
-          onSubmit={handleSubmit}
-        >
-          <div className="flex flex-row bg-blue-100 p-3 py-5 rounded-lg w-3/5 shadow-2xl mx-auto">
-            <div>
-            <div className="mt-3 ml-8">
-                <label className="font-bold text-slate-700 text-2xl ">
-                  Product Name
-                </label>
-                <br />
-                <select
-                  name="productName"
-                  onChange={handleChange}
-                  value={input.productName}
-                  className="border-2 border-slate-500 rounded-lg w-72 h-10 mt-2 placeholder-shown: placeholder-slate-500 p-1"
-                >
-                  <option value="" disabled selected className="text-slate-700">
-                    Select the Product
-                  </option>
-                  <option>Holders</option>
-                  <option>Junction Boxes</option>
-                  <option>Sunk Boxes</option>
-                  <option>Double Holder</option>
-                  <option>Round Block</option>
-                  <option>Ceiling rose</option>
-                </select>
-              </div>
-              <div className="mt-3 ml-8">
-                <label className="font-bold text-slate-700 text-2xl ">
-                  Product Category
-                </label>
-                <br />
-                <input
-                  type="text"
-                  onChange={handleChange}
-                  value={input.productCategory}
-                  name="productCategory"
-                  className="border-2 border-slate-500 rounded-lg w-72 h-10 mt-2 placeholder-shown: placeholder-slate-500 p-1"
-                  placeholder="Product Category"
-                />
-              </div>
-              <div className="mt-3 ml-8">
-                <label className="font-bold text-slate-700 text-2xl ">
-                  Location
-                </label>
-                <br />
-                <input
-                  type="text"
-                  onChange={handleChange}
-                  value={input.location}
-                  name="location"
-                  className="border-2 border-slate-500 rounded-lg w-72 h-10 mt-2 placeholder-shown: placeholder-slate-500 p-1"
-                  placeholder="Entert Location "
-                />
-              </div>
-              <div className="mt-3 ml-8">
-                <label className="font-bold text-slate-700 text-2xl ">
-                  Delivery Type
-                </label>
-                <br />
-                <select
-                  name="deliveryType"
-                  onChange={handleChange}
-                  value={input.deliveryType}
-                  className="border-2 border-slate-500 rounded-lg w-72 h-10 mt-2 placeholder-shown: placeholder-slate-500 p-1"
-                >
-                  <option value="" disabled selected className="text-slate-700">
-                    Select the delivery type
-                  </option>
-                  <option>Standard Delivery</option>
-                  <option>Express Delivery</option>
-                  <option>Scheduled Delivery</option>
-                  <option>Same-Day Delivery</option>
-                  <option>Next-Day Delivery</option>
-                </select>
-              </div>
-              <div className="mt-3 ml-8">
-                <label className="font-bold text-slate-700 text-2xl ">
-                  Recipt No
-                </label>
-                <br />
-                <input
-                  type="text"
-                  onChange={handleChange}
-                  value={input.reciptNo}
-                  name="reciptNo"
-                  className="border-2 border-slate-500 rounded-lg w-72 h-10 mt-2 placeholder-shown: placeholder-slate-500 p-1"
-                  placeholder="Tracking ID"
-                />
-              </div>
-              <div className="mt-3 ml-8">
-                <label className="font-bold text-slate-700 text-2xl ">
-                  Payment Type
-                </label>
-                <br />
-                <select
-                  name="paymentType"
-                  onChange={handleChange}
-                  value={input.paymentType}
-                  className="border-2 border-slate-500 rounded-lg w-72 h-10 mt-2 placeholder-shown: placeholder-slate-500 p-1"
-                >
-                  <option value="" disabled selected className="text-slate-700">
-                    Select the payment type
-                  </option>
-                  <option>Credit/Debit Card</option>
-                  <option>Bank Transfer</option>
-                  <option>Cash on Delivery (COD)</option>
-                  <option>Mobile Payment (e.g., PayPal, Apple Pay)</option>
-                  <option>Purchase Order (PO)</option>
-                </select>
-              </div>
-            </div>
-            <div>
-              <div className="ml-10">
-                <label className="font-bold text-slate-700 text-2xl ">
-                  Order Description
-                </label>
-                <br />
-                <input
-                  type="text"
-                  onChange={handleChange}
-                  value={input.orderDescription}
-                  name="orderDescription"
-                  className="border-2 border-slate-500 rounded-lg w-72 h-32 mt-2 placeholder-shown: placeholder-slate-500 p-1"
-                  placeholder="Description"
-                />
-              </div>
-              <div className="mt-4 ml-10">
-                <label className="font-bold text-slate-700 text-2xl ">
-                  Unit Price
-                </label>
-                <br />
-                <input
-                  type="text"
-                  onChange={handleChange}
-                  value={input.unitPrice}
-                  name="unitPrice"
-                  className="border-2 border-slate-500 rounded-lg w-72 h-10 mt-2 placeholder-shown: placeholder-slate-500 p-1"
-                  placeholder="Unit Price"
-                />
-              </div>
-              <div className="mt-3 ml-10">
-                <label className="font-bold text-slate-700 text-2xl ">
-                  Quantity
-                </label>
-                <br />
-                <input
-                  type="text"
-                  onChange={handleChange}
-                  value={input.quantity}
-                  name="quantity"
-                  className="border-2 border-slate-500 rounded-lg w-72 h-10 mt-2 placeholder-shown: placeholder-slate-500 p-1"
-                  placeholder="Quantity"
-                />
-              </div>
-              <div className="mt-3 ml-10">
-                <label className="font-bold text-slate-700 text-2xl ">
-                  Order Total
-                </label>
-                <br />
-                <input
-                  type="text"
-                  onChange={handleChange}
-                  value={input.orderTotal}
-                  name="orderTotal"
-                  className="border-2 border-slate-500 rounded-lg w-72 h-10 mt-2 placeholder-shown: placeholder-slate-500 p-1"
-                  placeholder="Auto-calculated...."
-                  readOnly
-                />
-              </div>
-              {/* Place Order Button */}
-              <div className="mt-5 ml-10">
-                <button
-                  type="submit"
-                  className="bg-blue-700 hover:bg-blue-600 text-white font-bold mt-5 py-2 px-4 rounded-lg w-72 h-12"
-                >
-                  Update Order
-                </button>
-              </div>
-            </div>
+      <Header />
+      <div className="mx-auto">
+  <h1 className="text-4xl font-bold text-gray-800 text-center mb-8">
+    Update Order
+  </h1>
+  <hr className="border-t-2 border-gray-300 mb-10" />
+    <form className="w-2/5 bg-blue-100" onSubmit={handleSubmit}>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {/* Left Column */}
+        <div>
+          <div className="mb-4">
+            <label className="block text-lg font-medium text-gray-700 mb-2">
+              Product Name
+            </label>
+            <input
+              type="text"
+              name="productName"
+              value={input.productName || ""}
+              className="opacity-50 w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2  bg-gray-100"
+              readOnly
+            />
           </div>
-        </form>
+
+          <div className="mb-4">
+            <label className="block text-lg font-medium text-gray-700 mb-2">
+              Product Category
+            </label>
+            <input
+              type="text"
+              onChange={handleChange}
+              value={input.productCategory || ""}
+              name="productCategory"
+              className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400"
+              placeholder="Enter Product Category"
+            />
+            {errors.productCategory && (
+              <p className="text-red-500 text-sm mt-1">{errors.productCategory}</p>
+            )}
+          </div>
+
+          <div className="mb-4">
+            <label className="block text-lg font-medium text-gray-700 mb-2">
+              Location
+            </label>
+            <input
+              type="text"
+              onChange={handleChange}
+              value={input.location || ""}
+              name="location"
+              className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400"
+              placeholder="Enter Location"
+            />
+            {errors.location && (
+              <p className="text-red-500 text-sm mt-1">{errors.location}</p>
+            )}
+          </div>
+
+          <div className="mb-4">
+            <label className="block text-lg font-medium text-gray-700 mb-2">
+              Delivery Type
+            </label>
+            <select
+              name="deliveryType"
+              onChange={handleChange}
+              value={input.deliveryType || ""}
+              className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            >
+              <option value="" disabled>
+                Select the delivery type
+              </option>
+              <option>Standard Delivery</option>
+              <option>Express Delivery</option>
+              <option>Scheduled Delivery</option>
+              <option>Same-Day Delivery</option>
+              <option>Next-Day Delivery</option>
+            </select>
+            {errors.deliveryType && (
+              <p className="text-red-500 text-sm mt-1">{errors.deliveryType}</p>
+            )}
+          </div>
+
+          <div className="mb-4">
+            <label className="block text-lg font-medium text-gray-700 mb-2">
+              Receipt No
+            </label>
+            <input
+              type="text"
+              onChange={handleChange}
+              value={input.reciptNo || ""}
+              name="reciptNo"
+              className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400"
+              placeholder="Enter Receipt No"
+            />
+            {errors.reciptNo && (
+              <p className="text-red-500 text-sm mt-1">{errors.reciptNo}</p>
+            )}
+          </div>
+
+        </div>
+
+        {/* Right Column */}
+        <div>
+          <div className="mb-4">
+            <label className="block text-lg font-medium text-gray-700 mb-2">
+              Unit Price
+            </label>
+            <input
+              type="text"
+              value={input.unitPrice || ""}
+              name="unitPrice"
+              className=" opacity-50 w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2  bg-gray-100"
+              readOnly
+            />
+          </div>
+
+          <div className="mb-4">
+            <label className="block text-lg font-medium text-gray-700 mb-2">
+              Quantity
+            </label>
+            <input
+              type="number"
+              onChange={handleChange}
+              value={input.quantity || ""}
+              name="quantity"
+              className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400"
+              placeholder="Enter Quantity"
+            />
+            {errors.quantity && (
+              <p className="text-red-500 text-sm mt-1">{errors.quantity}</p>
+            )}
+          </div>
+
+          <div className="mb-4">
+            <label className="block text-lg font-medium text-gray-700 mb-2">
+              Order Total
+            </label>
+            <input
+              type="text"
+              value={input.orderTotal || ""}
+              name="orderTotal"
+              className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400 bg-gray-100"
+              readOnly
+            />
+          </div>
+
+          <div className="mb-4">
+            <label className="block text-lg font-medium text-gray-700 mb-2">
+              Payment Type
+            </label>
+            <select
+              name="paymentType"
+              onChange={handleChange}
+              value={input.paymentType || ""}
+              className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            >
+              <option value="" disabled>
+                Select Payment Type
+              </option>
+              <option>Credit Card</option>
+              <option>PayPal</option>
+              <option>Bank Transfer</option>
+              <option>Cash on Delivery</option>
+            </select>
+            {errors.paymentType && (
+              <p className="text-red-500 text-sm mt-1">{errors.paymentType}</p>
+            )}
+          </div>
+        </div>
       </div>
-    </div>
+      
+      <div className="mb-4">
+            <label className="block text-lg font-medium text-gray-700 mb-2">
+              Order Description
+            </label>
+            <textarea
+              onChange={handleChange}
+              value={input.orderDescription || ""}
+              name="orderDescription"
+              className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400"
+              placeholder="Enter Order Description"
+            ></textarea>
+            {errors.orderDescription && (
+              <p className="text-red-500 text-sm mt-1">{errors.orderDescription}</p>
+            )}
+          </div>
+
+      {/* Submit Button */}
+      <div className="mt-8">
+        <button
+          type="submit"
+          className="w-full bg-blue-600 text-white font-semibold py-3 rounded-lg shadow-lg hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 transition-all"
+          disabled={loading}
+        >
+          {loading ? "Updating..." : "Update Order"}
+        </button>
+        {errors.submit && (
+          <p className="text-red-500 text-center mt-3">{errors.submit}</p>
+        )}
+      </div>
+    </form>
+  </div>
+</div>
   );
 }
 

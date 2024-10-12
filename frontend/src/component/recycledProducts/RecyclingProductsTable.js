@@ -71,12 +71,13 @@ const RecyclingProductsTable = () => {
   };
 
   return (
-    <div style={{display : "flex"}}>
-      <RecycleProductSidebar />
-      <div className='component-div'>
+    <div id='body-div'>
+        <div id='sidebar-section'>
+        < RecycleProductSidebar /></div>
+        <div id='component-div'>
         <div>
           <div className='page-title-div'>
-            <h2 className='page-title'>Recycling Products List</h2>
+            <h2 className='re-page-title'>Recycling Products List</h2>
             <input
             type="text"
             placeholder="Search by Raw Material Name"
@@ -98,8 +99,10 @@ const RecyclingProductsTable = () => {
                   <th>Date</th>
                   <th>Stage</th>
                   <th>Status</th>
+                  <th>Machine Name</th>
+                  <th>Machine Status</th>
                   <th>Update</th>
-                  <th>Delete</th>
+                  <th>Delete</th>  
                 </tr>
               </thead>
               <tbody>
@@ -111,6 +114,8 @@ const RecyclingProductsTable = () => {
                     <td>{formatDate(product.date)}</td>
                     <td>{product.stage}</td>
                     <td>{product.status}</td>
+                    <td>{product.machineName}</td>
+                    <td>{product.machineCondition}</td>
                     <td>
                       <button id='update-button' onClick={() => handleUpdate(product)}>Update</button>
                     </td>

@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 
 const StockDashboard = () => {
   const [items, setItems] = useState([]);
+  const [recyclingProducts, setRecyclingProducts] = useState([]); // State to hold recycling products
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
@@ -32,6 +33,19 @@ const StockDashboard = () => {
     };
 
     fetchItems();
+  }, []);
+
+  useEffect(() => {
+    const fetchRecyclingProducts = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/recyclingProducts');
+        setRecyclingProducts(response.data.RecyclingProducts); // Assuming your API returns { RecyclingProducts: [...] }
+      } catch (err) {
+        console.error('Error fetching recycling products:', err);
+      }
+    };
+
+    fetchRecyclingProducts();
   }, []);
 
   useEffect(() => {
@@ -62,14 +76,6 @@ const StockDashboard = () => {
       alert('Failed to delete item');
     }
   };
-
-  if (loading) {
-    return <p className="text-center">Loading items...</p>;
-  }
-
-  if (error) {
-    return <p className="text-center">{error}</p>;
-  }
 
   const handleEdit = (itemId) => {
     navigate(`/addStock/${itemId}`);
@@ -103,23 +109,71 @@ const StockDashboard = () => {
     doc.save('Stock_Inventory_Report.pdf');
   };
 
+  // Function to reduce stock size based on recycling products
+  const updateStockFromRecycling = () => {
+    recyclingProducts.forEach(async (recyclingProduct) => {
+      const itemInStock = items.find(item => item.itemName === recyclingProduct.recyclingProductName);
+      if (itemInStock) {
+        const newStockSize = itemInStock.stockSize - recyclingProduct.quantity;
+
+        // Update the stock size if the new value is not negative
+        if (newStockSize >= 0) {
+          try {
+            await axios.put(`http://localhost:5000/api/items/${itemInStock._id}`, {
+              ...itemInStock,
+              stockSize: newStockSize
+            });
+            setItems(prevItems => prevItems.map(item => 
+              item._id === itemInStock._id ? { ...item, stockSize: newStockSize } : item
+            ));
+            setFilteredItems(prevItems => prevItems.map(item => 
+              item._id === itemInStock._id ? { ...item, stockSize: newStockSize } : item
+            ));
+          } catch (err) {
+            console.error('Error updating stock size:', err);
+          }
+        }
+      }
+    });
+  };
+
   const lowStockItems = filteredItems.filter(item => item.stockSize < lowStockThreshold);
+
+  // Call the updateStockFromRecycling function when the component mounts
+  useEffect(() => {
+    updateStockFromRecycling();
+  }, [recyclingProducts]);
+
+  if (loading) {
+    return <p className="text-center">Loading items...</p>;
+  }
+
+  if (error) {
+    return <p className="text-center">{error}</p>;
+  }
 
   return (
     <div className="flex">
       <div className="w-64 bg-gray-800 h-screen text-white flex flex-col">
-        <div className="p-4">
-          <img src={Logo} alt="Tannoy Electricals Logo" className="h-16 mx-auto" />
-          <h2 className="text-center mt-2">Tannoy Electricals</h2>
-        </div>
         <ul className="mt-6 space-y-2">
-          <li><a href="/productDashboard" className="block py-2 px-4 hover:bg-gray-700">Product Details</a></li>
+
+        
+        <li><a href="/stockDashboard" className="block py-2 px-4 hover:bg-gray-700">Stock Details</a></li>   
+        <li><a href="/addStock" className="block py-2 px-4 hover:bg-gray-700">Add Stock</a></li>  
+        <li><a href="/productDashboard" className="block py-2 px-4 hover:bg-gray-700">Product Details</a></li>   
+        {/* <li><a href="/Addproduct" className="block py-2 px-4 hover:bg-gray-700">Add Product</a></li> */}
+        <li><a href="/supplierDashboard" className="block py-2 px-4 hover:bg-gray-700">Supplier details</a></li>
+        <li><a href="/Addsupplier" className="block py-2 px-4 hover:bg-gray-700">Add Supplier</a></li>
+        <li><a href="/stock-add" className="block py-2 px-4 hover:bg-gray-700">Help Desk</a></li>
+
+
+          {/* <li><a href="/productDashboard" className="block py-2 px-4 hover:bg-gray-700">Product Details</a></li>
           <li><a href="/Addproduct" className="block py-2 px-4 hover:bg-gray-700">Add Product</a></li>
           <li><a href="/supplierDashboard" className="block py-2 px-4 hover:bg-gray-700">Supplier Details</a></li>
           <li><a href="/Addsupplier" className="block py-2 px-4 hover:bg-gray-700">Add Supplier</a></li>
           <li><a href="/stockDashboard" className="block py-2 px-4 hover:bg-gray-700">Stock Details</a></li>
           <li><a href="/addStock" className="block py-2 px-4 hover:bg-gray-700">Add Stock</a></li>
-          <li><a href="/stock-add" className="block py-2 px-4 hover:bg-gray-700">Add Inquiry</a></li>
+          <li><a href="/stock-add" className="block py-2 px-4 hover:bg-gray-700">Add Inquiry</a></li> */}
         </ul>
         <div className="mt-auto p-4">
           <img src={manager} alt="Manager Photo" className="h-16 w-16 rounded-full mx-auto" />
@@ -174,35 +228,32 @@ const StockDashboard = () => {
               <th className="border px-4 py-2">Stock Size</th>
               <th className="border px-4 py-2">Availability</th>
               <th className="border px-4 py-2">Actions</th>
+              <th className="border px-4 py-2">Restock</th>
             </tr>
           </thead>
           <tbody>
-            {filteredItems.length > 0 ? (
-              filteredItems.map(item => (
-                <tr key={item._id} className="hover:bg-gray-100">
-                  <td className="border px-4 py-2">{item.itemCode}</td>
-                  <td className="border px-4 py-2">{item.itemName}</td>
-                  <td className="border px-4 py-2">{item.itemCategory}</td>
-                  <td className="border px-4 py-2">{item.itemDescription || 'No description'}</td>
-                  <td className="border px-4 py-2">{item.stockSize}</td>
-                  <td className="border px-4 py-2">{item.availability === 'Available' ? 'Available' : 'Unavailable'}</td>
-                  <td className="border px-4 py-2">
-                    <button className="bg-blue-500 text-white rounded px-4 py-1 mr-2" onClick={() => handleEdit(item._id)}>Edit</button>
-                    <button className="bg-red-500 text-white rounded px-4 py-1" onClick={() => handleDelete(item._id)}>Delete</button>
-                  </td>
-                </tr>
-              ))
-            ) : (
-              <tr>
-                <td colSpan="7" className="text-center border px-4 py-2">No items found</td>
+            {filteredItems.map(item => (
+              <tr key={item._id}>
+                <td className="border px-4 py-2">{item.itemCode}</td>
+                <td className="border px-4 py-2">{item.itemName}</td>
+                <td className="border px-4 py-2">{item.itemCategory}</td>
+                <td className="border px-4 py-2">{item.itemDescription || 'No description'}</td>
+                <td className="border px-4 py-2">{item.stockSize}</td>
+                <td className="border px-4 py-2">{item.availability === 'Available' ? 'Available' : 'Unavailable'}</td>
+                <td className="border px-4 py-2">
+                  <button onClick={() => handleEdit(item._id)} className="bg-blue-500 text-white px-2 py-1 rounded ml-2">Edit</button>
+                  <button onClick={() => handleDelete(item._id)} className="bg-red-500 text-white px-2 py-1 rounded ml-2">Delete</button>
+                </td>
+                <td className="border px-4 py-2">
+                  <button onClick={() => handleEdit(item._id)} className="bg-yellow-600 text-white px-2 py-1 rounded ml-2 hover:bg-yellow-700 transition duration-200">Re-Stock</button>
+                  
+                </td>
               </tr>
-            )}
+            ))}
           </tbody>
         </table>
 
-        <button onClick={generatePDFReport} className="mt-4 bg-green-500 text-white rounded px-4 py-2">
-          Generate PDF Report
-        </button>
+        <button onClick={generatePDFReport} className="bg-green-500 text-white px-4 py-2 rounded mt-4">Download Report</button>
       </div>
     </div>
   );

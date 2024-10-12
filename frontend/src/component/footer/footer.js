@@ -1,36 +1,72 @@
-import React from 'react';
-import '../../App.css';
-import Logo from '../../images/logo.jpeg';
-import facebook from '../../images/facebook.jpeg';
-import instagram from '../../images/instagram.jpeg';
-import linkedin from '../../images/linkedin.jpeg';
-
+import React from "react";
+import "./footer.css";
 
 const Footer = () => {
-    return (
-        <footer className="tannoy-footer">
-            <div className="tannoy-footer-logo">
-                <img src={Logo} alt="Tannoy Logo" />
-                <p>Lorem ipsum dolor amet consectetur adi pisicing elit sed eiusm tempor incidunt ut labore dolore.</p>
-                <address>Add: 70 Upper St Norwich NR2.<br /> Call: 01-123 5641 231<br /> Email: info@edublink.com</address>
+  return (
+    <footer className="footer">
+      <ul className="footer-right">
+        <li>
+          <div className="footer-left"> {/* Changed id to className */}
+            <img className="logo" />
+            <p className="footer-desc"> {/* Changed id to className */}
+              "Amplifying Innovation, Powering Connections: Delivering
+              High-Quality Electrical Solutions for a Smarter Future"
+            </p>
+            <div className="socials social-links"> {/* Changed id to className */}
+              <a href="#">
+                <i className="fa-brands fa-facebook-f"></i>
+              </a>
+              <a href="#">
+                <i className="fa-brands fa-instagram"></i>
+              </a>
+              <a href="#">
+                <i className="fa-brands fa-twitter"></i>
+              </a>
             </div>
-            <div className="tannoy-footer-links">
-                <h3>Social Media Platforms</h3>
-                <div className="tannoy-social-icons">
-                    <a href="#"><img src={facebook} alt="Facebook" /></a> 
-                    <a href="#"><img src={instagram} alt="Instagram" /></a>
-                    <a href="#"><img src={linkedin} alt="LinkedIn" /></a>
-                </div>
-                <h3>Contacts</h3>
-                <form>
-                    <label htmlFor="email">Enter your email address to register to our newsletter subscription</label>
-                    <input type="email" id="email" placeholder="Enter your Email" />
-                    <button type="submit">Subscribe</button>
-                </form>
+          </div>
+        </li>
+        <li className="features">
+          <h2 className="links-header"> {/* Changed id to className */}
+            <span>Links</span>
+          </h2>
+          <ul className="nav-links box-middle"> {/* Changed id to className */}
+            <li>
+              <a href="home">Home</a>
+            </li>
+            <li>
+              <a href="home">About Us</a>
+            </li>
+            <li>
+              <a href="#">Contact Us</a>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <div className="box">
+            <div className="subscription-form form-box"> {/* Changed id to className */}
+              <input
+                type="text"
+                name="EmailAddress"
+                placeholder="Enter your Email"
+              />
+              <button type="submit">Subscribe</button>
             </div>
-            <p>&copy; 2024 Tannoy Electricals</p>
-        </footer>
-    );
-}
+            <form action="#"></form>
+          </div>
+          <ul className="box-middle">
+            <li>
+              <a href="#">Terms and Conditions</a>
+              <a href="#">FAQ and Feedback</a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+
+      <div className="footer-bottom"> {/* Changed id to className */}
+        <p>All Right reserved by &copy; Tannoy Electrical Industries 2024</p>
+      </div>
+    </footer>
+  );
+};
 
 export default Footer;

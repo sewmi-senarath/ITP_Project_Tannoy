@@ -3,10 +3,11 @@ const express = require("express");
 const userRouter = require("./Route/UserRoutes");
 const employeeRouter = require("./Route/EmployeeRoute");
 const recyclingProductRouter = require("./Route/RecyclingProductRoute");
+const reProductRouter = require("./Route/ProductRoute");
 const delivermanRoute = require("./Route/delivermanRoute");
 const deliverParselRoute =require("./Route/deliverParselRoutes")
 const financeRoute = require("./Route/FinanceInvestorRoutes");
-const ProductRouter = require("./Route/InventoryProductRoutes");
+// const ProductRouter = require("./Route/InventoryProductRoutes");
 const SupplierRouter = require("./Route/SupplierRoutes")
 const employeeAttendancerouter=require("./Route/employeeAttendanceRoutes")
 require('dotenv').config({path: './env/.env'});
@@ -22,7 +23,7 @@ const { loginCRM } = require("./CRMAuthHandler/CRMLoginHandler");
 
 const app = express();
 const itemRoutes = require("./Route/InvenoryRoute");
-const productRoutes=require("./Route/InventoryProductRoutes")
+const productRoutes=require("./Route/InventoryProductRoutes");
 const loginRoute = require('./Route/loginRoute.js');
 
 
@@ -33,6 +34,7 @@ app.use(express.json());
 app.use(cors());
 //app.use("/Users", userRouter);
 app.use("/api/employees", employeeRouter);
+app.use("/products", reProductRouter);
 app.use("/RecyclingProducts", recyclingProductRouter);
 app.use(cookieParser());
 app.use(express.urlencoded({extended: false}));
@@ -42,15 +44,15 @@ app.use("/deliverMan", delivermanRoute);
 app.use("/deliverParsel", deliverParselRoute)
 app.use("/FinanceInvestor", financeRoute);
 app.use("/api/items", itemRoutes);
-app.use("/api/inventoryProduct",ProductRouter)
+// app.use("/api/inventoryProduct",ProductRouter)
 app.use("/api/suppliers",SupplierRouter)
 app.use("/api/attendance",employeeAttendancerouter)
 app.use("/order", orderRouter);
 app.use('/api/products', productRoutes);
-app.use('/api/items',itemRoutes);
 app.post("/CRMRegister", CRMRegister);
 app.post("/loginCRM", loginCRM);
 app.use(require("./Route/TechnicalRoutes.js"));
+
 
 const jwt = require('jsonwebtoken');
 

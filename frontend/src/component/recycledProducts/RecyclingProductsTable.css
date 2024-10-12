@@ -1,8 +1,16 @@
-.component-div {
-  display: inline-block; 
-  vertical-align: top; 
-  width: calc(100% - 220px);
-  margin-left: 260px;
+#component-div {
+  display: inline-flex  !important;
+  vertical-align: top;
+  width: 100%!important;
+}
+#sidebar-section{
+  display: inline-flex  !important;
+  position: sticky;
+  width: 25% !important;
+}
+
+#body-div{
+  display: flex !important;
 }
 
 #AddRecycleProductsButton {
@@ -11,9 +19,10 @@
     color: white;
     border-radius: 5px;
 }
-.page-title{
+.re-page-title{
   font-size: 24px;
   font-weight: 600;
+  color: black;
 }
 
 .page-title-div {
