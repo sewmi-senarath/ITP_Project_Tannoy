@@ -49,7 +49,8 @@ function OrderDtails() {
 
   return (
     <div>
-     <Header />
+      <div>
+        <Header />
       <div className="flex flex-row mt-5 mb-2 justify-between">
         <h1 className="text-center font-semibold m-1 ml-5 text-4xl text-slate-700">
           Order Details Display
@@ -61,18 +62,17 @@ function OrderDtails() {
               Place New Order
             </button>
           </Link>
-          <form className="   rounded-lg flex items-center h-12 mr-1  mt-2">
-            <input
-              onChange={(e) => setSearchQuery(e.target.value)}
-              type="text"
-              placeholder="Search..."
-              //Responsivness od the components
-              //w-24 --> make the size according to the mobile
-              //sm:w-64 --> above the size of the mobile
-              className="bg-green-100  w-44 sm:w-64 border-none h-10 "
-            />
-            
-          </form>
+          <div className="rounded-lg flex items-center h-12 mr-1  mt-2 w-96 ">
+           <input
+            onChange={(e) => setSearchQuery(e.target.value)}
+            type="text"
+            placeholder="Search..."
+            //Responsivness of the components
+            //w-24 --> make the size according to the mobile
+            //sm:w-64 --> above the size of the mobile
+          className="bg-green-100  w-32 sm:w-64 border-none h-10"
+           />
+          </div>
           <button
             className="h-10 font-bold bg-green-500 px-5 rounded-lg w-32 mt-3"
             onClick={handleSearch}
@@ -85,25 +85,25 @@ function OrderDtails() {
       <div className="mt-2 text-center  p-3">
         <h1 className="text-3xl font-bold mr-2">Order Summary</h1>
         <div className="flex flex-row gap-10 mx-auto items-center w-3/5 mt-5">
-          <h4 className="font-semibold text-2xl ml-14 border-2 p-1 rounded-lg border-dashed border-slate-900">
+          <h4 className="font-semibold text-2xl ml-14 border-2 p-1 rounded-lg border-dashed border-slate-900 text-slate-700">
             Total Orders: {totalOrders}
           </h4>
-          <h4 className="font-semibold text-2xl border-2 rounded-lg p-1 border-dashed border-slate-900">
+          <h4 className="font-semibold text-2xl border-2 rounded-lg p-1 border-dashed border-slate-900 text-slate-700">
             Quantity Less Than 20: {ordersLessThan20}
           </h4>
-          <h4 className="font-semibold text-2xl border-2 rounded-lg p-1 border-dashed border-slate-900">
+          <h4 className="font-semibold text-2xl border-2 rounded-lg p-1 border-dashed border-slate-900 text-slate-700">
             Total Amount : ${totalAmount.toFixed(2)}
           </h4>
         </div>
       </div>
       <div className="mt-10">
         <table className=" mx-auto">
-          <tr className="bg-green-300 ">
+          <tr className="bg-green-300 h-14">
             <td className=" p-2 border-hidden font-bold text-center w-48 border-green-500">
               Product Name
             </td>
             <td className=" p-2 border-hidden font-bold text-center w-48  border-green-500">
-              Category
+              Date
             </td>
             <td className="p-2 border-hidden font-bold text-center w-48 border-green-500">
               Location
@@ -161,7 +161,9 @@ function OrderDtails() {
         </div>
       )}
     </div>
+    </div>
   );
+
 }
 
 export default OrderDtails;
