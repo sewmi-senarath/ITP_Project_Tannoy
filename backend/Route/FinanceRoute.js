@@ -1,13 +1,13 @@
+
 const express = require('express');
 const router = express.Router();
+const {addFinance,getFinanceWithinMonth} = require('../Controlers/FinanceController');
+const {deleteFinance} = require('../Controlers/FinanceController');
+const {getAllFinance} = require('../Controlers/FinanceController');
 
-//Insert Model
-const Finance = require("../Model/FinanceModel");
-//Insert User Controller
-const FinanceController = require("../Controlers/FinanceController");
-
-router.post('/', FinanceController.addFinance);
-router.get('/monthly', FinanceController.getFinanceWithinMonth);
-router.delete('/:id', FinanceController.deleteFinance);
+router.post('/', addFinance);
+router.get('/monthly', getFinanceWithinMonth);
+router.delete('/:id', deleteFinance);
+router.get('/', getAllFinance);
 
 module.exports = router;
