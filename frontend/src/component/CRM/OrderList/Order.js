@@ -7,6 +7,7 @@ function Order(props) {
   const {
     _id,
     productName,
+    // productCategory,
     location,
     deliveryType,
     reciptNo,
@@ -45,6 +46,9 @@ function Order(props) {
           <td className=" w-48 text-nowrap font-medium text-center text-slate-700 border-hidden">
             {location}
           </td>
+          {/* <td className=" w-48 text-nowrap font-medium text-center text-slate-700 border-hidden">
+            {productCategory}
+          </td> */}
           <td className=" w-48 text-nowrap font-medium text-center text-slate-700 border-hidden">
             {deliveryType}
           </td>
