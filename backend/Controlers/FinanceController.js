@@ -12,6 +12,16 @@ const addFinance = async (req, res) => {
     }
 };
 
+// Get all finance data
+const getAllFinance = async (req, res) => {
+    try {
+        const financeData = await Finance.find(); // Retrieve all entries
+        res.json(financeData);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
 // Get finance data within a month
 const getFinanceWithinMonth = async (req, res) => {
     try {
@@ -38,4 +48,4 @@ const deleteFinance = async (req, res) => {
     }
 };
 
-module.exports = { addFinance, getFinanceWithinMonth, deleteFinance };
+module.exports = { addFinance, getAllFinance, getFinanceWithinMonth, deleteFinance };

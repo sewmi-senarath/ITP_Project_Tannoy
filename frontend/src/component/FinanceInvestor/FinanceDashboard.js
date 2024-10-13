@@ -1,12 +1,11 @@
-// FinanceDashboard.js
-import React, { useState } from 'react';
+// Finance Dashboard
+
+import React, { useState, useEffect } from 'react';
 import { Pie } from 'react-chartjs-2';
-import ChartDataLabels from 'chartjs-plugin-datalabels'; // Import datalabels plugin
+import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { Chart } from 'chart.js';
 import './FinanceDashboard.css';
 
-
-// Register the plugin
 Chart.register(ChartDataLabels);
 
 const FinanceDashboard = () => {
@@ -19,7 +18,7 @@ const FinanceDashboard = () => {
     date: ''
   });
   const [chartData, setChartData] = useState(null);
-  const [totals, setTotals] = useState({ debit: 0, credit: 0 });
+  const [allData, setAllData] = useState([]);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -27,6 +26,7 @@ const FinanceDashboard = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
     try {
       const response = await fetch('http://localhost:5000/api/finance', {
         method: 'POST',
@@ -35,6 +35,15 @@ const FinanceDashboard = () => {
       });
       if (response.ok) {
         alert('Data added successfully');
+        fetchAllData();
+        setFormData({
+          paymentID: '',
+          department: '',
+          amount: 0,
+          type: 'debit',
+          contactNumber: '',
+          date: ''
+        });
       } else {
         alert('Failed to add data');
       }
@@ -58,8 +67,6 @@ const FinanceDashboard = () => {
         }
       });
 
-      setTotals({ debit: totalDebit, credit: totalCredit });
-
       setChartData({
         labels: ['Debit', 'Credit'],
         datasets: [{
@@ -72,40 +79,65 @@ const FinanceDashboard = () => {
     }
   };
 
+  const fetchAllData = async () => {
+    try {
+      const response = await fetch('http://localhost:5000/api/finance');
+      const data = await response.json();
+      setAllData(data);
+    } catch (error) {
+      console.error('Error fetching all data:', error);
+    }
+  };
+
+  const handleDelete = async (id) => {
+    try {
+      const response = await fetch(`http://localhost:5000/api/finance/${id}`, {
+        method: 'DELETE'
+      });
+      if (response.ok) {
+        alert('Data deleted successfully');
+        fetchAllData();
+      } else {
+        alert('Failed to delete data');
+      }
+    } catch (error) {
+      console.error('Error deleting data:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchAllData();
+  }, []);
+
   return (
-    <div>
-      <h2>Finance Dashboard</h2>
-      <form onSubmit={handleSubmit}>
-        <input type="text" name="paymentID" placeholder="Payment ID" onChange={handleChange} />
-        <input type="text" name="department" placeholder="Department" onChange={handleChange} />
-        <input type="number" name="amount" placeholder="Amount" onChange={handleChange} />
-        <select name="type" onChange={handleChange}>
+    <div className="dashboard-container">
+      <h2 className="dashboard-title">Finance Dashboard</h2>
+      
+      <form onSubmit={handleSubmit} className="form-container">
+        <input type="text" name="paymentID" placeholder="Payment ID" onChange={handleChange} className="form-input" />
+        <input type="text" name="department" placeholder="Department" onChange={handleChange} className="form-input" />
+        <input type="number" name="amount" placeholder="Amount" onChange={handleChange} className="form-input" />
+        <select name="type" onChange={handleChange} className="form-input">
           <option value="debit">Debit</option>
           <option value="credit">Credit</option>
         </select>
-        <input type="text" name="contactNumber" placeholder="Contact Number" onChange={handleChange} />
-        <input type="date" name="date" onChange={handleChange} />
-        <button type="submit">Add Data</button>
+        <input type="text" name="contactNumber" placeholder="Contact Number" onChange={handleChange} className="form-input" />
+        <input type="date" name="date" onChange={handleChange} className="form-input" />
+        <button type="submit" className="submit-button">Add Data</button>
       </form>
-      <button onClick={fetchChartData}>Analytics</button>
+
+      <button onClick={fetchChartData} className="analytics-button">View Analytics</button>
 
       {chartData && (
-        <div style={{ maxWidth: '500px', margin: '0 auto' }}>
+        <div className="chart-container">
           <Pie 
             data={chartData}
             options={{
               responsive: true,
               maintainAspectRatio: false,
               plugins: {
-                legend: {
-                  display: true,
-                  position: 'top'
-                },
-                title: {
-                  display: true,
-                  text: 'Monthly Financial Summary',
-                  font: { size: 15 }
-                },
+                legend: { display: true, position: 'top' },
+                title: { display: true, text: 'Monthly Financial Summary', font: { size: 15 } },
                 tooltip: {
                   callbacks: {
                     label: function(context) {
@@ -113,7 +145,7 @@ const FinanceDashboard = () => {
                       const value = context.raw || 0;
                       const total = context.dataset.data.reduce((acc, cur) => acc + cur, 0);
                       const percentage = ((value / total) * 100).toFixed(2);
-                      const sign = label === 'Debit' ? '↓' : '↑'; // Custom sign for Debit (↓) and Credit (↑)
+                      const sign = label === 'Debit' ? '↓' : '↑';
                       return `${label}: ${sign} $${value} (${percentage}%)`;
                     }
                   }
@@ -132,25 +164,43 @@ const FinanceDashboard = () => {
         </div>
       )}
 
-      {chartData && (
-        <div>
-          <h3>Total Summary</h3>
-          <table>
-            <thead>
+      <div className="table-container">
+        <h3>All Financial Data</h3>
+        <table className="data-table">
+          <thead>
+            <tr>
+              <th>Payment ID</th>
+              <th>Department</th>
+              <th>Amount</th>
+              <th>Type</th>
+              <th>Contact Number</th>
+              <th>Date</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {allData.length > 0 ? (
+              allData.map((item) => (
+                <tr key={item._id}>
+                  <td>{item.paymentID || 'N/A'}</td>
+                  <td>{item.department || 'N/A'}</td>
+                  <td>${item.amount || 0}</td>
+                  <td>{item.type}</td>
+                  <td>{item.contactNumber || 'N/A'}</td>
+                  <td>{item.date || 'N/A'}</td>
+                  <td>
+                    <button onClick={() => handleDelete(item._id)} className="delete-button">Delete</button>
+                  </td>
+                </tr>
+              ))
+            ) : (
               <tr>
-                <th>Total Debit</th>
-                <th>Total Credit</th>
+                <td colSpan="7" style={{ textAlign: 'center' }}>No financial data available.</td>
               </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Rs {totals.debit}</td>
-                <td>Rs {totals.credit}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      )}
+            )}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };

@@ -1,0 +1,102 @@
+
+/* General Dashboard Styling */
+.dashboard-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+  }
+  
+  .dashboard-title {
+    text-align: center;
+    color: #333;
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
+  
+  /* Form Styling */
+  .form-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-bottom: 30px;
+  }
+  
+  .form-input, .submit-button, .analytics-button {
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+  }
+  
+  .submit-button, .analytics-button {
+    background-color: #4CAF50;
+    color: #fff;
+    cursor: pointer;
+  }
+  
+  .submit-button:hover, .analytics-button:hover {
+    background-color: #45a049;
+  }
+  
+  /* Pie Chart Styling */
+  .chart-container {
+    max-width: 600px;
+    height: 400px;
+    margin: 0 auto 30px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #fafafa;
+    border-radius: 8px;
+  }
+  
+  /* Table Styling */
+  .table-container {
+    overflow-x: auto;
+    margin-top: 30px;
+  }
+  
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .data-table th, .data-table td {
+    padding: 12px;
+    border: 1px solid #ddd;
+    text-align: center;
+    font-size: 0.95rem;
+  }
+  
+  .data-table th {
+    background-color: #333;
+    color: #fff;
+  }
+  
+  .data-table td {
+    background-color: #f9f9f9;
+  }
+  
+  .delete-button {
+    padding: 6px 12px;
+    color: #fff;
+    background-color: #e74c3c;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .delete-button:hover {
+    background-color: #c0392b;
+  }
+  
+  /* Responsive Styling */
+  @media (max-width: 600px) {
+    .form-container {
+      grid-template-columns: 1fr;
+    }
+  
+    .submit-button, .analytics-button {
+      grid-column: span 1;
+    }
+  }
