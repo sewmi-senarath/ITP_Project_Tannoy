@@ -146,21 +146,61 @@ exports.generateEmployeeReport = async (req, res) => {
     if (employmentType === "Full-Time") {
       switch (position) {
         case "Delivery":
-          dailySalary = 2000;
-          otRate = 600;
-          break;
+              dailySalary = 2000;
+              otRate = 600;
+              break;
         case "Technical":
-          dailySalary = 2500;
-          otRate = 400;
-          break;
+              dailySalary = 2500;
+              otRate = 400;
+              break;
         case "Finance":
-          dailySalary = 3000;
-          otRate = 200;
-          break;
+              dailySalary = 3000;
+              otRate = 200;
+              break;
+          case 'Inquiry':
+              dailySalary = 2000;
+              otRate = 200;
+              break;
+          case 'Developer':
+              dailySalary = 2500;
+              otRate = 500;
+              break;
+          case 'Operator':
+              dailySalary = 2300;
+              otRate = 600;
+              break;
+          case 'Tester':
+              dailySalary = 2200;
+              otRate = 600;
+              break;
+          case 'Cleaning':
+              dailySalary = 1200;
+              otRate = 300;
+              break;
+          case 'HR':
+              dailySalary = 2400;
+              otRate = 350;
+              break;
+          case 'Sales':
+              dailySalary = 3000;
+              otRate = 450;
+              break;
+          case 'Trainee':
+              dailySalary = 800;
+              otRate = 150;
+              break;
+          case 'Supervisor':
+              dailySalary = 2700;
+              otRate = 500;
+              break;
+          case 'Helper':
+              dailySalary = 1300;
+              otRate = 100;
+              break;
         default:
-          dailySalary = 2000;
-          otRate = 500;
-          break;
+              dailySalary = 2000;
+              otRate = 500;
+              break;
       }
     } else if (employmentType === "Part-Time") {
       switch (position) {
@@ -172,10 +212,54 @@ exports.generateEmployeeReport = async (req, res) => {
           dailySalary = 1200;
           otRate = 300;
           break;
+        case 'Finance':
+              dailySalary = 1500;
+              otRate = 150;
+              break;
+        case 'Inquiry':
+              dailySalary = 1000;
+              otRate = 150;
+              break;
+        case 'Developer':
+              dailySalary = 1200;
+              otRate = 300;
+              break;
+        case 'Operator':
+              dailySalary = 1100;
+              otRate = 400;
+              break;
+        case 'Tester':
+              dailySalary = 1100;
+              otRate = 400;
+              break;
+        case 'Cleaning':
+              dailySalary = 600;
+              otRate = 200;
+              break;
+        case 'HR':
+              dailySalary = 1200;
+              otRate = 250;
+              break;
+        case 'Sales':
+              dailySalary = 1500;
+              otRate = 300;
+              break;
+        case 'Trainee':
+              dailySalary = 500;
+              otRate = 100;
+              break;
+        case 'Supervisor':
+              dailySalary = 1400;
+              otRate = 300;
+              break;
+        case 'Helper':
+              dailySalary = 700;
+              otRate = 50;
+              break;
         default:
-          dailySalary = 1000;
-          otRate = 300;
-          break;
+              dailySalary = 1000;
+              otRate = 300;
+              break;
       }
     } else if (employmentType === "Contract") {
       switch (position) {
@@ -187,6 +271,50 @@ exports.generateEmployeeReport = async (req, res) => {
           dailySalary = 1200;
           otRate = 250;
           break;
+        case 'Finance':
+              dailySalary = 1500;
+              otRate = 100;
+              break;
+        case 'Inquiry':
+              dailySalary = 1000;
+              otRate = 100;
+              break;
+        case 'Developer':
+              dailySalary = 1200;
+              otRate = 250;
+              break;
+        case 'Operator':
+              dailySalary = 1100;
+              otRate = 300;
+              break;
+        case 'Tester':
+              dailySalary = 1100;
+              otRate = 300;
+              break;
+        case 'Cleaning':
+              dailySalary = 600;
+              otRate = 200;
+              break;
+        case 'HR':
+              dailySalary = 1200;
+              otRate = 200;
+              break;
+        case 'Sales':
+              dailySalary = 1500;
+              otRate = 250;
+              break;
+        case 'Trainee':
+              dailySalary = 500;
+              otRate = 100;
+              break;
+        case 'Supervisor':
+              dailySalary = 1400;
+              otRate = 250;
+              break;
+        case 'Helper':
+              dailySalary = 700;
+              otRate = 50;
+              break;
         default:
           dailySalary = 1200;
           otRate = 250;

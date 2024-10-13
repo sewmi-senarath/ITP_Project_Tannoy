@@ -39,11 +39,15 @@ const StockReport = () => {
   const generatePdf = () => {
     const doc = new jsPDF();
     doc.text(`Supplier Report for ${supplier.SupplierName}`, 10, 10);
-    doc.text(`Supplier Code: ${supplier.supCode}`, 10, 20);
-    doc.text(`Contact Info: ${supplier.ContactInfo}`, 10, 30);
-    doc.text(`Delivery Item: ${supplier.DeliveryItem}`, 10, 40);
-    doc.text(`Quantity: ${quantity}`, 10, 50);
-    doc.text(`Total Bill: Rs.${total.toFixed(2)}`, 10, 60);
+    doc.text(`Supplier Code: ${supplier.supCode}`, 10, 40);
+    doc.text(`Contact Info: ${supplier.ContactInfo}`, 10, 50);
+    doc.text(`Delivery Item: ${supplier.DeliveryItem}`, 10, 60);
+    doc.text(`Quantity: ${quantity}`, 10, 70);
+    doc.text(`Total Bill: Rs.${total.toFixed(2)}`, 10, 80);
+
+    const currentDate = new Date().toLocaleDateString();
+    doc.text('Sent by the inventory manager', 10, 280); // Footer text
+    doc.text(`Date: ${currentDate}`, 10, 290); // Current date
 
     doc.save(`Supplier_Report_${supplier.SupplierName}.pdf`);
   };

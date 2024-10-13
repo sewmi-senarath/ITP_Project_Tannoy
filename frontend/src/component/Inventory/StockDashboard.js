@@ -141,6 +141,10 @@ const StockDashboard = () => {
       startY: 20,
     });
 
+    const currentDate = new Date().toLocaleDateString();
+    doc.text('Sent by the inventory manager', 10, 280); // Footer text
+    doc.text(`Date: ${currentDate}`, 10, 290); // Current date
+
     doc.save('Stock_Inventory_Report.pdf');
   };
 
@@ -166,7 +170,7 @@ const StockDashboard = () => {
         {/* <li><a href="/Addproduct" className="block py-2 px-4 hover:bg-gray-700">Add Product</a></li> */}
         <li><a href="/supplierDashboard" className="block py-2 px-4 hover:bg-gray-700">Supplier details</a></li>
         <li><a href="/Addsupplier" className="block py-2 px-4 hover:bg-gray-700">Add Supplier</a></li>
-        <li><a href="/stock-add" className="block py-2 px-4 hover:bg-gray-700">Help Desk</a></li>
+        <li><a href="/inquiries" className="block py-2 px-4 hover:bg-gray-700">Help Desk</a></li>
         </ul>
 
         <div className="mt-auto p-4">

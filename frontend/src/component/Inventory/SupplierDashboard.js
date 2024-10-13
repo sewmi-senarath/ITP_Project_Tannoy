@@ -102,7 +102,7 @@ const SupplierDashboard = () => {
         {/* <li><a href="/Addproduct" className="block py-2 px-4 hover:bg-gray-700">Add Product</a></li> */}
         <li><a href="/supplierDashboard" className="block py-2 px-4 hover:bg-gray-700">Supplier details</a></li>
         <li><a href="/Addsupplier" className="block py-2 px-4 hover:bg-gray-700">Add Supplier</a></li>
-        <li><a href="/stock-add" className="block py-2 px-4 hover:bg-gray-700">Help Desk</a></li>
+        <li><a href="/inquiries" className="block py-2 px-4 hover:bg-gray-700">Help Desk</a></li>
 
 
 

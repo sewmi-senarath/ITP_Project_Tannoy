@@ -26,6 +26,19 @@ const MarkAttendance = () => {
     fetchEmployees();
   }, []);
 
+  //edit new
+  // Get today's date in the format YYYY-MM-DD
+  const getCurrentDate = () => {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const day = String(today.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  };
+
+  const today = getCurrentDate();
+//edit new end
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -35,6 +48,13 @@ const MarkAttendance = () => {
       return;
     }
 
+    //edit new start
+    // Check if the selected attendance date matches today's date
+    if (attendanceDate !== today) {
+      setErrorMessage("You can only mark attendance for today's date.");
+      return;
+    }
+    //edit new end
 
     try {
       const attendanceData = {

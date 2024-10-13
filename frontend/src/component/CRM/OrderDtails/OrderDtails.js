@@ -55,13 +55,15 @@ function OrderDtails() {
         <h1 className="text-center font-semibold m-1 ml-6 text-4xl text-slate-700 ">
           Order Details Display
         </h1>
-
+      {/* place new order button */}
         <div className="flex flex-row gap-3">
           <Link to="/addorder" className="no-underline text-black">
             <button className="h-10 mt-3 font-semibold bg-blue-400 mr-28 rounded-lg w-44 ">
               Place New Order
             </button>
           </Link>
+
+          {/* Search bar */}
           <div className="rounded-lg flex items-center h-12 mr-1  mt-2 w-96 ">
            <input
             onChange={(e) => setSearchQuery(e.target.value)}
@@ -99,39 +101,42 @@ function OrderDtails() {
       <div className="mt-2">
         <table className=" mx-auto">
           <tr className="bg-slate-300 h-14">
-            <td className=" p-2 border-hidden font-bold text-center w-48 border-green-500">
+            <td className=" p-2 border-hidden font-bold text-center w-48 border-blue-500">
               Product Name
             </td>
-            <td className=" p-2 border-hidden font-bold text-center w-48  border-green-500">
+            <td className=" p-2 border-hidden font-bold text-center w-48  border-blue-500">
               Date
             </td>
-            <td className="p-2 border-hidden font-bold text-center w-48 border-green-500">
+            <td className="p-2 border-hidden font-bold text-center w-48 border-blue-500">
               Location
             </td>
-            <td className=" border-hidden font-bold text-center p-2 w-48 border-green-500">
+            {/* <td className="p-2 border-hidden font-bold text-center w-48 border-blue-500">
+              Location
+            </td> */}
+            <td className=" border-hidden font-bold text-center p-2 w-48 border-blue-500">
               Delivery Type
             </td>
 
-            <td className=" border-hidden font-bold text-center p-2 w-48 border-green-500">
+            <td className=" border-hidden font-bold text-center p-2 w-48 border-blue-500">
               Recipt No
             </td>
-            <td className="  border-hidden font-bold text-center p-2 w-48 border-green-500 text-nowrap">
+            <td className="  border-hidden font-bold text-center p-2 w-48 border-blue-500 text-nowrap">
               Description
             </td>
 
-            <td className="border-hidden font-bold text-center p-2 w-48 border-green-500">
+            <td className="border-hidden font-bold text-center p-2 w-48 border-blue-500">
               Unit Price
             </td>
-            <td className="border-hidden font-bold text-center w-32 border-green-500">
+            <td className="border-hidden font-bold text-center w-32 border-blue-500">
               Quantity
             </td>
-            <td className="border-hidden font-bold text-center p-2 w-48 border-green-500">
+            <td className="border-hidden font-bold text-center p-2 w-48 border-blue-500">
               Order Total
             </td>
-            <td className="border-hidden font-bold text-center p-2 w-48 border-green-500">
+            <td className="border-hidden font-bold text-center p-2 w-48 border-blue-500">
               Payment Type
             </td>
-            <td className="border-hidden font-bold text-center p-2 w-56 border-green-500">
+            <td className="border-hidden font-bold text-center p-2 w-56 border-blue-500">
               Actions
             </td>
           </tr>

@@ -108,7 +108,7 @@ const EmployeeDashboard = () => {
 
         <div className="flex flex-col items-center">
         <ul className="settings mt-auto space-y-10">
-          <li><a href="#" className="block py-2 px-6 bg-gray-600 text-white rounded-lg shadow hover:bg-gray-700 hover:shadow-lg transition duration-300">Make Inquiry</a></li>
+          <li><a href="/inquiries" className="block py-2 px-6 bg-gray-600 text-white rounded-lg shadow hover:bg-gray-700 hover:shadow-lg transition duration-300">Make Inquiry</a></li>
           <li><a href="/home" className="block py-2 px-6 bg-gray-600 text-white rounded-lg shadow hover:bg-gray-700 hover:shadow-lg transition duration-300">Log out</a></li>
         </ul>
         </div>
