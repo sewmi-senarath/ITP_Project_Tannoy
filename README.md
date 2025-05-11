@@ -4,9 +4,10 @@ Employee Management System-
 A full-stack web application built to streamline employee management, attendance tracking, and payroll processing for Tannoy Electrical Industries.
 
 🎯 Project Overview
-  The Employee Management System is a robust, user-friendly platform designed to simplify workforce management. It enables businesses to efficiently handle employee data, track attendance, and automate payroll     calculations with precision and ease. From generating unique employee IDs to calculating net salaries with EPF/EFT deductions, the system ensures accuracy and scalability for modern organizations.
+The Employee Management System is a robust, user-friendly platform designed to simplify workforce management. It enables businesses to efficiently handle employee data, track attendance, and automate payroll     calculations with precision and ease. From generating unique employee IDs to calculating net salaries with EPF/EFT deductions, the system ensures accuracy and scalability for modern organizations.
   
 Key Features-
+
 1.Employee Onboarding: Add new employees with details like name, email, phone, position (e.g., manager, trainee), and type (full-time, part-time).
 2.Automatically generates unique IDs (e.g., EMP00001).
 3.Data Validation: Ensures valid inputs (e.g., proper email/phone formats, non-empty fields) for reliable data entry.
@@ -24,7 +25,6 @@ Key Features-
 15.Automatic deductions for EPF/EFT to compute net salary.
 
 
-
 🛠️ Technologies & Tools
 
 MongoDB: NoSQL database for scalable storage of employee and attendance data.
@@ -34,22 +34,3 @@ Node.js: Server-side runtime for efficient backend operations.
 Visual Studio Code: Primary IDE for development and debugging.
 GitHub: Version control and collaboration platform for the team.
 Postman: API testing tool to ensure robust backend endpoints.
-
-
-Installation-
-Clone the Repository:git clone https://github.com/your-username/employee-management-system.git
-cd employee-management-system
-
-Install Dependencies:
-Backend:cd backend
-npm install
-
-Frontend:cd ../frontend
-npm install
-
-Run the Application:
-Start the backend:cd backend
-npm start
-
-Start the frontend:cd frontend
-npm run start
