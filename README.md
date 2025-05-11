@@ -3,10 +3,11 @@ Tannoy Electrical Industries
 Employee Management System-
 A full-stack web application built to streamline employee management, attendance tracking, and payroll processing for Tannoy Electrical Industries.
 
-🎯 Project Overview
-The Employee Management System is a robust, user-friendly platform designed to simplify workforce management. It enables businesses to efficiently handle employee data, track attendance, and automate payroll     calculations with precision and ease. From generating unique employee IDs to calculating net salaries with EPF/EFT deductions, the system ensures accuracy and scalability for modern organizations.
-  
-Key Features-
+🎯 Project Overview:
+The Employee Management System is a robust, user-friendly platform designed to simplify workforce management. It enables businesses to efficiently handle employee data, track attendance, and automate payrolL calculations with precision and ease. From generating unique employee IDs to calculating net salaries with EPF/EFT deductions, the system ensures accuracy and scalability for modern organizations.
+
+
+Key Features:
 
 1.Employee Onboarding: Add new employees with details like name, email, phone, position (e.g., manager, trainee), and type (full-time, part-time).
 2.Automatically generates unique IDs (e.g., EMP00001).
@@ -25,7 +26,7 @@ Key Features-
 15.Automatic deductions for EPF/EFT to compute net salary.
 
 
-🛠️ Technologies & Tools
+🛠️ Technologies & Tools:
 
 MongoDB: NoSQL database for scalable storage of employee and attendance data.
 Express.js: Backend framework for handling API requests and server logic.
