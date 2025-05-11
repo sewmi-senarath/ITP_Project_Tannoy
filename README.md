@@ -10,7 +10,7 @@ The Employee Management System is a robust, user-friendly platform designed to s
 Key Features:
 
 1.Employee Onboarding: Add new employees with details like name, email, phone, position (e.g., manager, trainee), and type (full-time, part-time).
-2.Automatically generates unique IDs (e.g., EMP00001).
+2.Automatically generates unique IDs (e.g., EMP00001). 
 3.Data Validation: Ensures valid inputs (e.g., proper email/phone formats, non-empty fields) for reliable data entry.
 4.Employee Dashboard: Displays employee profiles and total employee count for quick insights.
 5.Search Functionality: Instantly locate employees by their unique ID.
